@@ -4,19 +4,16 @@
     <meta charset="UTF-8">
     <style>
         :root {
-            /* 醫用金屬與冷光色調 */
-            --metal-bg: #1a1d21; /* 深色髮絲紋金屬背景底色 */
-            --panel-steel: #e0e6ed; /* 拉絲不鏽鋼面板顏色 */
-            --medical-cyan: #00ffff; /* 手術儀器冷藍光 */
+            --metal-bg: #1a1d21;
+            --panel-steel: #e0e6ed;
+            --medical-cyan: #00ffff;
             --medical-cyan-dim: rgba(0, 255, 255, 0.3);
-            --blood-red: #ff3333; /* 警告/生命跡象紅色 */
-            --text-dark: #121418;
+            --blood-red: #ff3333;
             --text-light: #dbe2e9;
         }
 
         body {
             background-color: var(--metal-bg);
-            /* 添加微小的金屬髮絲紋背景 */
             background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
             background-size: 4px 4px;
             color: var(--text-light);
@@ -27,7 +24,7 @@
             letter-spacing: 0.03em;
         }
 
-        /* 主標題：金屬銘版風格 */
+        /* 主標題 */
         .main-title {
             font-size: 2.8em;
             font-weight: 900;
@@ -36,40 +33,65 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             text-align: center;
-            /* 金屬蝕刻與發光效果 */
             text-shadow: -1px -1px 1px rgba(255,255,255,0.3), 1px 1px 1px rgba(0,0,0,0.8), 0 0 10px var(--medical-cyan);
             border-bottom: 3px solid var(--panel-steel);
             padding-bottom: 15px;
             position: relative;
         }
-        
-        /* 標題裝飾：模擬鉚釘 */
-        .main-title::before, .main-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            width: 10px;
-            height: 10px;
-            background: #aaa;
-            border-radius: 50%;
-            box-shadow: inset -1px -1px 2px #000, 1px 1px 2px rgba(255,255,255,0.5);
-        }
-        .main-title::before { left: 10px; }
-        .main-title::after { right: 10px; }
 
+        /* 藝術感文字進場區塊 */
         .intro-section {
             margin-bottom: 40px;
-            font-size: 1em;
-            color: #b0bac5;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-left: 4px solid var(--medical-cyan-dim);
+            font-size: 1.1em;
+            color: var(--medical-cyan);
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 2px solid var(--medical-cyan);
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
         }
 
-        /* 互動式摺疊區塊：手術箱/儀器面板風格 */
+        /* 橫向掃描光束特效 */
+        .intro-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            animation: scan-pass 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes scan-pass {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* 漸進顯影文字 */
+        .reveal-text {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(10px);
+            animation: text-reveal 1.2s ease-out forwards;
+        }
+
+        .reveal-text:nth-child(1) { animation-delay: 0.2s; }
+        .reveal-text:nth-child(2) { animation-delay: 0.8s; }
+        .reveal-text:nth-child(3) { animation-delay: 1.4s; }
+        .reveal-text:nth-child(4) { animation-delay: 2.0s; }
+
+        @keyframes text-reveal {
+            0% { opacity: 0; filter: blur(10px); transform: translateY(10px); color: white; }
+            50% { opacity: 0.5; filter: blur(2px); color: var(--medical-cyan); }
+            100% { opacity: 1; filter: blur(0px); transform: translateY(0px); }
+        }
+
+        /* 摺疊區塊與數據面板 */
         details {
             margin-bottom: 15px;
-            background: linear-gradient(145deg, #2a2f36, #1e2227); /* 金屬立體感漸層 */
+            background: linear-gradient(145deg, #2a2f36, #1e2227);
             border: 1px solid #444;
             box-shadow: 3px 3px 6px rgba(0,0,0,0.5), inset 1px 1px 1px rgba(255,255,255,0.1);
             transition: all 0.3s ease;
@@ -77,7 +99,7 @@
 
         details[open] {
             border: 1px solid var(--medical-cyan);
-            box-shadow: 0 0 15px var(--medical-cyan-dim), 3px 3px 6px rgba(0,0,0,0.5);
+            box-shadow: 0 0 15px var(--medical-cyan-dim);
         }
 
         summary {
@@ -91,110 +113,43 @@
             align-items: center;
             outline: none;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            position: relative;
         }
 
-        summary::-webkit-details-marker { display: none; }
-        
-        /* 銳利的手術刀型箭頭 */
         summary::before {
             content: "";
             display: inline-block;
-            width: 0;
-            height: 0;
+            width: 0; height: 0;
             border-style: solid;
             border-width: 8px 0 8px 14px;
             border-color: transparent transparent transparent var(--panel-steel);
             margin-right: 15px;
-            transform: rotate(0deg);
-            transition: transform 0.2s, border-color 0.2s;
-            filter: drop-shadow(0 0 2px var(--medical-cyan));
+            transition: transform 0.2s;
         }
 
-        details[open] summary::before {
-            transform: rotate(90deg);
-            border-color: transparent transparent transparent var(--medical-cyan);
-        }
-        
-        /* 模擬儀器指示燈 */
-        summary::after {
-            content: '';
-            position: absolute;
-            right: 20px;
-            width: 12px;
-            height: 12px;
-            background-color: #333; /* 關閉狀態 */
-            border-radius: 50%;
-            box-shadow: inset 0 0 3px #000;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-        
-        details[open] summary::after {
-            background-color: var(--medical-cyan); /* 激活狀態 */
-            box-shadow: 0 0 10px var(--medical-cyan), inset 0 0 3px #fff;
-        }
+        details[open] summary::before { transform: rotate(90deg); border-color: transparent transparent transparent var(--medical-cyan); }
 
-        .content-inner {
-            padding: 10px 30px 25px 50px;
-            font-size: 1em;
-            color: #d0dbe5;
-            border-top: 1px solid #444;
-        }
+        .content-inner { padding: 10px 30px 25px 50px; border-top: 1px solid #444; color: #d0dbe5; }
 
-        /* 數據面板：儀器螢幕風格 */
         .data-panel {
             margin-top: 20px;
             background: rgba(0, 0, 0, 0.5);
             border: 2px solid #555;
             padding: 15px;
-            font-family: 'Courier New', monospace; /* 保持數據的科技感 */
+            font-family: 'Courier New', monospace;
             box-shadow: inset 0 0 10px #000;
         }
 
-        .data-panel::before {
-            content: 'BIOMETRIC DATA MONITOR';
-            font-size: 0.7em;
-            color: #777;
-            display: block;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #333;
-        }
+        .data-panel::before { content: 'BIOMETRIC DATA MONITOR'; font-size: 0.7em; color: #777; display: block; margin-bottom: 10px; border-bottom: 1px solid #333; }
 
-        .data-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed #333;
-        }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed #333; }
 
-        .highlight {
-            color: var(--medical-cyan);
-            font-weight: bold;
-            text-shadow: 0 0 5px var(--medical-cyan-dim);
-        }
+        .highlight { color: var(--medical-cyan); font-weight: bold; }
 
-        .danger {
-            color: var(--blood-red);
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
-            animation: pulse 2s infinite;
-        }
+        .danger { color: var(--blood-red); font-weight: bold; animation: pulse 2s infinite; }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-        .footer-tag {
-            margin-top: 50px;
-            font-size: 0.8em;
-            text-align: right;
-            color: #555;
-            border-top: 1px solid #333;
-            padding-top: 10px;
-            font-family: monospace;
-        }
+        .footer-tag { margin-top: 50px; font-size: 0.8em; text-align: right; color: #555; border-top: 1px solid #333; padding-top: 10px; font-family: monospace; }
     </style>
 </head>
 <body>
@@ -202,10 +157,10 @@
     <div class="main-title">妄二虛間</div>
 
     <div class="intro-section">
-        <p>繁華之城的野心，數百萬生命流逝<br>
-        一場數百年的實驗，使生存成為奢望、自由成為妄想</p>
-        <p>赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</p>
-        <p>沒有終點的壽命，是生命的蛻變也是一生的枷鎖</p>
+        <div class="reveal-text">繁華之城的野心，數百萬生命流逝</div>
+        <div class="reveal-text">一場數百年的實驗，使生存成為奢望、自由成為妄想</div>
+        <div class="reveal-text">赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</div>
+        <div class="reveal-text">沒有終點的壽命，是生命的蛻變也是一生的枷鎖</div>
     </div>
 
     <details>
