@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            /* 醫用金屬與冷藍光色調 */
+            --metal-bg: #1a1d21;
+            --panel-steel: #e0e6ed;
+            --medical-cyan: #00ffff;
+            --medical-cyan-dim: rgba(0, 255, 255, 0.3);
+            --text-light: #dbe2e9;
+            --box-bg: rgba(45, 52, 60, 0.6);
+        }
+
+        body {
+            background-color: var(--metal-bg);
+            background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
+            background-size: 4px 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif, "Microsoft JhengHei";
+            margin: 0;
+            padding: 30px;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        /* 區域標題：金屬銘版風格 */
+        .header-section {
+            border-left: 5px solid var(--medical-cyan);
+            padding-left: 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.05), transparent);
+        }
+
+        .region-name {
+            font-size: 2.2em;
+            font-weight: 900;
+            margin: 0 0 15px 0;
+            color: var(--panel-steel);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--medical-cyan-dim);
+        }
+
+        .region-desc {
+            font-size: 1em;
+            color: #b0bac5;
+        }
+
+        /* 陣營摺疊塊 */
+        details {
+            margin-bottom: 15px;
+            background: linear-gradient(145deg, #2a2f36, #1e2227);
+            border: 1px solid #444;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border: 1px solid var(--medical-cyan);
+            box-shadow: 0 0 15px var(--medical-cyan-dim);
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--panel-steel);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            outline: none;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--panel-steel);
+            margin-right: 15px;
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+            border-color: transparent transparent transparent var(--medical-cyan);
+        }
+
+        .content-inner {
+            padding: 10px 30px 25px 50px;
+            border-top: 1px solid #444;
+            background: var(--metal-bg);
+        }
+
+        /* 家族/單位標題 */
+        .unit-label {
+            color: var(--medical-cyan);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid var(--medical-cyan-dim);
+            width: fit-content;
+            padding-right: 30px;
+        }
+
+        /* 內容數據盒 */
+        .data-box {
+            background: var(--box-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            margin: 10px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .data-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .data-box li {
+            margin-bottom: 5px;
+            color: #dbe2e9;
+        }
+
+        p {
+            margin: 12px 0;
+            color: #b0bac5;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, var(--medical-cyan-dim), transparent);
+            margin: 30px 0 10px 0;
+        }
+
+        .footer-tag {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: right;
+            color: #555;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="region-name">【聖彌可帝國 (西區)】</div>
+        <div class="region-desc">
+            冰冷的機械聲與忙碌的腳步，沒有人情味的社會只剩科技與時間的搏鬥在資源荒涼的世代不斷找尋新科技，自給自足的代價是強權的壓迫
+        </div>
+    </div>
+
+    <details>
+        <summary>中立派</summary>
+        <div class="content-inner">
+            <span class="unit-label">[希恩家族（皇家）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 繼位長達六百多年</li>
+                    <li>2. 主張公正執法、帝國發展為第一優先</li>
+                    <li>3. 具三大非家族勢力支持</li>
+                    <li>4. 除帝國境內的人民外都是「劣種」</li>
+                    <li>5. 位於帝國西南部</li>
+                </ul>
+            </div>
+            <p>於在位二百多年時開始啟動「人類基因改造計畫」，在此期間不斷在帝國外的地區尋找幼年孩子進行藥物實驗</p>
+            <p>在位五百多年時計畫敗露但因各家利益牽扯導致帝國主權仍然掌握在手中</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[希爾曼家族（子爵）]</span>
+            <p>(原為希爾文家族，後因內部爭鬥改名)</p>
+            <div class="data-box">
+                <ul>
+                    <li>1. 原為希爾文，經聖殿提拔取得爵位</li>
+                    <li>2. 主張能力至上、無情</li>
+                    <li>3. 表面無站隊，但暗裡會配合皇家行動</li>
+                    <li>4. 男權家族</li>
+                </ul>
+            </div>
+            <p>希恩在位四百多年時因族內內訌產生權力挑戰，當代家主變挑戰成功後飲毒自殺。而希爾文家族也不復存在，由希爾曼家族接續</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[聖希維爾軍團]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 駐守於西區南部邊疆</li>
+                    <li>2. 主張團結、紀律</li>
+                    <li>3. 與邊境地帶的勢力有交易往來</li>
+                    <li>4. 軍令至上</li>
+                </ul>
+            </div>
+            <p>聖彌可最著名的就職方向，高福利及不受貴族控制的地位使每年都有無數平民爭奪名額。當然每年也有貴族會將自己部分子弟送入盼望他們能成為自己未來的助力</p>
+            <p>具有挑戰制度，每十年舉行一次大會，輪替萬夫長以下軍職，以上則二十年輪替一次統帥等高層則是五十年輪替一次</p>
+            <p>在役期間可對比自己高的軍職發起挑戰兩次不限時間，兩次皆失敗則失去下次挑戰大會的名額並且具有重大功勞也不予升軍職最低服役時間為二十年，十年後可自行決定是否留於軍中</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[奧雷伊索聖殿]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 富可敵國</li>
+                    <li>2. 主張平等、清心寡慾</li>
+                    <li>3. 帝國最高權力</li>
+                    <li>4. 主神至上</li>
+                </ul>
+            </div>
+            <p>聖彌可帝國主心骨，平時不管事因此會扶持家族以確保在控管範圍內聖殿每五年選拔新人選進入其中靜修，只選擇有緣之人（錢緣未盡者也可再續前緣）</p>
+            <p>完成修業者可在聖殿範圍內獲得一穩定職業，也可決定離開聖殿。未完成者則永久失去進入聖殿的機會</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>激進派</summary>
+        <div class="content-inner">
+            <span class="unit-label">[艾德里克家族（伯爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 從商貴族，位高權重</li>
+                    <li>2. 主張利益至上、金錢主義</li>
+                    <li>3. 曾提出「將平民改造成機械人以獲取永久勞動力」的荒謬想法</li>
+                </ul>
+            </div>
+            <p>不受聖殿待見，但因每年繳納高額貢獻金使其爵位尚存，但也因此無法晉升公爵</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[瓦拉家族（伯爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 科技著名</li>
+                    <li>2. 主張知識&數據才是真理</li>
+                    <li>3. 受軍團喜愛</li>
+                    <li>4. 厭惡聖殿</li>
+                </ul>
+            </div>
+            <p>為了希恩研究中的數據而私下達成了某種協議。看不慣聖殿以神為信仰的行為但礙於權力表面仍然尊敬</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[貝拉維塔家族（子爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 因族中出了一位奧雷伊索副主教從而榮獲爵位</li>
+                    <li>2. 主張信仰至上</li>
+                    <li>3. 厭惡瓦拉，與艾德里克交好</li>
+                    <li>4. 未完成奧雷伊索修業者一律處死</li>
+                </ul>
+            </div>
+            <p>希恩在位三百多年時第486代副主教米德．貝爾維塔因平民出身，為了將自己姓氏留存於世向聖殿申請了爵位並於兩年後成功通過。也立下了以信仰為中心的一切家規</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[彭布曼家族（男爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 瓦拉扶持獲得爵位，因聖殿在其中阻擾導致無法晉升更高位貴族</li>
+                    <li>2. 主張韜光養晦、謙卑</li>
+                    <li>3. 背後培養兩隊未知力量駐守於孟凡倫特</li>
+                    <li>4. 厭惡瓦拉</li>
+                </ul>
+            </div>
+            <p>認為因為瓦拉家族的扶持才導致家族受聖殿厭惡並無法提升地位，只能成為瓦拉的附庸。暗地中在各個家族裡都安排了探子探查消息，也創建了情報網匿名出售消息</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>保守派</summary>
+        <div class="content-inner">
+            <span class="unit-label">[孟思萊德家族（公爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 老牌貴族</li>
+                    <li>2. 主張忠誠、淡泊名利</li>
+                    <li>3. 受聖殿喜愛</li>
+                    <li>4. 盲目追隨者處死</li>
+                </ul>
+            </div>
+            <p>原是聖殿想扶持成皇家的貴族，因當時高層們一致認為不適合才換希恩上位公爵地位為一代代皇家慢慢升上來的，盡忠職守無野心，使孟思萊德幾乎是每代皇家並需要取得支持的家族</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[貝里安家族（男爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 姓氏前身為世代奴隸，由孟思萊德提拔獲得爵位</li>
+                    <li>2. 主張血統其次，榮譽至上</li>
+                    <li>3. 歧視一切靠家世而不努力的貴族子弟</li>
+                    <li>4. 會定期收養孤兒或年幼奴隸培養成族內力量</li>
+                </ul>
+            </div>
+            <p>配戴貝里安姓氏者大多與其血統並無太大關係，通常為被收養者經培養後授予其姓氏每代貝里安家主由對帝國有最高奉獻者繼承</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[法羅拉斯家族（子爵）]</span>
+            <div class="data-box">
+                <ul>
+                    <li>1. 貿易起家</li>
+                    <li>2. 主張秩序、規律，注重體面與禮統</li>
+                    <li>3. 對外以高尚名聲著名</li>
+                    <li>4. 有繁瑣的禮節條款學習手冊</li>
+                </ul>
+            </div>
+            <p>因駐地位置靠海使其在貿易方面具有不小的成就，並在帝國中有一定佔比的重要性，因此被皇家重視距離學院遙遠而在駐地內有專設一所學院以應付多數子弟的學習需求</p>
+
+            <div class="divider"></div>
+            <span class="unit-label">[柯尼斯學院]</span>
+            <div class="data-box">
+                <p>為窮苦人家專門設立的學院，由孟思萊德和貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
+            </div>
+            <p>因學生多為勤勉之人，使帝國每年優秀人才增加許多，皇家和聖殿也會定期到當地親自挑選合適的人才</p>
+        </div>
+    </details>
+
+    <div class="footer-tag">
+        MED_OS v2.4 // REGION: WEST_SECTOR // SYSTEM_STATUS: MONITORING
+    </div>
+
+</body>
+</html>

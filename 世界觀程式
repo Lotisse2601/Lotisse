@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            /* 醫用金屬與冷光色調 */
+            --metal-bg: #1a1d21; /* 深色髮絲紋金屬背景底色 */
+            --panel-steel: #e0e6ed; /* 拉絲不鏽鋼面板顏色 */
+            --medical-cyan: #00ffff; /* 手術儀器冷藍光 */
+            --medical-cyan-dim: rgba(0, 255, 255, 0.3);
+            --blood-red: #ff3333; /* 警告/生命跡象紅色 */
+            --text-dark: #121418;
+            --text-light: #dbe2e9;
+        }
+
+        body {
+            background-color: var(--metal-bg);
+            /* 添加微小的金屬髮絲紋背景 */
+            background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
+            background-size: 4px 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif, "Microsoft JhengHei";
+            margin: 0;
+            padding: 30px;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        /* 主標題：金屬銘版風格 */
+        .main-title {
+            font-size: 2.8em;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--panel-steel);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+            /* 金屬蝕刻與發光效果 */
+            text-shadow: -1px -1px 1px rgba(255,255,255,0.3), 1px 1px 1px rgba(0,0,0,0.8), 0 0 10px var(--medical-cyan);
+            border-bottom: 3px solid var(--panel-steel);
+            padding-bottom: 15px;
+            position: relative;
+        }
+        
+        /* 標題裝飾：模擬鉚釘 */
+        .main-title::before, .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            width: 10px;
+            height: 10px;
+            background: #aaa;
+            border-radius: 50%;
+            box-shadow: inset -1px -1px 2px #000, 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        .main-title::before { left: 10px; }
+        .main-title::after { right: 10px; }
+
+        .intro-section {
+            margin-bottom: 40px;
+            font-size: 1em;
+            color: #b0bac5;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--medical-cyan-dim);
+        }
+
+        /* 互動式摺疊區塊：手術箱/儀器面板風格 */
+        details {
+            margin-bottom: 15px;
+            background: linear-gradient(145deg, #2a2f36, #1e2227); /* 金屬立體感漸層 */
+            border: 1px solid #444;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.5), inset 1px 1px 1px rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border: 1px solid var(--medical-cyan);
+            box-shadow: 0 0 15px var(--medical-cyan-dim), 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--panel-steel);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            outline: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        
+        /* 銳利的手術刀型箭頭 */
+        summary::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--panel-steel);
+            margin-right: 15px;
+            transform: rotate(0deg);
+            transition: transform 0.2s, border-color 0.2s;
+            filter: drop-shadow(0 0 2px var(--medical-cyan));
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+            border-color: transparent transparent transparent var(--medical-cyan);
+        }
+        
+        /* 模擬儀器指示燈 */
+        summary::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            width: 12px;
+            height: 12px;
+            background-color: #333; /* 關閉狀態 */
+            border-radius: 50%;
+            box-shadow: inset 0 0 3px #000;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        details[open] summary::after {
+            background-color: var(--medical-cyan); /* 激活狀態 */
+            box-shadow: 0 0 10px var(--medical-cyan), inset 0 0 3px #fff;
+        }
+
+        .content-inner {
+            padding: 10px 30px 25px 50px;
+            font-size: 1em;
+            color: #d0dbe5;
+            border-top: 1px solid #444;
+        }
+
+        /* 數據面板：儀器螢幕風格 */
+        .data-panel {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #555;
+            padding: 15px;
+            font-family: 'Courier New', monospace; /* 保持數據的科技感 */
+            box-shadow: inset 0 0 10px #000;
+        }
+
+        .data-panel::before {
+            content: 'BIOMETRIC DATA MONITOR';
+            font-size: 0.7em;
+            color: #777;
+            display: block;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #333;
+        }
+
+        .highlight {
+            color: var(--medical-cyan);
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--medical-cyan-dim);
+        }
+
+        .danger {
+            color: var(--blood-red);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .footer-tag {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: right;
+            color: #555;
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-title">妄二虛間</div>
+
+    <div class="intro-section">
+        <p>繁華之城的野心，數百萬生命流逝<br>
+        一場數百年的實驗，使生存成為奢望、自由成為妄想</p>
+        <p>赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</p>
+        <p>沒有終點的壽命，是生命的蛻變也是一生的枷鎖</p>
+    </div>
+
+    <details>
+        <summary>人類基因改造計畫</summary>
+        <div class="content-inner">
+            <p>此計畫於希恩在位653年時被帝國內各個貴族聯合壓迫下宣告結束，死亡人數超過180萬人。</p>
+            <p>因此計畫為各個未知區域的探索帶來巨大貢獻，所以希恩仍然是統治帝國的權力者。此計畫被迫害的人在接受巨額賠償金之後大多隱居在各處，或者隱姓埋名繼續擔任雇傭兵。</p>
+            <p>希恩內部高層在無法控制洛緹絲後曾試圖說服她入駐皇家，但遭其拒絕並被其殺害不少過往行為極度殘忍的部分高層。</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>[syn 實驗所]</summary>
+        <div class="content-inner">
+            <p>希恩統治帝國200多年時內部高層經會議決定後建立，並在五大區各個地方都設有分部。</p>
+            <p>雇傭大量傭兵尋找年齡7-10歲的孩子並將其帶走到實驗所中控制進行藥物注射，400多年來實驗總人數高達200萬人。</p>
+            
+            <div class="data-panel">
+                <div class="data-row"><span>FIRST BATCH SUBJECTS</span><span class="highlight">10,000</span></div>
+                <div class="data-row"><span>SURVIVAL RATE (INJECTION)</span><span class="danger">~ 0.84%</span></div>
+                <div class="data-row"><span>PHYSIOLOGICALLY INTACT</span><span class="highlight">1</span></div>
+                <div class="data-row"><span>TOTAL SUBJECTS (CUMULATIVE)</span><span class="highlight">2,000,000</span></div>
+            </div>
+        </div>
+    </details>
+
+    <div class="footer-tag">
+        MED_OS v2.1 // SUBJECT_STATUS: MONITORING // VOID_E2
+    </div>
+
+</body>
+</html>
