@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --metal-bg: #1a1d21;
+            --panel-steel: #e0e6ed;
+            --medical-cyan: #00ffff;
+            --ice-blue: #a5f3fc; /* 北區特有極光藍 */
+            --ice-blue-dim: rgba(165, 243, 252, 0.2);
+            --text-light: #dbe2e9;
+            --ice-box-bg: rgba(30, 45, 60, 0.6); /* 暗藍灰色調模擬冰域感 */
+            --box-border: rgba(165, 243, 252, 0.2);
+        }
+
+        body {
+            background-color: var(--metal-bg);
+            background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
+            background-size: 4px 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif, "Microsoft JhengHei";
+            margin: 0;
+            padding: 30px;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        /* 頂部標題與介紹：極寒冰域 */
+        .header-section {
+            border-left: 5px solid var(--ice-blue);
+            padding-left: 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, var(--ice-blue-dim), transparent);
+        }
+
+        .region-name {
+            font-size: 2.2em;
+            font-weight: 900;
+            margin: 0 0 15px 0;
+            color: var(--panel-steel);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--ice-blue-dim);
+        }
+
+        .region-desc {
+            font-size: 1em;
+            color: #b0bac5;
+        }
+
+        /* 互動式摺疊塊 */
+        details {
+            margin-bottom: 15px;
+            background: linear-gradient(145deg, #2a2f36, #1e2227);
+            border: 1px solid #444;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border: 1px solid var(--ice-blue);
+            box-shadow: 0 0 15px var(--ice-blue-dim);
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--panel-steel);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            outline: none;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--panel-steel);
+            margin-right: 15px;
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+            border-color: transparent transparent transparent var(--ice-blue);
+        }
+
+        .content-inner {
+            padding: 10px 30px 25px 50px;
+            border-top: 1px solid #444;
+            background: var(--metal-bg);
+        }
+
+        /* 內容標籤 */
+        .force-label {
+            color: var(--medical-cyan);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid var(--box-border);
+            width: fit-content;
+            padding-right: 30px;
+        }
+
+        /* 內容數據盒 */
+        .data-box {
+            background: var(--ice-box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px 20px;
+            margin: 10px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 12px 0;
+            color: #b0bac5;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, var(--ice-blue-dim), transparent);
+            margin: 30px 0 10px 0;
+        }
+
+        .footer-tag {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: right;
+            color: #555;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="region-name">【極寒冰域（北區）】</div>
+        <div class="region-desc">
+            無止的暴風雪夾雜著刺骨寒風讓人望而卻步，永晝為模糊的視野帶來了光亮，極寒的天氣為少數居民建立了雪屋的特色建築部分人們以捕食維生，偌大的海上是厚重的冰層，冰層之下是賴以生存的水源與食物來源
+        </div>
+    </div>
+
+    <details>
+        <summary>雪紗城</summary>
+        <div class="content-inner">
+            <span class="force-label">[瓦諾爾]</span>
+            <div class="data-box">
+                以瓦諾爾一族為主族的地區，其地區裡有四十三種不同姓氏每年春季皆會舉辦狩獵大賽，8-15歲一組、16-23歲一組、24-30歲一組，連續五年三組奪冠的家族則可以替換掉原來的主族<br>
+                目前瓦諾爾一族已成為主族百餘年，人才輩出但地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[紗維妲]</span>
+            <div class="data-box">
+                女權主義，當地人口組成也多為女性為主一妻多夫制度，僅限當地。因選夫制度嚴格且和當地女人結婚福利及待遇非常好，因此是北區許多男人的嚮往的地方<br>
+                每五年主族會舉辦選拔，成績優異的男性即可成為主族中的一員<br>
+                以貿易維生，平時海上有專門的船隊及護衛隊以提防海盜
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[厄萊]</span>
+            <div class="data-box">
+                少數並非以主族姓氏作為地名的地區，當地主張慈悲解救眾生，行財產共有制度<br>
+                每年家家戶戶皆要奉獻自己10%的收入去幫助弱勢，以增加自己的「聖人券」<br>
+                受萬毒城中流民群喜愛&依靠
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[馮德梅拉]</span>
+            <div class="data-box">
+                也是非主族姓氏命名地之一雪紗城幸福指數最高的地區，同時也是自殺率最高的地區<br>
+                當地沒什麼娛樂設施，適合喜歡安穩人生的人定居，是退休後渡假的好去處
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[辛利]</span>
+            <div class="data-box">
+                主族以商家起家，因曾到訪帝國而宣示信仰聖殿主神，並將信仰帶回雪紗城內<br>
+                區內擁有一座小型聖堂以收取人們的香火錢和祭拜主神
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[凜洛]</span>
+            <div class="data-box">
+                雪紗城的軍事重地，因距離戰場較近因此長年招募新兵前往十二號軍團支援<br>
+                北方長年的寒冷使訓練出來的軍人體力易於常人，且身形壯碩<br>
+                當地主族以好戰為名，熱血的精神在戰場上時常因自我犧牲而取得巨大的戰果
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[伊拉瓦福科尼耶]</span>
+            <div class="data-box">
+                大多設立工廠和礦場，且具有城中最大的監獄，時不時會出現處刑槍聲或處理屍體的狀況，因此居住此地的人極為罕見
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[凱博海]</span>
+            <div class="data-box">
+                盛行奴隸交易，甚至為此建立了一個競拍場所和風花雪月場所，時常與奎雷那私下往來交易，並且當地的權力象徵是南區被抓了的奴隸
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>寂冰之喉</summary>
+        <div class="content-inner">
+            <span class="force-label">[愚人島]</span>
+            <div class="data-box">
+                無勢力所屬，島上具有原住民，以海上捕食、渡假行業維生。因此認識不少權貴，並取得不少資金發展
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[思卡晨德群島]</span>
+            <div class="data-box">
+                又稱為「怨魂血島」，最早希恩建造實驗所的地方，在主島底下掩埋了大量屍體<br>
+                轉移基地後因屍體怨念過多積成實體但無法離開島嶼從而在島上空形成一片片黑霧
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[災暮嶼]</span>
+            <div class="data-box">
+                島上只有朴絲猴族群生存，但殘暴屬性和極其狡猾的個性使當地不適合生活也難以將其滅絕
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>牙風脊</summary>
+        <div class="content-inner">
+            <span class="force-label">[珂弗林]</span>
+            <div class="data-box">
+                銜接十二號軍團的資源供給處，當地負責接收凜洛區帶來的資源和人才，以及生產糧食
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[辜斯雷涅]</span>
+            <div class="data-box">
+                不想遵守城內規範而自主獨立出來的區域，這裡人們主張自給自足，不與外界接觸<br>
+                曾受皇家委託成為實驗計畫施行的地方之一在接近幽谷的山中有後來為此建立的墓園
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[米希亞萊特]</span>
+            <div class="data-box">
+                傳說是幾千年前大陸開世時的第一座城市，因怪獸暴亂和天災而消亡<br>
+                遺址內機關眾多，有些技術甚至至今無法推斷並復刻出來
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>里司爾達聚落</summary>
+        <div class="content-inner">
+            <div class="data-box">
+                居住居民多是長年在幽谷內探索的人，當地依靠加工和處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
+                因幽谷內的材料特殊，因此來探險或有需要的人都會與聚落裡的人打好關係以試圖協商那高額的處理費用
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>凜霜幽谷</summary>
+        <div class="content-inner">
+            <div class="data-box">
+                地形複雜，常年因寒冷被寒霧籠罩，兩側峭壁覆滿岩石和當地專有的幽凝鐵礦
+            </div>
+            <p>深層地區居住著一群淺藍小精靈，每過一段時間會產出名為凝霧晶的特殊材料</p>
+            <p>在外圍有著專門採集材料的人們居住，依靠採集材料和擔任引路人維生</p>
+        </div>
+    </details>
+
+    <div class="footer-tag">
+        MED_OS v2.4 // REGION: NORTH_ICE_SECTOR // SYSTEM_STATUS: MONITORING
+    </div>
+
+</body>
+</html>
