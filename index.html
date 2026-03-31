@@ -342,21 +342,21 @@
 .btn-top { border-color: var(--panel-steel); font-size: 0.8em; }
 .btn-top:hover { background: var(--panel-steel); color: #000; }
 
-/* 角色檔案全螢幕介面 */
+/* --- 角色檔案全螢幕介面新樣式 --- */
 #character-overlay {
-    display: none; /* 初始隱藏 */
+    display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: var(--metal-bg);
     z-index: 2000;
-    padding: 40px;
+    padding: 0;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow: hidden; /* 防止主視窗捲動 */
 }
 
 /* 返回按鈕 */
 .back-btn {
-    position: fixed;
+    position: absolute;
     top: 20px; left: 20px;
     color: var(--medical-cyan);
     border: 1px solid var(--medical-cyan);
@@ -367,76 +367,72 @@
     font-weight: bold;
 }
 
-/* 角色選單 (名字與選項) */
-.char-menu {
-    text-align: center;
-    margin-top: 50px;
+/* 左右滑動提示 */
+.swipe-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--medical-cyan);
+    font-family: monospace;
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    animation: hint-pulse 2s infinite;
+    z-index: 2050;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 15px;
+    border-radius: 20px;
 }
-.char-name-title {
-    font-size: 2.5em;
-    color: var(--panel-steel);
-    text-shadow: 0 0 15px var(--medical-cyan);
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-.char-options {
-    display: none; /* 點擊名字後才顯示 */
-    justify-content: center;
-    gap: 30px;
-}
-.opt-btn {
-    background: none;
-    border: 1px dashed var(--medical-cyan);
-    color: var(--text-light);
-    padding: 10px 30px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.opt-btn:hover { background: var(--medical-cyan-dim); }
+@keyframes hint-pulse { 0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(0.9); } 50% { opacity: 1; transform: translateX(-50%) scale(1); } }
 
-/* 內容展示區 */
-#display-content {
-    margin-top: 40px;
+/* 滑動容器：核心改動 */
+.slider-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-x: auto; /* 允許水平滑動 */
+    scroll-snap-type: x mandatory; /* 強制對齊 */
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* 隱藏捲軸 Firefox */
+}
+.slider-container::-webkit-scrollbar { display: none; } /* 隱藏捲軸 Chrome */
+
+/* 單個角色分頁 */
+.char-slide {
+    min-width: 100%; /* 每個角色佔滿寬度 */
+    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 50px;
-    flex-wrap: wrap;
+    align-items: center;
+    scroll-snap-align: start; /* 滑動停止時對齊起始點 */
+    padding: 60px 20px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* RWD 適應，手機版會上下排 */
+    gap: 40px;
+    overflow-y: auto; /* 內容過長可垂直滑動 */
 }
 
 /* 立繪樣式 */
 .char-illustration {
-    max-width: 90%;
+    max-width: 450px;
+    width: 90%;
     max-height: 80vh;
+    object-fit: contain;
     border: 1px solid var(--medical-cyan-dim);
-    box-shadow: 0 0 30px rgba(0,255,255,0.2);
+    box-shadow: 0 0 30px rgba(0,255,255,0.1);
 }
 
-/* 文字介紹排版 (酷炫資料感) */
+/* 檔案卡片 */
 .char-info-card {
     background: rgba(45, 52, 60, 0.8);
     border-left: 5px solid var(--medical-cyan);
     padding: 30px;
-    max-width: 600px;
+    max-width: 500px;
+    width: 100%;
     font-family: 'Courier New', monospace;
-    position: relative;
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
 }
-.info-header {
-    font-size: 1.5em;
-    color: var(--medical-cyan);
-    border-bottom: 1px solid #444;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-.info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-.info-item { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 5px 0; }
-.info-label { color: #888; font-size: 0.8em; margin-right: 10px; }
+
 
 
     </style>
@@ -1152,63 +1148,14 @@
     <div class="footer-tag">
         MED_OS v2.4 // FULL_EMPIRE_MONITORING // VOID_E2_COMPLETE_ARCHIVE
     </div>
-<div id="character-overlay">
+<<div id="character-overlay">
     <button class="back-btn" onclick="closeCharacterOverlay()">◀ 返回主系統</button>
+    <div class="swipe-hint">《 左右滑動切換檔案 SWIPE TO BROWSE 》</div>
     
-    <div class="char-menu">
-        <div class="char-name-title" onclick="toggleOptions()">洛緹絲・斯崔爾 (Lotisse·Streil)</div>
-        <div id="char-options-box" class="char-options">
-            <button class="opt-btn" onclick="showContent('img')">查看立繪</button>
-            <button class="opt-btn" onclick="showContent('text')">檔案資料</button>
-        </div>
-    </div>
-
-    <div id="display-content">
-        </div>
-</div>
-
-    <script>
-        // 1. 修改原本的加載函數
-function showProcessing() {
-    const modal = document.getElementById('processingModal');
-    const loadingText = modal.querySelector('div[style*="color: #fff"]');
-    
-    // 更改文字為正在加載
-    loadingText.innerText = "檔案正在加載中...";
-    modal.style.display = 'block';
-
-    // 1.5秒後執行跳轉
-    setTimeout(() => {
-        modal.style.display = 'none';
-        document.getElementById('character-overlay').style.display = 'block';
-    }, 1500);
-}
-
-function hideProcessing() {
-    document.getElementById('processingModal').style.display = 'none';
-}
-
-// 2. 角色介面控制
-function closeCharacterOverlay() {
-    document.getElementById('character-overlay').style.display = 'none';
-    document.getElementById('display-content').innerHTML = ''; // 清空內容
-    document.getElementById('char-options-box').style.display = 'none'; // 重置選項
-}
-
-function toggleOptions() {
-    const box = document.getElementById('char-options-box');
-    box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
-}
-
-// 3. 顯示立繪或文字
-function showContent(type) {
-    const container = document.getElementById('display-content');
-    container.innerHTML = ''; // 先清空
-
-    if (type === 'img') {
-        container.innerHTML = `<img src="https://drive.google.com/thumbnail?id=1FzwTyIIc8FWgXr0CN-I66FQ3NocBeN4L&sz=w1000" class="char-illustration" alt="Lotisse Illustration">`;
-    } else {
-        container.innerHTML = `
+    <div class="slider-container" id="slider">
+        <div class="char-slide">
+            <img src="https://drive.google.com/thumbnail?id=1FzwTyIIc8FWgXr0CN-I66FQ3NocBeN4L&sz=w1000" class="char-illustration" alt="Lotisse">
+            
             <div class="char-info-card">
                 <div class="info-header">
                     <span>#2601 LOTISSE</span>
@@ -1219,6 +1166,7 @@ function showContent(type) {
                     <div class="info-item"><span class="info-label">種族</span>人類</div>
                     <div class="info-item"><span class="info-label">生日</span>09/17</div>
                     <div class="info-item"><span class="info-label">身高</span>165cm</div>
+                    <div class="info-item"><span class="info-label">性格</span>隨和淡漠</div>
                     <div class="info-item"><span class="info-label">MBTI</span>ISFP</div>
                 </div>
                 <p style="color:var(--medical-cyan)">【能力特點】</p>
@@ -1228,11 +1176,92 @@ function showContent(type) {
                     於戰亂中出生，苟延殘喘多年，追殺、奪食、人性在小女孩短短的幾年中不斷上演，一次因飢餓昏迷後被實驗所綁走成為第一批實驗體。
                 </div>
             </div>
-        `;
-    }
+        </div>
+
+        </div>
+</div>
+<div id="character-overlay">
+    <button class="back-btn" onclick="closeCharacterOverlay()">◀ 返回主系統</button>
+    <div class="swipe-hint">《 左右滑動切換檔案 SWIPE TO BROWSE 》</div>
+    
+    <div class="slider-container" id="slider">
+        <div class="char-slide">
+            <img src="https://drive.google.com/thumbnail?id=1FzwTyIIc8FWgXr0CN-I66FQ3NocBeN4L&sz=w1000" class="char-illustration" alt="Lotisse">
+            
+            <div class="char-info-card">
+                <div class="info-header">
+                    <span>#2601 LOTISSE</span>
+                    <span style="font-size: 0.6em; color: #555;">STATUS: STABLE</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">代表花種</span>蓮花</div>
+                    <div class="info-item"><span class="info-label">種族</span>人類</div>
+                    <div class="info-item"><span class="info-label">生日</span>09/17</div>
+                    <div class="info-item"><span class="info-label">身高</span>165cm</div>
+                    <div class="info-item"><span class="info-label">性格</span>隨和、淡漠</div>
+                    <div class="info-item"><span class="info-label">MBTI</span>ISFP</div>
+                </div>
+                <p style="color:var(--medical-cyan)">【能力特點】</p>
+                <p style="font-size: 0.9em; margin-bottom: 20px;">控制他人意識，必要時可給予幻覺或更改記憶。具失憶屬性，會不定期出現片段失憶。</p>
+                <p style="color:var(--medical-cyan)">【背景簡述】</p>
+                <div style="font-size: 0.85em; border-top: 1px solid #444; padding-top: 10px; line-height: 1.6;">
+                    於戰亂中出生，苟延殘喘多年，追殺、奪食、人性在小女孩短短的幾年中不斷上演，一次因飢餓昏迷後被實驗所綁走成為第一批實驗體。
+                </div>
+            </div>
+        </div>
+
+        </div>
+</div>
+
+        <div class="char-slide">
+            <img src="https://drive.google.com/thumbnail?id=1IMAUECE8ysprnO8kHW_-BUJh6RXuVyFb&sz=w1000" class="char-illustration" alt="Akaryn">
+            
+            <div class="char-info-card" style="border-left-color: var(--blood-red);">
+                <div class="info-header">
+                    <span style="color: var(--blood-red);">#0714 AKARYN</span>
+                    <span style="font-size: 0.6em; color: #ff3333; animation: pulse 1s infinite;">STATUS: AGGRESSIVE</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">代表花種</span>曼珠沙華</div>
+                    <div class="info-item"><span class="info-label">種族</span>人類 </div>
+                    <div class="info-item"><span class="info-label">生日</span>02/01</div>
+                    <div class="info-item"><span class="info-label">身高</span>175cm</div>
+                    <div class="info-item"><span class="info-label">性格</span>衝動、好戰、活潑</div>
+                    <div class="info-item"><span class="info-label">MBTI</span>ENFP</div>
+                </div>
+                <p style="color:var(--blood-red)">【能力特點】</p>
+                <p style="font-size: 0.9em; margin-bottom: 20px;">血怒狀態：瞳孔轉金時，全方面素質提升 500%。目前觀測無任何副作用副作用。</p>
+                <p style="color:var(--blood-red)">【背景簡述】</p>
+                <div style="font-size: 0.85em; border-top: 1px solid #444; padding-top: 10px; line-height: 1.6;">
+                    手臂具有闇族代表紋身「曼珠沙華」。被探索組於野外發現後，因反抗激烈被強行打暈帶回實驗所。關於其血統來源的調查目前仍處於「擱置」狀態。
+                </div>
+            </div>
+        </div>
+
+
+
+    <script>
+        // 初始化加載特效 (保留原功能)
+function showProcessing() {
+    const modal = document.getElementById('processingModal');
+    modal.style.display = 'block';
+
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.getElementById('character-overlay').style.display = 'block';
+    }, 1500);
 }
 
-// 通用的捲動函數 (保留您之前的五按鈕功能)
+function hideProcessing() {
+    document.getElementById('processingModal').style.display = 'none';
+}
+
+// 關閉介面
+function closeCharacterOverlay() {
+    document.getElementById('character-overlay').style.display = 'none';
+}
+
+// 通用的捲動函數 (保留原功能)
 function scrollToRegion(selector) {
     const element = document.querySelector(selector);
     if (element) {
