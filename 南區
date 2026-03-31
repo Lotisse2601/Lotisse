@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --metal-bg: #1a1d21;
+            --panel-steel: #e0e6ed;
+            --medical-cyan: #00ffff;
+            --desert-red: #ff4500; /* 南區特有赤紅光 */
+            --desert-red-dim: rgba(255, 69, 0, 0.2);
+            --text-light: #dbe2e9;
+            --sand-box-bg: rgba(60, 35, 30, 0.6); /* 暗紅褐色調模擬沙漠感 */
+            --box-border: rgba(255, 69, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--metal-bg);
+            background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
+            background-size: 4px 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif, "Microsoft JhengHei";
+            margin: 0;
+            padding: 30px;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        /* 頂部標題與介紹：亂災沙漠 */
+        .header-section {
+            border-left: 5px solid var(--desert-red);
+            padding-left: 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, var(--desert-red-dim), transparent);
+        }
+
+        .region-name {
+            font-size: 2.2em;
+            font-weight: 900;
+            margin: 0 0 15px 0;
+            color: var(--panel-steel);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--desert-red-dim);
+        }
+
+        .region-desc {
+            font-size: 1em;
+            color: #b0bac5;
+        }
+
+        /* 互動式摺疊塊 */
+        details {
+            margin-bottom: 15px;
+            background: linear-gradient(145deg, #2a2f36, #1e2227);
+            border: 1px solid #444;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border: 1px solid var(--desert-red);
+            box-shadow: 0 0 15px var(--desert-red-dim);
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--panel-steel);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            outline: none;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--panel-steel);
+            margin-right: 15px;
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+            border-color: transparent transparent transparent var(--desert-red);
+        }
+
+        .content-inner {
+            padding: 10px 30px 25px 50px;
+            border-top: 1px solid #444;
+            background: var(--metal-bg);
+        }
+
+        /* 地點與族群標題 */
+        .force-label {
+            color: #ff6347; /* 類赤玉色 */
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid rgba(255, 99, 71, 0.3);
+            width: fit-content;
+            padding-right: 30px;
+        }
+
+        /* 內容數據盒 */
+        .data-box {
+            background: var(--sand-box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px 20px;
+            margin: 10px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            font-size: 0.95em;
+        }
+
+        .special-box {
+            background: rgba(80, 40, 80, 0.4); /* 紫色調模擬部分族群感 */
+            border: 1px solid rgba(150, 50, 150, 0.3);
+            padding: 15px 20px;
+            margin: 10px 0;
+        }
+
+        p {
+            margin: 12px 0;
+            color: #b0bac5;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, var(--desert-red-dim), transparent);
+            margin: 30px 0 10px 0;
+        }
+
+        .footer-tag {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: right;
+            color: #555;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="region-name">【亂災沙漠（南區）】</div>
+        <div class="region-desc">
+            時不時出現的自然天災使得人們並無定居，隨時能遷移的行李是永遠暢銷的資源，易於收納的避寒之物能免於在烈陽消失後失溫<br>
+            在繁華鄰近落居也是個不錯的選擇，施捨的些許足以支撐一個家庭的全部。沒有權柄和地頭蛇，只有四處遊蕩尋得一絲安全的「自由人」
+        </div>
+    </div>
+
+    <details>
+        <summary>邊境</summary>
+        <div class="content-inner">
+            <span class="force-label">[赤玉交易閣]</span>
+            <div class="data-box">
+                近百年間突然崛起的勢力，外人只知背後掌控者與聖希維爾中某位人物關係密切，並且實力高深因實惠價格、高信用、童叟無欺，且消費固定額度後會贈與免費住宿，在邊境一帶是遊蕩人群的極佳休息地
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[孟凡倫特]</span>
+            <div class="data-box">
+                南區最安全的城鎮，當地盛產一種名為「西蜜沙果」的食物，據說有解渴降火的功效，是當地熱銷的產品，也是軍中定期採購的商品之一
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[席爾維亞]</span>
+            <div class="data-box">
+                因靠近迷霧地帶而與自由之旅達成合作在當地建造了專屬交易區，所有冒險者可以在此地擺攤互相交換在迷霧內所得物<br>
+                因迷霧特殊性當地較少定居者，並且冒險者大多會配備特殊面具
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[碧得卡]</span>
+            <div class="data-box">
+                邊境老牌勢力，在赤玉建立前壟斷一切外部市場，因此極度敵對赤玉<br>
+                與夙族關係友好，有專門設立和夙族人風花雪月之地
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[自由之旅聯盟]</span>
+            <div class="data-box">
+                邊境最龐大勢力，為了了解夢亂迷霧中的謎團不擇手段，每個月都會派遣探索組去採集材料或勘查地形<br>
+                甚至創造出了專門蒐集迷霧的容器，因此還賺了不少錢
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>炎砂地帶</summary>
+        <div class="content-inner">
+            <span class="force-label">[藤族]</span>
+            <div class="data-box">
+                一種擬態類族群，白天依附在仙人掌或隱藏在沙地下休息，傍晚時會幻化成人形掠奪食物擅長以枯藤作為主要武器，並且以移動速度為名在每年冬季時進入繁殖期
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[夙族]</span>
+            <div class="data-box">
+                形似精靈，但非精靈純血種，不過因此具有絕色的容貌，在與碧得卡交好前曾一度是帝國的狩獵物多居住在山洞中，每當炎砂下雨時便會重新尋找據點<br>
+                全女性種族，因未知原因她們的血脈無法繁殖出男性<br><br>
+                新的族人會由每年12月21日的月光指引以此延續至今
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[鴞族]</span>
+            <div class="data-box">
+                形似幽靈般的存在，無人知道他們什麼時候出沒，又被稱做「守靈者」<br>
+                據說如果支付相對應報酬可以僱用他在迷霧尋找指定材料
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>夢亂迷霧</summary>
+        <div class="content-inner">
+            <span class="force-label">[闇族]</span>
+            <div class="special-box">
+                與人族外形相似，但與生俱來免疫迷霧體質極度厭惡人類，會隨機襲擊在迷霧中探索的人類帝國部分人鍾愛的寵物，私底下具有交易行為<br>
+                戰鬥時身上會出現曼珠沙華的圖案，也是其種族的代表之一極少數人標記會出現在瞳孔，通常這類人都是族內的族長或者重要戰力
+            </div>
+
+            <div class="divider"></div>
+            <div class="data-box" style="border-color: #medical-cyan;">
+                [曼蒂羅小隊（自由之旅）]<br>
+                [曼蒂諾小隊（自由之旅）]<br>
+                [赤玉勘察隊]<br>
+                [席爾維亞探索組]
+            </div>
+        </div>
+    </details>
+
+    <div class="footer-tag">
+        MED_OS v2.4 // REGION: SOUTH_DESERT_ZONE // SYSTEM_STATUS: MONITORING
+    </div>
+
+</body>
+</html>
