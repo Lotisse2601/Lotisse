@@ -2,6 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
             /* 核心醫用金屬基底 */
@@ -53,7 +54,7 @@
         }
         .main-title::before { left: 15px; } .main-title::after { right: 15px; }
 
-        /* 置頂：數位解碼掃描特效 (不變) */
+        /* 統一性特效介紹區塊 */
         .intro-section {
             margin-bottom: 50px;
             font-size: 1.1em;
@@ -62,15 +63,25 @@
             position: relative;
             overflow: hidden;
             box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.05);
-            border-left: 3px solid var(--medical-cyan);
-            color: var(--medical-cyan);
+            text-align: left; /* 字體靠左 */
         }
-        .intro-section::after {
+
+        /* 區域開頭邊線顏色 */
+        .main-intro { border-left: 3px solid var(--medical-cyan); color: var(--medical-cyan); }
+        .west-intro { border-left: 3px solid var(--west-cyan); color: var(--west-cyan); }
+        .toxic-intro { border-left: 3px solid var(--toxic-green); color: var(--toxic-green); }
+        .desert-intro { border-left: 3px solid var(--desert-red); color: var(--desert-red); }
+        .ice-intro { border-left: 3px solid var(--ice-blue); color: var(--ice-blue); }
+        .chaos-intro { border-left: 3px solid var(--chaos-purple); color: var(--chaos-purple); }
+
+        /* 置頂專用特效 (解碼掃描) */
+        .main-intro::after {
             content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: scan-pass 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes scan-pass { 0% { left: -100%; } 100% { left: 100%; } }
+
         .reveal-text {
             opacity: 0; filter: blur(5px); transform: translateY(10px);
             animation: text-reveal 1.2s ease-out forwards;
@@ -84,28 +95,22 @@
             100% { opacity: 1; filter: blur(0px); transform: translateY(0px); }
         }
 
-        /* 區域置頂：抽幀顯影特效 (藝術感特效) */
-        .region-intro-box {
-            margin-bottom: 30px;
-            padding: 20px 30px;
-            background: rgba(0, 0, 0, 0.25);
-            border-left: 2px solid #444;
-            text-align: left; /* 字體靠左 */
-        }
+        /* 五大區專用特效 (抽幀/閃爍進場) */
         .glitch-reveal {
             opacity: 0;
-            display: block;
-            animation: frame-reveal 0.4s steps(4) forwards;
+            animation: frame-step 0.4s steps(1, end) forwards;
         }
-        /* 設定每行抽幀延遲 */
-        .glitch-reveal:nth-child(1) { animation-delay: 0.5s; }
-        .glitch-reveal:nth-child(2) { animation-delay: 0.9s; }
-        .glitch-reveal:nth-child(3) { animation-delay: 1.3s; }
+        .glitch-reveal:nth-child(1) { animation-delay: 0.1s; }
+        .glitch-reveal:nth-child(2) { animation-delay: 0.3s; }
+        .reveal-text:nth-child(3), .glitch-reveal:nth-child(3) { animation-delay: 0.5s; }
+        .reveal-text:nth-child(4), .glitch-reveal:nth-child(4) { animation-delay: 0.7s; }
 
-        @keyframes frame-reveal {
+        @keyframes frame-step {
             0% { opacity: 0; transform: translateX(-5px); filter: brightness(2); }
             20% { opacity: 0.5; transform: translateX(2px); }
             40% { opacity: 0.2; transform: translateX(-2px); }
+            60% { opacity: 0.8; transform: translateX(1px); filter: brightness(1.5); }
+            80% { opacity: 0.4; }
             100% { opacity: 1; transform: translateX(0); filter: brightness(1); }
         }
 
@@ -159,7 +164,7 @@
         p.desc { margin: 12px 0; color: #b0bac5; }
         .divider { height: 1px; opacity: 0.2; margin: 30px 0 10px 0; }
 
-        /* --- 內部標題 (unit-label) 顏色區別 --- */
+        /* 內部標題顏色 */
         .unit-label { font-weight: bold; font-size: 1.1em; margin-top: 25px; margin-bottom: 10px; display: block; width: fit-content; padding-right: 30px; }
         
         .main-report .unit-label { color: var(--medical-cyan); border-bottom: 1px solid var(--medical-cyan-dim); }
@@ -169,13 +174,7 @@
         .ice-region .unit-label { color: var(--ice-blue); border-bottom: 1px solid rgba(165, 243, 252, 0.2); }
         .chaos-region .unit-label { color: var(--chaos-purple); border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
 
-        /* 區域邊線與摺疊顏色繼承 */
-        .west-region .region-intro-box { border-left-color: var(--west-cyan); color: var(--west-cyan); }
-        .toxic-region .region-intro-box { border-left-color: var(--toxic-green); color: var(--toxic-green); }
-        .desert-region .region-intro-box { border-left-color: var(--desert-red); color: var(--desert-red); }
-        .ice-region .region-intro-box { border-left-color: var(--ice-blue); color: var(--ice-blue); }
-        .chaos-region .region-intro-box { border-left-color: var(--chaos-purple); color: var(--chaos-purple); }
-
+        /* 區域細節顏色 */
         .west-region details[open] { border-color: var(--west-cyan); }
         .toxic-region details[open] { border-color: var(--toxic-green); }
         .desert-region details[open] { border-color: var(--desert-red); }
@@ -190,7 +189,7 @@
     <div class="main-report">
         <div class="main-title">妄二虛間</div>
 
-        <div class="intro-section">
+        <div class="intro-section main-intro">
             <div class="reveal-text">繁華之城的野心，數百萬生命流逝</div>
             <div class="reveal-text">一場數百年的實驗，使生存成為奢望、自由成為妄想</div>
             <div class="reveal-text">赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</div>
@@ -223,11 +222,11 @@
     </div>
 
     <div class="west-region">
-        <div class="region-header">【聖彌可帝國 】</div>
-        <div class="region-intro-box">
-            <span class="glitch-reveal">冰冷的機械聲與忙碌的腳步，沒有人情味的社會只剩科技與時間的搏鬥</span>
-            <span class="glitch-reveal">在資源荒涼的世代不斷找尋新科技</span>
-            <span class="glitch-reveal">自給足的代價是強權的壓迫</span>
+        <div class="region-header">【聖彌可帝國 (西區)】</div>
+        <div class="intro-section west-intro">
+            <div class="glitch-reveal">冰冷的機械聲與忙碌的腳步，沒有人情味的社會只剩科技與時間的搏鬥</div>
+            <div class="glitch-reveal">在資源荒涼的世代不斷找尋新科技</div>
+            <div class="glitch-reveal">自給自足的代價是強權的壓迫</div>
         </div>
 
         <details>
@@ -388,11 +387,11 @@
     </div>
 
     <div class="toxic-region">
-        <div class="region-header">【萬毒之地】</div>
-        <div class="region-intro-box">
-            <span class="glitch-reveal">人為的污染與資源的消耗，人們長時以面具抵擋空氣中未知的毒素</span>
-            <span class="glitch-reveal">依賴外地糧食與水源，少部分人因禍得福免疫毒素成為一方霸主</span>
-            <span class="glitch-reveal">將重心放在工業上以求得更高權力的支持</span>
+        <div class="region-header">【萬毒之地（中區）】</div>
+        <div class="intro-section toxic-intro">
+            <div class="glitch-reveal">人為的污染與資源的消耗，人們長時以面具抵擋空氣中未知的毒素</div>
+            <div class="glitch-reveal">依賴外地糧食與水源，少部分人因禍得福免疫毒素成為一方霸主</div>
+            <div class="glitch-reveal">將重心放在工業上以求得更高權力的支持</div>
         </div>
 
         <details>
@@ -489,11 +488,11 @@
     </div>
 
     <div class="desert-region">
-        <div class="region-header">【亂災沙漠】</div>
-        <div class="region-intro-box">
-            <span class="glitch-reveal">時不時出現的自然天災使得人們並無定居，隨時能遷移的行李是永遠暢銷的資源</span>
-            <span class="glitch-reveal">易於收納的避寒之物能免於在烈陽消失後失溫</span>
-            <span class="glitch-reveal">沒有權柄和地頭蛇，只有四處遊蕩尋得一絲安全的「自由人」</span>
+        <div class="region-header">【亂災沙漠（南區）】</div>
+        <div class="intro-section desert-intro">
+            <div class="glitch-reveal">時不時出現的自然天災使得人們並無定居，隨時能遷移的行李是永遠暢銷的資源</div>
+            <div class="glitch-reveal">易於收納的避寒之物能免於在烈陽消失後失溫</div>
+            <div class="glitch-reveal">沒有權柄和地頭蛇，只有四處遊蕩尋得一絲安全的「自由人」</div>
         </div>
 
         <details>
@@ -579,11 +578,11 @@
     </div>
 
     <div class="ice-region">
-        <div class="region-header">【極寒冰域】</div>
-        <div class="region-intro-box">
-            <span class="glitch-reveal">無止的暴風雪夾雜著刺骨寒風讓望而卻步，永晝為模糊的視野帶來了光亮</span>
-            <span class="glitch-reveal">部分人們以捕食維生，偌大的海上是厚重的冰層</span>
-            <span class="glitch-reveal">冰層之下是賴以生存的水源與食物來源</span>
+        <div class="region-header">【極寒冰域（北區）】</div>
+        <div class="intro-section ice-intro">
+            <div class="glitch-reveal">無止的暴風雪夾雜著刺骨寒風讓望而卻步，永晝為模糊的視野帶來了光亮</div>
+            <div class="glitch-reveal">部分人們以捕食維生，偌大的海上是厚重的冰層</div>
+            <div class="glitch-reveal">冰層之下是賴以生存的水源與食物來源</div>
         </div>
 
         <details>
@@ -717,11 +716,11 @@
     </div>
 
     <div class="chaos-region">
-        <div class="region-header">【混亂之地】</div>
-        <div class="region-intro-box">
-            <span class="glitch-reveal">活著是種幸福，錯綜複雜的勢力無時無刻都在等著下一秒的資源爭奪</span>
-            <span class="glitch-reveal">人命在此刻不過是一場交易中最微不足道的籌碼</span>
-            <span class="glitch-reveal">溫飽在此地是奢侈甚至難以想像的待遇，在絕望中苟延殘喘</span>
+        <div class="region-header">【混亂之地（東區）】</div>
+        <div class="intro-section chaos-intro">
+            <div class="glitch-reveal">活著是種幸福，錯綜複雜的勢力無時無刻都在等著下一秒的資源爭奪</div>
+            <div class="glitch-reveal">人命在此刻不過是一場交易中最微不足道的籌碼</div>
+            <div class="glitch-reveal">溫飽在此地是奢侈甚至難以想像的待遇，在絕望中苟延殘喘</div>
         </div>
 
         <details>
