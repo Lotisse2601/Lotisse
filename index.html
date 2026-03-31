@@ -342,6 +342,102 @@
 .btn-top { border-color: var(--panel-steel); font-size: 0.8em; }
 .btn-top:hover { background: var(--panel-steel); color: #000; }
 
+/* 角色檔案全螢幕介面 */
+#character-overlay {
+    display: none; /* 初始隱藏 */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--metal-bg);
+    z-index: 2000;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* 返回按鈕 */
+.back-btn {
+    position: fixed;
+    top: 20px; left: 20px;
+    color: var(--medical-cyan);
+    border: 1px solid var(--medical-cyan);
+    padding: 8px 20px;
+    cursor: pointer;
+    background: rgba(0,255,255,0.05);
+    z-index: 2100;
+    font-weight: bold;
+}
+
+/* 角色選單 (名字與選項) */
+.char-menu {
+    text-align: center;
+    margin-top: 50px;
+}
+.char-name-title {
+    font-size: 2.5em;
+    color: var(--panel-steel);
+    text-shadow: 0 0 15px var(--medical-cyan);
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.char-options {
+    display: none; /* 點擊名字後才顯示 */
+    justify-content: center;
+    gap: 30px;
+}
+.opt-btn {
+    background: none;
+    border: 1px dashed var(--medical-cyan);
+    color: var(--text-light);
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.opt-btn:hover { background: var(--medical-cyan-dim); }
+
+/* 內容展示區 */
+#display-content {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+/* 立繪樣式 */
+.char-illustration {
+    max-width: 90%;
+    max-height: 80vh;
+    border: 1px solid var(--medical-cyan-dim);
+    box-shadow: 0 0 30px rgba(0,255,255,0.2);
+}
+
+/* 文字介紹排版 (酷炫資料感) */
+.char-info-card {
+    background: rgba(45, 52, 60, 0.8);
+    border-left: 5px solid var(--medical-cyan);
+    padding: 30px;
+    max-width: 600px;
+    font-family: 'Courier New', monospace;
+    position: relative;
+}
+.info-header {
+    font-size: 1.5em;
+    color: var(--medical-cyan);
+    border-bottom: 1px solid #444;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.info-item { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 5px 0; }
+.info-label { color: #888; font-size: 0.8em; margin-right: 10px; }
+
 
     </style>
 </head>
@@ -1047,7 +1143,7 @@
         <div id="processingModal" class="modal">
             <div style="color: var(--medical-cyan); font-weight: bold; font-family: monospace;">INITIALIZING...</div>
             <div class="processing-line"></div>
-            <div style="color: #fff; font-size: 0.9em;">檔案正在加工中</div>
+            <div style="color: #fff; font-size: 0.9em;">檔案正在加載中</div>
             <div style="color: #555; font-size: 0.7em; margin-top: 10px;">ACCESS DENIED: DATA_STREAM_PENDING</div>
             <button onclick="hideProcessing()" style="margin-top: 15px; background: none; border: 1px solid #444; color: #888; cursor: pointer; padding: 5px 10px;">關閉</button>
         </div>
@@ -1056,30 +1152,95 @@
     <div class="footer-tag">
         MED_OS v2.4 // FULL_EMPIRE_MONITORING // VOID_E2_COMPLETE_ARCHIVE
     </div>
+<div id="character-overlay">
+    <button class="back-btn" onclick="closeCharacterOverlay()">◀ 返回主系統</button>
+    
+    <div class="char-menu">
+        <div class="char-name-title" onclick="toggleOptions()">洛緹絲・斯崔爾 (Lotisse·Streil)</div>
+        <div id="char-options-box" class="char-options">
+            <button class="opt-btn" onclick="showContent('img')">查看立繪</button>
+            <button class="opt-btn" onclick="showContent('text')">檔案資料</button>
+        </div>
+    </div>
+
+    <div id="display-content">
+        </div>
+</div>
 
     <script>
-        function showProcessing() {
-            document.getElementById('processingModal').style.display = 'block';
-        }
-        function hideProcessing() {
-            document.getElementById('processingModal').style.display = 'none';
-        }
-        function scrollToRegion(selector) {
-    const element = document.querySelector(selector);
-    if (element) {
-        // 計算 offset 以避免導覽列遮住標題
-        const offset = 80; 
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = element.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
+        // 1. 修改原本的加載函數
+function showProcessing() {
+    const modal = document.getElementById('processingModal');
+    const loadingText = modal.querySelector('div[style*="color: #fff"]');
+    
+    // 更改文字為正在加載
+    loadingText.innerText = "檔案正在加載中...";
+    modal.style.display = 'block';
 
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-        });
+    // 1.5秒後執行跳轉
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.getElementById('character-overlay').style.display = 'block';
+    }, 1500);
+}
+
+function hideProcessing() {
+    document.getElementById('processingModal').style.display = 'none';
+}
+
+// 2. 角色介面控制
+function closeCharacterOverlay() {
+    document.getElementById('character-overlay').style.display = 'none';
+    document.getElementById('display-content').innerHTML = ''; // 清空內容
+    document.getElementById('char-options-box').style.display = 'none'; // 重置選項
+}
+
+function toggleOptions() {
+    const box = document.getElementById('char-options-box');
+    box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
+}
+
+// 3. 顯示立繪或文字
+function showContent(type) {
+    const container = document.getElementById('display-content');
+    container.innerHTML = ''; // 先清空
+
+    if (type === 'img') {
+        container.innerHTML = `<img src="https://drive.google.com/thumbnail?id=1FzwTyIIc8FWgXr0CN-I66FQ3NocBeN4L&sz=w1000" class="char-illustration" alt="Lotisse Illustration">`;
+    } else {
+        container.innerHTML = `
+            <div class="char-info-card">
+                <div class="info-header">
+                    <span>#2601 LOTISSE</span>
+                    <span style="font-size: 0.6em; color: #555;">STATUS: STABLE</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">代表花種</span>蓮花</div>
+                    <div class="info-item"><span class="info-label">種族</span>人類</div>
+                    <div class="info-item"><span class="info-label">身份</span>五隱-碧影 / 榮譽騎士</div>
+                    <div class="info-item"><span class="info-label">生日</span>09/17</div>
+                    <div class="info-item"><span class="info-label">身高</span>165cm</div>
+                    <div class="info-item"><span class="info-label">MBTI</span>ISFP</div>
+                </div>
+                <p style="color:var(--medical-cyan)">【能力特點】</p>
+                <p style="font-size: 0.9em; margin-bottom: 20px;">控制他人意識，必要時可給予幻覺或更改記憶。具失憶屬性，會不定期出現片段失憶。</p>
+                <p style="color:var(--medical-cyan)">【背景簡述】</p>
+                <div style="font-size: 0.85em; border-top: 1px solid #444; padding-top: 10px; line-height: 1.6;">
+                    於戰亂中出生，苟延殘喘多年，追殺、奪食、人性在小女孩短短的幾年中不斷上演，一次因飢餓昏迷後被實驗所綁走成為第一批實驗體。
+                </div>
+            </div>
+        `;
     }
 }
+
+// 通用的捲動函數 (保留您之前的五按鈕功能)
+function scrollToRegion(selector) {
+    const element = document.querySelector(selector);
+    if (element) {
+        window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
+    }
+}
+
 
     </script>
 
