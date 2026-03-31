@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --metal-bg: #1a1d21;
+            --panel-steel: #e0e6ed;
+            --medical-cyan: #00ffff;
+            --chaos-purple: #8b5cf6; /* 東區特有紫色調 */
+            --chaos-purple-dim: rgba(139, 92, 246, 0.2);
+            --text-light: #dbe2e9;
+            --chaos-box-bg: rgba(45, 30, 60, 0.6); /* 暗紫色調模擬混亂之地感 */
+            --box-border: rgba(139, 92, 246, 0.2);
+        }
+
+        body {
+            background-color: var(--metal-bg);
+            background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
+            background-size: 4px 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif, "Microsoft JhengHei";
+            margin: 0;
+            padding: 30px;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        /* 頂部標題與介紹：混亂之地 */
+        .header-section {
+            border-left: 5px solid var(--chaos-purple);
+            padding-left: 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, var(--chaos-purple-dim), transparent);
+        }
+
+        .region-name {
+            font-size: 2.2em;
+            font-weight: 900;
+            margin: 0 0 15px 0;
+            color: var(--panel-steel);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--chaos-purple-dim);
+        }
+
+        .region-desc {
+            font-size: 1em;
+            color: #b0bac5;
+        }
+
+        /* 互動式摺疊塊 */
+        details {
+            margin-bottom: 15px;
+            background: linear-gradient(145deg, #2a2f36, #1e2227);
+            border: 1px solid #444;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border: 1px solid var(--chaos-purple);
+            box-shadow: 0 0 15px var(--chaos-purple-dim);
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--panel-steel);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            outline: none;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--panel-steel);
+            margin-right: 15px;
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+            border-color: transparent transparent transparent var(--chaos-purple);
+        }
+
+        .content-inner {
+            padding: 10px 30px 25px 50px;
+            border-top: 1px solid #444;
+            background: var(--metal-bg);
+        }
+
+        /* 勢力/地點標籤 */
+        .force-label {
+            color: var(--chaos-purple);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid var(--box-border);
+            width: fit-content;
+            padding-right: 30px;
+        }
+
+        /* 內容數據盒 */
+        .data-box {
+            background: var(--chaos-box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px 20px;
+            margin: 10px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 12px 0;
+            color: #b0bac5;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, var(--chaos-purple-dim), transparent);
+            margin: 30px 0 10px 0;
+        }
+
+        .footer-tag {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: right;
+            color: #555;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="region-name">【混亂之地（東區）】</div>
+        <div class="region-desc">
+            活著是種幸福，錯綜複雜的勢力無時無刻都在等著下一秒的資源爭奪，人命在此刻不過是一場交易中最微不足道的籌碼依附勢力或者躲藏於地下是僅有的兩個選擇，溫飽在此地是奢侈甚至難以想像的待遇，無數家庭分崩離析，在絕望中苟延殘喘
+        </div>
+    </div>
+
+    <details>
+        <summary>瓦倫城</summary>
+        <div class="content-inner">
+            <span class="force-label">[瓦倫]</span>
+            <div class="data-box">
+                為彰顯自己權力將自身領地和整座城皆更改為自己家族的姓氏，並且城內每處皆有瓦倫所屬的軍隊駐紮<br>
+                擁有榮譽男爵頭銜，但不被帝國內貴族承認因而未記錄<br>
+                其中為避免受戰爭和流民所擾，沿著自身駐地建立了高達20米的高牆，只留靠海處朝外進行貿易
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[巴加]</span>
+            <div class="data-box">
+                由巴格德里以及加米洛家族共同管理，一方負責民事管理一方負責財政，在沼澤帶中開發了一片新產業<br>
+                不提倡奴隸制度，會定期在流民群中施放糧食等資源救濟
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[西密斯]</span>
+            <div class="data-box">
+                瓦倫城中學院所在地，整座城的孩子在年滿8歲時便要進去進行6年義務教育，滿6年則可自行選擇到帝國進修或者回家就業<br>
+                院長為帝國家族所屬，每年可以提拔二十位人才免考即可進入帝國學院，未選中者則要自行考試進入
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[伊可德勒柏雅芝]</span>
+            <div class="data-box">
+                瓦倫城金融重心，全城經濟最好，甚至高於瓦倫領地<br>
+                當地人流多、安全、娛樂和生產力高效，是所有城內人夢寐以求的求職地方當地較少名宿或者房屋，多為其他地區的人來回值勤
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[莫水斯基科]</span>
+            <div class="data-box">
+                戰場上退役老兵的修養地，也是瓦倫城的軍事訓練重點，並且醫療資源也是全城最先進，為此還曾花大代價尋求帝國某些家族的協助
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[古雷皮那裡]</span>
+            <div class="data-box">
+                各種不同的傭兵團駐紮地，當地地區由古雷傭兵協會主管，負責登記外來傭兵訊息和各類委託
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[成希沙漠]</span>
+            <div class="data-box">
+                四周環山與世隔絕，凹陷地區全是水域當地房屋以高腳式為主，從事養殖業和觀光，四季皆春的景色是萬毒城和雪紗城人民著名的度假景點
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[蘭維摩克絲拉爾]</span>
+            <div class="data-box">
+                著名交易地區，當地擁有各種武器和藥劑或者道具可以使你在探索帕茲恆山脈或者寂語之森時有更高的存活率和回報<br>
+                並且在自由市場中可以兌換到自己需要的材料，前提是你要有足夠的代價，若償還不了代價則自有當地「規矩」處理
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>弑暮戰場</summary>
+        <div class="content-inner">
+            <span class="force-label">[亂葬崗]</span>
+            <div class="data-box">
+                原為聖希維爾屠殺各方勢力時丟棄屍體的地方，後因裡面怨氣過深並惹了大事件後一把火燒完就不再使用了
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[停戰區]</span>
+            <div class="data-box">
+                各方勢力協調好不可鬥爭的區域，因靠近瓦倫城所以有不少醫療區和藥劑交易區
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[十二號軍團]</span>
+            <div class="data-box">
+                瓦倫城在戰場中的領地，主要以收集資料和材料為目的<br>
+                長期招募民兵，不僅個人有優渥待遇，如果加入軍團還有家屬安全保障
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[謝克拉迪人民反抗軍]</span>
+            <div class="data-box">
+                因不滿瓦倫城對難民置之不理的態度，以謝克拉迪為創始者，在不斷搶劫貴族物資、收納戰場難民後逐漸成為戰場一方勢力<br>
+                在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍在戰場上勝率極高並佔領了最多領地以保護自己的後代
+            </div>
+
+            <div class="divider"></div>
+            <span class="force-label">[東方聯邦]</span>
+            <div class="data-box">
+                明面上是一個被放棄的勢力，曾隸屬於貝里安家族，後因帝國內部分貴族施壓而在幾十年前已放任當地地下屬自生自滅<br>
+                暗地中會透過反抗軍聯繫並支援，和反抗軍明面上呈敵對、暗地裡是合作夥伴
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>巴納達吉殘城</summary>
+        <div class="content-inner">
+            <div class="data-box">
+                千年前極為繁榮的城市，因未知原因某天突然全城寂靜，失去任何生命跡象<br>
+                幾百年後曾有隊伍探訪調查，城內並無打鬥痕跡，除了年代老化之外沒有外力破壞的地方，並且具記錄所說在城內停留過久也會因未知原因而消失
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>寂語之森</summary>
+        <div class="content-inner">
+            <div class="data-box">
+                顧名思義，是發出超過標準分貝的聲音就會亡命的森林<br>
+                經驗者記錄裡寫道：裡面居住者一種沒有形體的生物，會在你第一次超過限制分貝時尾隨你，並且隨著時間越長，跟隨的數量會逐漸增多。而當你第二次超出分貝時，累積的「它們」便會全部暴起將你一起「同化」<br>
+                除此之外也流傳著各式各樣的傳說，儘管古雷傭兵協會曾保證說已探索的區域危險性早已降之最低，但仍然每個月都有不同的意外發生
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>帕茲恆山脈</summary>
+        <div class="content-inner">
+            <div class="data-box">
+                山脈最外圍是最適合歷練的地方，但範圍僅僅只有整個山脈的1%<br><br>
+                探索至今1300餘年停留在一處低谷河流前，河流對面帝國派遣的人無一例外全部沒有有用的消息回來，因此被列為禁區無法探索雖說已探索區域擁有清楚的路線圖，但因山中天氣不定以及部分生物未曾登記資料，因此此地不適合單人前往
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>瑞伊德雨林</summary>
+        <div class="content-inner">
+            <p>樹木高聳密集，下雨頻率高，植被高挺大多高於人類平均身高</p>
+            <div class="data-box">
+                為應對躲藏在各處的生物攻擊，自由聯盟研究出一種可以完全隱藏氣息的藥劑，這使得他們在雨林中開發出了一片狩獵區
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>暗霧侵蝕帶</summary>
+        <div class="content-inner">
+            <div class="data-box">
+                無法探索該區域，未有資料記錄
+            </div>
+        </div>
+    </details>
+
+    <div class="footer-tag">
+        MED_OS v2.4 // REGION: EAST_CHAOS_ZONE // SYSTEM_STATUS: MONITORING
+    </div>
+
+</body>
+</html>
