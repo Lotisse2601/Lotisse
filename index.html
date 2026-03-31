@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <style>
         :root {
+            /* 核心醫用金屬基底 */
             --metal-bg: #1a1d21;
             --panel-steel: #e0e6ed;
             --medical-cyan: #00ffff;
             --medical-cyan-dim: rgba(0, 255, 255, 0.3);
             --blood-red: #ff3333;
             --text-light: #dbe2e9;
+            --box-bg: rgba(45, 52, 60, 0.6);
+
+            /* 各區域辨識色調 */
+            --west-cyan: #00ffff;    /* 西區：冷藍 */
+            --toxic-green: #4ade80;  /* 中區：毒素綠 */
+            --desert-red: #ff4500;   /* 南區：赤紅 */
+            --ice-blue: #a5f3fc;     /* 北區：極光藍 */
+            --chaos-purple: #8b5cf6; /* 東區：混亂紫 */
         }
 
         body {
@@ -24,71 +33,104 @@
             letter-spacing: 0.03em;
         }
 
-        /* 主標題 */
+        /* 全域標題：妄二虛間 */
         .main-title {
-            font-size: 2.8em;
+            font-size: 3.2em;
             font-weight: 900;
             margin-bottom: 30px;
             color: var(--panel-steel);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             text-align: center;
-            text-shadow: -1px -1px 1px rgba(255,255,255,0.3), 1px 1px 1px rgba(0,0,0,0.8), 0 0 10px var(--medical-cyan);
+            text-shadow: -1px -1px 1px rgba(255,255,255,0.3), 1px 1px 1px rgba(0,0,0,0.8), 0 0 15px var(--medical-cyan);
             border-bottom: 3px solid var(--panel-steel);
             padding-bottom: 15px;
             position: relative;
         }
+        .main-title::before, .main-title::after {
+            content: ''; position: absolute; bottom: -8px; width: 12px; height: 12px;
+            background: #aaa; border-radius: 50%; box-shadow: inset -1px -1px 2px #000, 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        .main-title::before { left: 15px; } .main-title::after { right: 15px; }
 
-        /* 藝術感文字進場區塊 */
+        /* 置頂專屬：數位解碼特效區塊 */
         .intro-section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             font-size: 1.1em;
-            color: var(--medical-cyan);
             padding: 25px;
             background: rgba(0, 0, 0, 0.4);
-            border-left: 2px solid var(--medical-cyan);
             position: relative;
             overflow: hidden;
-            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
+            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.05);
         }
 
-        /* 橫向掃描光束特效 */
-        .intro-section::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+        .main-intro { border-left: 3px solid var(--medical-cyan); color: var(--medical-cyan); }
+        .main-intro::after {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
             animation: scan-pass 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+        @keyframes scan-pass { 0% { left: -100%; } 100% { left: 100%; } }
 
-        @keyframes scan-pass {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* 漸進顯影文字 */
         .reveal-text {
-            opacity: 0;
-            filter: blur(5px);
-            transform: translateY(10px);
+            opacity: 0; filter: blur(5px); transform: translateY(10px);
             animation: text-reveal 1.2s ease-out forwards;
         }
-
         .reveal-text:nth-child(1) { animation-delay: 0.2s; }
         .reveal-text:nth-child(2) { animation-delay: 0.8s; }
         .reveal-text:nth-child(3) { animation-delay: 1.4s; }
         .reveal-text:nth-child(4) { animation-delay: 2.0s; }
-
         @keyframes text-reveal {
             0% { opacity: 0; filter: blur(10px); transform: translateY(10px); color: white; }
-            50% { opacity: 0.5; filter: blur(2px); color: var(--medical-cyan); }
             100% { opacity: 1; filter: blur(0px); transform: translateY(0px); }
         }
 
-        /* 摺疊區塊與數據面板 */
+        /* 區域專屬：脈衝電子顯影特效 (不同於置頂) */
+        .region-intro {
+            margin-bottom: 50px;
+            font-size: 1.05em;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        .region-intro::before {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 2px;
+            background: currentColor;
+            opacity: 0.5;
+            animation: pulse-line 4s infinite;
+        }
+
+        @keyframes pulse-line {
+            0%, 100% { transform: scaleX(0); opacity: 0; }
+            50% { transform: scaleX(1); opacity: 0.8; }
+        }
+
+        .trace-text {
+            opacity: 0;
+            animation: trace-fade 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        .trace-text:nth-child(1) { animation-delay: 0.5s; }
+        .trace-text:nth-child(2) { animation-delay: 1s; }
+        .trace-text:nth-child(3) { animation-delay: 1.5s; }
+
+        @keyframes trace-fade {
+            0% { opacity: 0; transform: translateX(-20px); filter: brightness(2); }
+            100% { opacity: 1; transform: translateX(0); filter: brightness(1); }
+        }
+
+        /* 區域配色繼承 */
+        .west-intro { border-right: 3px solid var(--west-cyan); color: var(--west-cyan); text-align: right; }
+        .toxic-intro { border-right: 3px solid var(--toxic-green); color: var(--toxic-green); text-align: right; }
+        .desert-intro { border-right: 3px solid var(--desert-red); color: var(--desert-red); text-align: right; }
+        .ice-intro { border-right: 3px solid var(--ice-blue); color: var(--ice-blue); text-align: right; }
+        .chaos-intro { border-right: 3px solid var(--chaos-purple); color: var(--chaos-purple); text-align: right; }
+
+        /* 摺疊區塊基礎 */
         details {
             margin-bottom: 15px;
             background: linear-gradient(145deg, #2a2f36, #1e2227);
@@ -96,99 +138,755 @@
             box-shadow: 3px 3px 6px rgba(0,0,0,0.5), inset 1px 1px 1px rgba(255,255,255,0.1);
             transition: all 0.3s ease;
         }
-
-        details[open] {
-            border: 1px solid var(--medical-cyan);
-            box-shadow: 0 0 15px var(--medical-cyan-dim);
-        }
-
         summary {
-            cursor: pointer;
-            padding: 15px 20px;
-            font-weight: bold;
-            font-size: 1.2em;
-            color: var(--panel-steel);
-            list-style: none;
-            display: flex;
-            align-items: center;
-            outline: none;
+            cursor: pointer; padding: 15px 20px; font-weight: bold; font-size: 1.2em;
+            color: var(--panel-steel); list-style: none; display: flex; align-items: center; outline: none;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
-
+        summary::-webkit-details-marker { display: none; }
         summary::before {
-            content: "";
-            display: inline-block;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 8px 0 8px 14px;
-            border-color: transparent transparent transparent var(--panel-steel);
-            margin-right: 15px;
-            transition: transform 0.2s;
+            content: ""; display: inline-block; width: 0; height: 0; border-style: solid;
+            border-width: 8px 0 8px 14px; border-color: transparent transparent transparent var(--panel-steel);
+            margin-right: 15px; transition: transform 0.2s;
         }
+        details[open] summary::before { transform: rotate(90deg); }
+        .content-inner { padding: 10px 30px 25px 50px; border-top: 1px solid #444; color: #d0dbe5; background: var(--metal-bg); }
 
-        details[open] summary::before { transform: rotate(90deg); border-color: transparent transparent transparent var(--medical-cyan); }
-
-        .content-inner { padding: 10px 30px 25px 50px; border-top: 1px solid #444; color: #d0dbe5; }
-
+        /* 數據面板 */
         .data-panel {
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #555;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            box-shadow: inset 0 0 10px #000;
+            margin-top: 20px; background: rgba(0, 0, 0, 0.5); border: 2px solid #555; padding: 15px;
+            font-family: 'Courier New', monospace; box-shadow: inset 0 0 10px #000;
         }
-
         .data-panel::before { content: 'BIOMETRIC DATA MONITOR'; font-size: 0.7em; color: #777; display: block; margin-bottom: 10px; border-bottom: 1px solid #333; }
-
         .data-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed #333; }
-
         .highlight { color: var(--medical-cyan); font-weight: bold; }
-
         .danger { color: var(--blood-red); font-weight: bold; animation: pulse 2s infinite; }
-        
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-        .footer-tag { margin-top: 50px; font-size: 0.8em; text-align: right; color: #555; border-top: 1px solid #333; padding-top: 10px; font-family: monospace; }
+        /* 區域標題通用 */
+        .region-header {
+            font-size: 1.8em; font-weight: 900; margin-top: 60px; margin-bottom: 25px;
+            color: var(--panel-steel); text-transform: uppercase; text-align: center;
+            border-bottom: 2px solid #444; padding-bottom: 12px; position: relative;
+        }
+
+        /* 內容數據盒 */
+        .data-box {
+            background: var(--box-bg); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px; margin: 10px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); font-size: 0.95em;
+        }
+        .data-box ul { list-style: none; padding: 0; margin: 0; }
+        .data-box li { margin-bottom: 5px; color: #dbe2e9; }
+        p.desc { margin: 12px 0; color: #b0bac5; }
+        .divider { height: 1px; opacity: 0.2; margin: 30px 0 10px 0; }
+
+        /* --- 內部標題 (unit-label) 顏色區別 --- */
+        .unit-label { font-weight: bold; font-size: 1.1em; margin-top: 25px; margin-bottom: 10px; display: block; width: fit-content; padding-right: 30px; }
+        
+        .main-report .unit-label { color: var(--medical-cyan); border-bottom: 1px solid var(--medical-cyan-dim); }
+        .west-region .unit-label { color: var(--west-cyan); border-bottom: 1px solid rgba(0, 255, 255, 0.2); }
+        .toxic-region .unit-label { color: var(--toxic-green); border-bottom: 1px solid rgba(74, 222, 128, 0.2); }
+        .desert-region .unit-label { color: var(--desert-red); border-bottom: 1px solid rgba(255, 69, 0, 0.2); }
+        .ice-region .unit-label { color: var(--ice-blue); border-bottom: 1px solid rgba(165, 243, 252, 0.2); }
+        .chaos-region .unit-label { color: var(--chaos-purple); border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
+
+        /* 區域細節顏色繼承 */
+        .west-region details[open] { border-color: var(--west-cyan); }
+        .toxic-region details[open] { border-color: var(--toxic-green); }
+        .desert-region details[open] { border-color: var(--desert-red); }
+        .ice-region details[open] { border-color: var(--ice-blue); }
+        .chaos-region details[open] { border-color: var(--chaos-purple); }
+
+        .footer-tag { margin-top: 60px; font-size: 0.8em; text-align: right; color: #555; border-top: 1px solid #333; padding-top: 10px; font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <div class="main-title">妄二虛間</div>
+    <div class="main-report">
+        <div class="main-title">妄二虛間</div>
 
-    <div class="intro-section">
-        <div class="reveal-text">繁華之城的野心，數百萬生命流逝</div>
-        <div class="reveal-text">一場數百年的實驗，使生存成為奢望、自由成為妄想</div>
-        <div class="reveal-text">赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</div>
-        <div class="reveal-text">沒有終點的壽命，是生命的蛻變也是一生的枷鎖</div>
+        <div class="intro-section main-intro">
+            <div class="reveal-text">繁華之城的野心，數百萬生命流逝</div>
+            <div class="reveal-text">一場數百年的實驗，使生存成為奢望、自由成為妄想</div>
+            <div class="reveal-text">赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</div>
+            <div class="reveal-text">沒有終點的壽命，是生命的蛻變也是一生的枷鎖</div>
+        </div>
+
+        <details>
+            <summary>人類基因改造計畫</summary>
+            <div class="content-inner">
+                <p>此計畫於希恩在位653年時被帝國內各個貴族聯合壓迫下宣告結束，死亡人數超過180萬人。</p>
+                <p>因此計畫為各個未知區域的探索帶來巨大貢獻，所以希恩仍然是統治帝國的權力者。此計畫被迫害的人在接受巨額賠償金之後大多隱居在各處，或者隱姓埋名繼續擔任雇傭兵。</p>
+                <p>希恩內部高層在無法控制洛緹絲後曾試圖說服她入駐皇家，but遭其拒絕並被其殺害不少過往行為極度殘忍的部分高層。</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>[syn 實驗所]</summary>
+            <div class="content-inner">
+                <p>希恩統治帝國200多年時內部高層經會議決定後建立，並在五大區各個地方都設有分部。</p>
+                <p>雇傭大量傭兵尋找年齡7-10歲的孩子並將其帶走到實驗所中控制進行藥物注射，400多年來實驗總人數高達200萬人。</p>
+                
+                <div class="data-panel">
+                    <div class="data-row"><span>FIRST BATCH SUBJECTS</span><span class="highlight">10,000</span></div>
+                    <div class="data-row"><span>SURVIVAL RATE (INJECTION)</span><span class="danger">~ 0.84%</span></div>
+                    <div class="data-row"><span>PHYSIOLOGICALLY INTACT</span><span class="highlight">1</span></div>
+                    <div class="data-row"><span>TOTAL SUBJECTS (CUMULATIVE)</span><span class="highlight">2,000,000</span></div>
+                </div>
+            </div>
+        </details>
     </div>
 
-    <details>
-        <summary>人類基因改造計畫</summary>
-        <div class="content-inner">
-            <p>此計畫於希恩在位653年時被帝國內各個貴族聯合壓迫下宣告結束，死亡人數超過180萬人。</p>
-            <p>因此計畫為各個未知區域的探索帶來巨大貢獻，所以希恩仍然是統治帝國的權力者。此計畫被迫害的人在接受巨額賠償金之後大多隱居在各處，或者隱姓埋名繼續擔任雇傭兵。</p>
-            <p>希恩內部高層在無法控制洛緹絲後曾試圖說服她入駐皇家，但遭其拒絕並被其殺害不少過往行為極度殘忍的部分高層。</p>
+    <div class="west-region">
+        <div class="region-header">【聖彌可帝國 (西區)】</div>
+        <div class="region-intro west-intro">
+            <div class="trace-text">冰冷的機械聲與忙碌的腳步，沒有人情味的社會只剩科技與時間的搏鬥</div>
+            <div class="trace-text">在資源荒涼的世代不斷找尋新科技</div>
+            <div class="trace-text">自給自足的代價是強權的壓迫</div>
         </div>
-    </details>
 
-    <details>
-        <summary>[syn 實驗所]</summary>
-        <div class="content-inner">
-            <p>希恩統治帝國200多年時內部高層經會議決定後建立，並在五大區各個地方都設有分部。</p>
-            <p>雇傭大量傭兵尋找年齡7-10歲的孩子並將其帶走到實驗所中控制進行藥物注射，400多年來實驗總人數高達200萬人。</p>
-            
-            <div class="data-panel">
-                <div class="data-row"><span>FIRST BATCH SUBJECTS</span><span class="highlight">10,000</span></div>
-                <div class="data-row"><span>SURVIVAL RATE (INJECTION)</span><span class="danger">~ 0.84%</span></div>
-                <div class="data-row"><span>PHYSIOLOGICALLY INTACT</span><span class="highlight">1</span></div>
-                <div class="data-row"><span>TOTAL SUBJECTS (CUMULATIVE)</span><span class="highlight">2,000,000</span></div>
+        <details>
+            <summary>中立派</summary>
+            <div class="content-inner">
+                <span class="unit-label">[希恩家族（皇家）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 繼位長達六百多年</li>
+                        <li>2. 主張公正執法、帝國發展為第一優先</li>
+                        <li>3. 具三大非家族勢力支持</li>
+                        <li>4. 除帝國境內的人民外都是「劣種」</li>
+                        <li>5. 位於帝國西南部</li>
+                    </ul>
+                </div>
+                <p class="desc">於在位二百多年時開始啟動「人類基因改造計畫」，在此期間不斷在帝國外的地區尋找幼年孩子進行藥物實驗</p>
+                <p class="desc">在位五百多年時計畫敗露但因各家利益牽扯導致帝國主權仍然掌握在手中</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[希爾曼家族（子爵）]</span>
+                <p class="desc">(原為希爾文家族，後因內部爭鬥改名)</p>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 原為希爾文，經聖殿提拔取得爵位</li>
+                        <li>2. 主張能力至上、無情</li>
+                        <li>3. 表面無站隊，但暗裡會配合皇家行動</li>
+                        <li>4. 男權家族</li>
+                    </ul>
+                </div>
+                <p class="desc">希恩在位四百多年時因族內內訌產生權力挑戰，當代家主變挑戰成功後飲毒自殺。而希爾文家族也不復存在，由希爾曼家族接續</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[聖希維爾軍團]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 駐守於西區南部邊疆</li>
+                        <li>2. 主張團結、紀律</li>
+                        <li>3. 與邊境地帶的勢力有交易往來</li>
+                        <li>4. 軍令至上</li>
+                    </ul>
+                </div>
+                <p class="desc">聖彌可最著名的就職方向，高福利及不受貴族控制的地位使每年都有無數平民爭奪名額。當然每年也有貴族會將自己部分子弟送入盼望他們能成為自己未來的助力</p>
+                <p class="desc">具有挑戰制度，每十年舉行一次大會，輪替萬夫長以下軍職，以上則二十年輪替一次統帥等高層則是五十年輪替一次</p>
+                <p class="desc">在役期間可對比自己高的軍職發起挑戰兩次不限時間，兩次皆失敗則失去下次挑戰大會的名額並且具有重大功勞也不予升軍職最低服役時間為二十年，十年後可自行決定是否留於軍中</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[奧雷伊索聖殿]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 富可敵國</li>
+                        <li>2. 主張平等、清心寡慾</li>
+                        <li>3. 帝國最高權力</li>
+                        <li>4. 主神至上</li>
+                    </ul>
+                </div>
+                <p class="desc">聖彌可帝國主心骨，平時不管事因此會扶持家族以確保在控管範圍內聖殿每五年選拔新人選進入其中靜修，只選擇有緣之人（錢緣未盡者也可再續前緣）</p>
+                <p class="desc">完成修業者可在聖殿範圍內獲得一穩定職業，也可決定離開聖殿。未完成者則永久失去進入聖殿的機會</p>
             </div>
+        </details>
+
+        <details>
+            <summary>激進派</summary>
+            <div class="content-inner">
+                <span class="unit-label">[艾德里克家族（伯爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 從商貴族，位高權重</li>
+                        <li>2. 主張利益至上、金錢主義</li>
+                        <li>3. 曾提出「將平民改造成機械人以獲取永久勞動力」的荒謬想法</li>
+                    </ul>
+                </div>
+                <p class="desc">不受聖殿待見，但因每年繳納高額貢獻金使其爵位尚存，但也因此無法晉升公爵</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[瓦拉家族（伯爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 科技著名</li>
+                        <li>2. 主張知識&數據才是真理</li>
+                        <li>3. 受軍團喜愛</li>
+                        <li>4. 厭惡聖殿</li>
+                    </ul>
+                </div>
+                <p class="desc">為了希恩研究中的數據而私下達成了某種協議。看不慣聖殿以神為信仰的行為但礙於權力表面仍然尊敬</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[貝拉維塔家族（子爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 因族中出了一位奧雷伊索副主教從而榮獲爵位</li>
+                        <li>2. 主張信仰至上</li>
+                        <li>3. 厭惡瓦拉，與艾德里克交好</li>
+                        <li>4. 未完成奧雷伊索修業者一律處死</li>
+                    </ul>
+                </div>
+                <p class="desc">希恩在位三百多年時第486代副主教米德．貝爾維塔因平民出身，為了將自己姓氏留存於世向聖殿申請了爵位並於兩年後成功通過。也立下了以信仰為中心的一切家規</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[彭布曼家族（男爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 瓦拉扶持獲得爵位，因聖殿在其中阻擾導致無法晉升更高位貴族</li>
+                        <li>2. 主張韜光養晦、謙卑</li>
+                        <li>3. 背後培養兩隊未知力量駐守於孟凡倫特</li>
+                        <li>4. 厭惡瓦拉</li>
+                    </ul>
+                </div>
+                <p class="desc">認為因為瓦拉家族的扶持才導致家族受聖殿厭惡並無法提升地位，只能成為瓦拉的附庸。暗地中在各個家族裡都安排了探子探查消息，也創建了情報網匿名出售消息</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>保守派</summary>
+            <div class="content-inner">
+                <span class="unit-label">[孟思萊德家族（公爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 老牌貴族</li>
+                        <li>2. 主張忠誠、淡泊名利</li>
+                        <li>3. 受聖殿喜愛</li>
+                        <li>4. 盲目追隨者處死</li>
+                    </ul>
+                </div>
+                <p class="desc">原是聖殿想扶持成皇家的貴族，因當時高層們一致認為不適合才換希恩上位公爵地位為一代代皇家慢慢升上來的，盡忠職守無野心，使孟思萊德幾乎是每代皇家並需要取得支持的家族</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[貝里安家族（男爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 姓氏前身為世代奴隸，由孟思萊德提拔獲得爵位</li>
+                        <li>2. 主張血統其次，榮譽至上</li>
+                        <li>3. 歧視一切靠家世而不努力的貴族子弟</li>
+                        <li>4. 會定期收養孤兒或年幼奴隸培養成族內力量</li>
+                    </ul>
+                </div>
+                <p class="desc">配戴貝里安姓氏者大多與其血統並無太大關係，通常為被收養者經培養後授予其姓氏每代貝里安家主由對帝國有最高奉獻者繼承</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[法羅拉斯家族（子爵）]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 貿易起家</li>
+                        <li>2. 主張秩序、規律，注重體面與禮統</li>
+                        <li>3. 對外以高尚名聲著名</li>
+                        <li>4. 有繁瑣的禮節條款學習手冊</li>
+                    </ul>
+                </div>
+                <p class="desc">因駐地位置靠海使其在貿易方面具有不小的成就，並在帝國中有一定佔比的重要性，因此被皇家重視距離學院遙遠而在駐地內有專設一所學院以應付多數子弟的學習需求</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[柯尼斯學院]</span>
+                <div class="data-box">
+                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德和貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
+                </div>
+                <p class="desc">因學生多為勤勉之人，使帝國每年優秀人才增加許多，皇家和聖殿也會定期到當地親自挑選合適的人才</p>
+            </div>
+        </details>
+    </div>
+
+    <div class="toxic-region">
+        <div class="region-header">【萬毒之地（中區）】</div>
+        <div class="region-intro toxic-intro">
+            <div class="trace-text">人為的污染與資源的消耗，人們長時以面具抵擋空氣中未知的毒素</div>
+            <div class="trace-text">依賴外地糧食與水源，少部分人因禍得福免疫毒素成為一方霸主</div>
+            <div class="trace-text">將重心放在工業上以求得更高權力的支持</div>
         </div>
-    </details>
+
+        <details>
+            <summary>萬毒城</summary>
+            <div class="content-inner">
+                <span class="unit-label">[法蘭]</span>
+                <div class="data-box">
+                    萬毒城之首，歷代家主因實力高強且據說與帝國內人物有關係從而繼位至今<br>
+                    城內擁有可以不被毒素干擾的儀器，因此人流密集度高每五年舉辦一次全城的清剿活動，以定期清理萬毒山脈中的魔物<br>
+                    but從二百年前便不再舉辦，轉為定期委託的方式清理，據說是當時城主在大會期間長子和其隨從皆隕落，悲痛之下頒下的公告
+                </div>
+
+                <div class="divider" style="background: var(--toxic-green);"></div>
+                <span class="unit-label">[梅倫]</span>
+                <div class="data-box">
+                    外地移居，非中區本地勢力，但依靠高明的制工與防毒技術在城中奪得一席之位
+                </div>
+
+                <div class="divider" style="background: var(--toxic-green);"></div>
+                <span class="unit-label">[薩摩金]</span>
+                <div class="data-box">
+                    主業是海上貿易，與帝國和雪紗城部分地區皆有交易來往<br>
+                    暗中與奎金達成交易合作，定期搶奪法蘭冒險隊隊伍並分贓
+                </div>
+
+                <div class="divider" style="background: var(--toxic-green);"></div>
+                <span class="unit-label">[洛笙]</span>
+                <div class="data-box">
+                    表面是萬毒城中最龐大傭兵團，除了傭兵委託之外也會進行城中交易往來<br>
+                    暗地裡有名為“夜夢”的殺手組織，用特殊的委託渠道才能知道這個組織，業務範圍涵蓋除南區之外的範圍
+                </div>
+
+                <div class="divider" style="background: var(--toxic-green);"></div>
+                <span class="unit-label">[奎雷那]</span>
+                <div class="data-box">
+                    負責控制流民地帶暴動，與雪紗城有奴隸交易，在無人管控的區域中是地頭蛇的存在
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>墨樹林沼澤帶</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    沼澤帶毒，當地土壤是煉藥的極好材料，生物大多攻擊性高且免疫毒物，同樣其血液作為藥劑時具有極強的藥效<br><br>
+                    就學期間七年，若未在時間內完成學業，最多延後三年，若十年內未完成則成為學院內雜役，就算是貴族也無法避免
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>紫青岩礦山</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    盛產紫青岩，可用於製造武器、能量炮，甚至可以當成燃料，是聖彌可中大量需要的物品
+                </div>
+                <p class="desc" style="color: #4ade80;">目前由瓦拉家族和聖希維爾軍團掌控</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>成可尼爾水域</summary>
+            <div class="content-inner">
+                <span class="unit-label">[密坦達灣]</span>
+                <div class="data-box">
+                    因萬毒山脈的地形遮擋使寂冰之喉中的極端寒風不會影響到灣內，因此建造許多碼頭和漁業<br><br>
+                    靠近聖彌可帝國的邊界地帶目前由貝爾維塔和法羅拉斯家族掌控，其餘為萬毒城掌控區塊
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>萬毒山脈</summary>
+            <div class="content-inner">
+                <span class="unit-label">[羅布倫村]</span>
+                <div class="data-box">
+                    位於萬毒山脈西邊山腳，因接近軍團轄地因而安全受到保障，當地以農業自給自足為主
+                </div>
+
+                <div class="divider" style="background: var(--toxic-green);"></div>
+                <span class="unit-label">[奎金]</span>
+                <div class="data-box">
+                    定點於萬毒山脈南邊高緯度斷崖附近一處山洞中，對山中地貌極為熟悉，因定點隱密沒人知道他們真正的大本營在何處
+                </div>
+
+                <div class="divider" style="background: var(--toxic-green);"></div>
+                <span class="unit-label">[米拉爾]</span>
+                <div class="data-box">
+                    一群非人類種族，定居在萬毒山脈山腳下一處山洞中，平時靠法蘭發布的委託和挖礦、鍛造交易維生<br>
+                    喜好燉湯和山泉水，因其廚藝高超因此不少法蘭人會僱用他們當廚師
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <div class="desert-region">
+        <div class="region-header">【亂災沙漠（南區）】</div>
+        <div class="region-intro desert-intro">
+            <div class="trace-text">時不時出現的自然天災使得人們並無定居，隨時能遷移的行李是永遠暢銷的資源</div>
+            <div class="trace-text">易於收納的避寒之物能免於在烈陽消失後失溫</div>
+            <div class="trace-text">沒有權柄和地頭蛇，只有四處遊蕩尋得一絲安全的「自由人」</div>
+        </div>
+
+        <details>
+            <summary>邊境</summary>
+            <div class="content-inner">
+                <span class="unit-label">[赤玉交易閣]</span>
+                <div class="data-box">
+                    近百年間突然崛起的勢力，外人只知背後掌控者與聖希維爾中某位人物關係密切，並且實力高深因實惠價格、高信用、童叟無欺，且消費固定額度後會贈與免費住宿，在邊境一帶是遊蕩人群的極佳休息地
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <span class="unit-label">[孟凡倫特]</span>
+                <div class="data-box">
+                    南區最安全的城鎮，當地盛產一種名為「西蜜沙果」的食物，據說有解渴降火的功效，是當地熱銷的產品，也是軍中定期採購的商品之一
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <span class="unit-label">[席爾維亞]</span>
+                <div class="data-box">
+                    因靠近迷霧地帶而與自由之旅達成合作在當地建造了專屬交易區，所有冒險者可以在此地擺攤互相交換在迷霧內所得物<br>
+                    因迷霧特殊性當地較少定居者，並且冒險者大多會配備特殊面具
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <span class="unit-label">[碧得卡]</span>
+                <div class="data-box">
+                    邊境老牌勢力，在赤玉建立前壟斷一切外部市場，因此極度敵對赤玉<br>
+                    與夙族關係友好，有專門設立和夙族人風花雪月之地
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <span class="unit-label">[自由之旅聯盟]</span>
+                <div class="data-box">
+                    邊境最龐大勢力，為了了解夢亂迷霧中的謎團不擇手段，每個月都會派遣探索組去採集材料或勘查地形<br>
+                    甚至創造出了專門蒐集迷霧的容器，因此還賺了不少錢
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>炎砂地帶</summary>
+            <div class="content-inner">
+                <span class="unit-label">[藤族]</span>
+                <div class="data-box">
+                    一種擬態類族群，白天依附在仙人掌或隱藏在沙地下休息，傍晚時會幻化成人形掠奪食物擅長以枯藤作為主要武器，並且以移動速度為名在每年冬季時進入繁殖期
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <span class="unit-label">[夙族]</span>
+                <div class="data-box">
+                    形似精靈，但非精靈純血種，不過因此具有絕色的容貌，在與碧得卡交好前曾一度是帝國的狩獵物多居住在山洞中，每當炎砂下雨時便會重新尋找據點<br>
+                    全女性種族，因未知原因她們的血脈無法繁殖出男性<br><br>
+                    新的族人會由每年12月21日的月光指引以此延續至今
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <span class="unit-label">[鴞族]</span>
+                <div class="data-box">
+                    形似幽靈般的存在，無人知道他們什麼時候出沒，又被稱做「守靈者」<br>
+                    據說如果支付相對應報酬可以僱用他在迷霧尋找指定材料
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>夢亂迷霧</summary>
+            <div class="content-inner">
+                <span class="unit-label">[闇族]</span>
+                <div class="data-box" style="background: rgba(80, 40, 80, 0.4); border-color: rgba(150, 50, 150, 0.3);">
+                    與人族外形相似，但與生俱來免疫迷霧體質極度厭惡人類，會隨機襲擊在迷霧中探索的人類帝國部分人鍾愛的寵物，私底下具有交易行為<br>
+                    戰鬥時身上會出現曼珠沙華的圖案，也是其種族的代表之一極少數人標記會出現在瞳孔，通常這類人都是族內的族長或者重要戰力
+                </div>
+
+                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="data-box">
+                    [曼蒂羅小隊（自由之旅）]<br>
+                    [曼蒂諾小隊（自由之旅）]<br>
+                    [赤玉勘察隊]<br>
+                    [席爾維亞探索組]
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <div class="ice-region">
+        <div class="region-header">【極寒冰域（北區）】</div>
+        <div class="region-intro ice-intro">
+            <div class="trace-text">無止的暴風雪夾雜著刺骨寒風讓望而卻步，永晝為模糊的視野帶來了光亮</div>
+            <div class="trace-text">部分人們以捕食維生，偌大的海上是厚重的冰層</div>
+            <div class="trace-text">冰層之下是賴以生存的水源與食物來源</div>
+        </div>
+
+        <details>
+            <summary>雪紗城</summary>
+            <div class="content-inner">
+                <span class="unit-label">[瓦諾爾]</span>
+                <div class="data-box">
+                    以瓦諾爾一族為主族的地區，其地區裡有四十三種不同姓氏每年春季皆會舉辦狩獵大賽，8-15歲一組、16-23歲一組、24-30歲一組，連續五年三組奪冠的家族則可以替換掉原來的主族<br>
+                    目前瓦諾爾一族已成為主族百餘年，人才輩出但地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[紗維妲]</span>
+                <div class="data-box">
+                    女權主義，當地人口組成也多為女性為主一妻多夫制度，僅限當地。因選夫制度嚴格且和當地女人結婚福利及待遇非常好，因此是北區許多男人的嚮往的地方<br>
+                    每五年主族會舉辦選拔，成績優異的男性即可成為主族中的一員<br>
+                    以貿易維生，平時海上有專門的船隊及護衛隊以提防海盜
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[厄萊]</span>
+                <div class="data-box">
+                    少數並非以主族姓氏作為地名的地區，當地主張慈悲解救眾生，行財產共有制度<br>
+                    每年家家戶戶皆要奉獻自己10%的收入去幫助弱勢，以增加自己的「聖人券」<br>
+                    受萬毒城中流民群喜愛&依靠
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[馮德梅拉]</span>
+                <div class="data-box">
+                    也是非主族姓氏命名地之一雪紗城幸福指數最高的地區，同時也是自殺率最高的地區<br>
+                    當地沒什麼娛樂設施，適合喜歡安穩人生的人定居，是退休後渡假的好去處
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[辛利]</span>
+                <div class="data-box">
+                    主族以商家起家，因曾到訪帝國而宣示信仰聖殿主神，並將信仰帶回雪紗城內<br>
+                    區內擁有一座小型聖堂以收取人們的香火錢和祭拜主神
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[凜洛]</span>
+                <div class="data-box">
+                    雪紗城的軍事重地，因距離戰場較近因此長年招募新兵前往十二號軍團支援<br>
+                    北方長年的寒冷使訓練出來的軍人體力易於常人，且身形壯碩<br>
+                    當地主族以好戰為名，熱血的精神在戰場上時常因自我犧牲而取得巨大的戰果
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[伊拉瓦福科尼耶]</span>
+                <div class="data-box">
+                    大多設立工廠和礦場，且具有城中最大的監獄，時不時會出現處刑槍聲或處理屍體的狀況，因此居住此地的人極為罕見
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[凱博海]</span>
+                <div class="data-box">
+                    盛行奴隸交易，甚至為此建立了一個競拍場所和風花雪月場所，時常與奎雷那私下往來交易，並且當地的權力象徵是南區被抓了的奴隸
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>寂冰之喉</summary>
+            <div class="content-inner">
+                <span class="unit-label">[愚人島]</span>
+                <div class="data-box">
+                    無勢力所屬，島上具有原住民，以海上捕食、渡假行業維生。因此認識不少權貴，並取得不少資金發展
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[思卡晨德群島]</span>
+                <div class="data-box">
+                    又稱為「怨魂血島」，最早希恩建造實驗所的地方，在主島底下掩埋了大量屍體<br>
+                    轉移基地後因屍體怨念過多積成實體但無法離開島嶼從而在島上空形成一片片黑霧
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[災暮嶼]</span>
+                <div class="data-box">
+                    島上只有朴絲猴族群生存，but殘暴屬性和極其狡猾的個性使當地不適合生活也難以將其滅絕
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>牙風脊</summary>
+            <div class="content-inner">
+                <span class="unit-label">[珂弗林]</span>
+                <div class="data-box">
+                    銜接十二號軍團的資源供給處，當地負責接收凜洛區帶來的資源和人才，以及生產糧食
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[辜斯雷涅]</span>
+                <div class="data-box">
+                    不想遵守城內規範而自主獨立出來的區域，這裡人們主張自給自足，不與外界接觸<br>
+                    曾受皇家委託成為實驗計畫施行的地方之一在接近幽谷的山中有後來為此建立的墓園
+                </div>
+
+                <div class="divider" style="background: var(--ice-blue);"></div>
+                <span class="unit-label">[米希亞萊特]</span>
+                <div class="data-box">
+                    傳說是幾千年前大陸開世時的第一座城市，因怪獸暴亂和天災而消亡<br>
+                    遺址內機關眾多，有些技術甚至至今無法推斷並復刻出來
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>里司爾達聚落</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    居住居民多是長年在幽谷內探索的人，當地依靠加工和處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
+                    因幽谷內的材料特殊，因此來探險或有需要的人都會與聚落裡的人打好關係以試圖協商那高額的處理費用
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>凜霜幽谷</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    地形複雜，常年因寒冷被寒霧籠罩，兩側峭壁覆滿岩石和當地專有的幽凝鐵礦
+                </div>
+                <p class="desc">深層地區居住著一群淺藍小精靈，每過一段時間會產出名為凝霧晶的特殊材料</p>
+                <p class="desc">在外圍有著專門採集材料的人們居住，依靠採集材料和擔任引路人維生</p>
+            </div>
+        </details>
+    </div>
+
+    <div class="chaos-region">
+        <div class="region-header">【混亂之地（東區）】</div>
+        <div class="region-intro chaos-intro">
+            <div class="trace-text">活著是種幸福，錯綜複雜的勢力無時無刻都在等著下一秒的資源爭奪</div>
+            <div class="trace-text">人命在此刻不過是一場交易中最微不足道的籌碼</div>
+            <div class="trace-text">溫飽在此地是奢侈甚至難以想像的待遇，在絕望中苟延殘喘</div>
+        </div>
+
+        <details>
+            <summary>瓦倫城</summary>
+            <div class="content-inner">
+                <span class="unit-label">[瓦倫]</span>
+                <div class="data-box">
+                    為彰顯自己權力將自身領地和整座城皆更改為自己家族的姓氏，並且城內每處皆有瓦倫所屬的軍隊駐紮<br>
+                    擁有榮譽男爵頭銜，but不被帝國內貴族承認因而未記錄<br>
+                    其中為避免受戰爭和流民所擾，沿著自身駐地建立了高達20米的高牆，只留靠海處朝外進行貿易
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[巴加]</span>
+                <div class="data-box">
+                    由巴格德里以及加米洛家族共同管理，一方負責民事管理一方負責財政，在沼澤帶中開發了一片新產業<br>
+                    不提倡奴隸制度，會定期在流民群中施放糧食等資源救濟
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[西密斯]</span>
+                <div class="data-box">
+                    瓦倫城中學院所在地，整座城的孩子在年滿8歲時便要進去進行6年義務教育，滿6年則可自行選擇到帝國進修或者回家就業<br>
+                    院長為帝國家族所屬，每年可以提拔二十位人才免考即可進入帝國學院，未選中者則要自行考試進入
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[伊可德勒柏雅芝]</span>
+                <div class="data-box">
+                    瓦倫城金融重心，全城經濟最好，甚至高於瓦倫領地<br>
+                    當地人流多、安全、娛樂和生產力高效，是所有城內人夢寐以求的求職地方當地較少名宿或者房屋，多為其他地區的人來回值勤
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[莫水斯基科]</span>
+                <div class="data-box">
+                    戰場上退役老兵的修養地，也是瓦倫城的軍事訓練重點，並且醫療資源也是全城最先進，為此還曾花大代價尋求帝國某些家族的協助
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[古雷皮那裡]</span>
+                <div class="data-box">
+                    各種不同的傭兵團駐紮地，當地地區由古雷傭兵協會主管，負責登記外來傭兵訊息和各類委託
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[成希沙漠]</span>
+                <div class="data-box">
+                    四周環山與世隔絕，凹陷地區全是水域當地房屋以高腳式為主，從事養殖業和觀光，四季皆春的景色是萬毒城和雪紗城人民著名的度假警點
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[蘭維摩克絲拉爾]</span>
+                <div class="data-box">
+                    著名交易地區，當地擁有各種武器和藥劑或者道具可以使你在探索帕茲恆山脈或者寂語之森時有更高的存活率和回報<br>
+                    並且在自由市場中可以兌換到自己需要的材料，前提是你要有足夠的代價，若償還不了代價則自有當地「規矩」處理
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>弑暮戰場</summary>
+            <div class="content-inner">
+                <span class="unit-label">[亂葬崗]</span>
+                <div class="data-box">
+                    原為聖希維爾屠殺各方勢力時丟棄屍體的地方，後因裡面怨氣過深並惹了大事件後一把火燒完就不再使用了
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[停戰區]</span>
+                <div class="data-box">
+                    各方勢力協調好不可鬥爭的區域，因靠近瓦倫城所以有不少醫療區和藥劑交易區
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[十二號軍團]</span>
+                <div class="data-box">
+                    瓦倫城在戰場中的領地，主要以收集資料和材料為目的<br>
+                    長期招募民兵，不僅個人有優渥待遇，如果加入軍團還有家屬安全保障
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[謝克拉迪人民反抗軍]</span>
+                <div class="data-box">
+                    因不滿瓦倫城對難民置之不理的態度，以謝克拉迪為創始者，在不斷搶劫貴族物資、收納戰場難民後逐漸成為戰場一方勢力<br>
+                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍在戰場上勝率極高並佔領了最多領地以保護自己的後代
+                </div>
+
+                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <span class="unit-label">[東方聯邦]</span>
+                <div class="data-box">
+                    明面上是一個被放棄的勢力，曾隸屬於貝里安家族，後因帝國內部分貴族施壓而在幾十年前已放任當地地下屬自生自滅<br>
+                    暗地中會透過反抗軍聯繫並支援，和反抗軍明面上呈敵對、暗地裡是合作夥伴
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>巴納達吉殘城</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    千年前極為繁榮的城市，因未知原因某天突然全城寂靜，失去任何生命跡象<br>
+                    幾百年後曾有隊伍探訪調查，城內並無打鬥痕跡，除了年代老化之外沒有外力破壞的地方，並且具記錄所說在城內停留過久也會因未知原因而消失
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>寂語之森</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    顧名思義，是發出超過標準分貝的聲音就會亡命的森林<br>
+                    經驗者記錄裡寫道：裡面居住者一種沒有形體的生物，會在你第一次超過限制分貝時尾隨你，並且隨著時間越長，跟隨的數量會逐漸增多。而當你第二次超出分貝時，累積的「它們」便會全部暴起將你一起「同化」<br>
+                    除此之外也流傳著各式各樣的傳說，儘管古雷傭兵協會曾保證說已探索的區域危險性早已降之最低，但仍然每個月都有不同的意外發生
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>帕茲恆山脈</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    山脈最外圍是最適合歷練的地方，but範圍僅僅只有整個山脈的1%<br><br>
+                    探索至今1300餘年停留在一處低谷河流前，河流對面帝國派遣的人無一例外全部沒有有用的消息回來，因此被列為禁區無法探索雖說已探索區域擁有清楚的路線圖，but因山中天氣不定以及部分生物未曾登記資料，因此此地不適合單人前往
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>瑞伊德雨林</summary>
+            <div class="content-inner">
+                <p class="desc">樹木高聳密集，下雨頻率高，植被高挺大多高於人類平均身高</p>
+                <div class="data-box">
+                    為應對躲藏在各處的生物攻擊，自由聯盟研究出一種可以完全隱藏氣息的藥劑，這使得他們在雨林中開發出了一片狩獵區
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>暗霧侵蝕帶</summary>
+            <div class="content-inner">
+                <div class="data-box">
+                    無法探索該區域，未有資料記錄
+                </div>
+            </div>
+        </details>
+    </div>
 
     <div class="footer-tag">
-        MED_OS v2.1 // SUBJECT_STATUS: MONITORING // VOID_E2
+        MED_OS v2.5 // FULL_EMPIRE_MONITORING // VOID_E2_COMPLETE_ARCHIVE
     </div>
 
 </body>
