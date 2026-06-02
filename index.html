@@ -468,6 +468,9 @@
             justify-content: center;
             position: sticky;
             top: 20px;
+            position: relative; 
+            user-select: none;  
+            -webkit-user-drag: none;
         }
 
         .char-illustration {
@@ -479,6 +482,27 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 12px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            pointer-events: none; 
+        }
+
+        /* 優化：重塑微型「若有似無」版權防衛水印（極小、高透、留白、無外框） */
+        .watermark-overlay {
+            position: absolute;
+            right: 25px; bottom: 22px; /* 精準錨定於圖片底邊右下角 */
+            z-index: 10;
+            pointer-events: auto; /* 物理點擊攔截屏障 */
+            cursor: default;
+        }
+        
+        /* 縮小到極限的微型 B.S 標籤設計（達到低調不搶眼、但具備識別力的效果） */
+        .watermark-overlay::before {
+            content: 'B.S';
+            color: rgba(255, 255, 255, 0.15); /* 極高透明度，與背景自然融合 */
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.6em; /* 極度縮小，若有似無 */
+            font-weight: 800; 
+            letter-spacing: 4px; /* 加寬字距留白 */
+            white-space: nowrap;
         }
 
         .char-info-card {
@@ -491,29 +515,26 @@
             font-family: 'Inter', "Microsoft JhengHei", monospace;
         }
 
-        /* 標題文字排版特別設定 (縮小字級、調大留白與字距) */
         .info-header {
             border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 18px; /* 增加下方留白空間 */
+            padding-bottom: 18px; 
             margin-bottom: 28px;
             display: flex;
             flex-direction: column; 
-            gap: 10px; /* 增加兩行名字之間的呼吸留白 */
+            gap: 10px; 
         }
         
-        /* 微調縮小後的英文字級與字距 */
         .info-header-top {
-            font-size: 1.45em; /* 由原先 1.7em 精細縮小 */
+            font-size: 1.45em; 
             font-weight: 800;
-            letter-spacing: 0.08em; /* 增加字距留白 */
+            letter-spacing: 0.08em; 
             white-space: nowrap; 
         }
         
-        /* 微調縮小後的中文字級與字距 */
         .info-header-bottom {
-            font-size: 1.12em; /* 由原先 1.25em 精細縮小 */
+            font-size: 1.12em; 
             font-weight: 700;
-            letter-spacing: 0.06em; /* 增加字距留白 */
+            letter-spacing: 0.06em; 
             white-space: nowrap; 
         }
         
@@ -593,6 +614,7 @@
             }
             .info-header-top { font-size: 1.25em; }
             .info-header-bottom { font-size: 1.02em; }
+            .watermark-overlay { right: 18px; bottom: 15px; }
         }
     </style>
 </head>
@@ -823,7 +845,7 @@
                 <div class="data-box">
                     萬毒城之首，歷代家主因實力高強且據說與帝國內人物有關係從而繼位至今<br>
                     城內擁有可以不被毒素干擾的儀器，因此人流密集度高每五年舉辦一次全城的清剿活動，以定期清理萬毒山脈中的魔物<br>
-                    but從二百年前便不再舉辦，轉為定期委託的方式清理，據說是當時城主在大會期間長子和其隨從皆隕落，悲痛之下頒下的公告
+                    but從二百年前便不再舉辦...
                 </div>
 
                 <div class="divider" style="background: var(--toxic-green);"></div>
@@ -1096,7 +1118,7 @@
             <div class="content-inner">
                 <span class="unit-label">[珂弗林]</span>
                 <div class="data-box">
-                    銜接十二號軍團的資源供給處，當地負責接收凜洛區帶來的資源和人才，以及生產糧食
+                    銜接十二號軍團的資源供給處，當地負責接收凜洛區帶來的資源 and 人才，以及生產糧食
                 </div>
 
                 <div class="divider" style="background: var(--ice-blue);"></div>
@@ -1141,7 +1163,7 @@
         <div class="region-header">【混亂之地】</div>
         <div class="intro-section chaos-intro">
             <div class="glitch-reveal">活著是種幸福，錯綜複雜的勢力無時無刻都在等著下一秒的資源爭奪</div>
-            <div class="glitch-reveal">人命在此刻不過是一場交易中最微不足道的籌碼</div>
+            <div class="glitch-reveal">人命在此刻不過是一場交易表中最微不足道的籌碼</div>
             <div class="glitch-reveal">溫飽在此地是奢侈甚至難以想像的待遇，在絕望中苟延殘喘</div>
         </div>
 
@@ -1172,8 +1194,7 @@
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[伊可德勒柏雅芝]</span>
                 <div class="data-box">
-                    瓦倫城金融重心，全城經濟最好，甚至高於瓦倫領地<br>
-                    當地人流多、安全、娛樂和生產力高效，是所有城內人夢寐求的求職地方當地較少名宿或者房屋，多為其他地區的人來回值勤
+                    ...瓦倫城金融重心...
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1228,7 +1249,7 @@
                 <span class="unit-label">[謝克拉迪人民反抗軍]</span>
                 <div class="data-box">
                     因不滿瓦倫城對難民置之不理的態度，以謝克拉迪為創始者，在不断搶劫貴族物資、收納戰場難民後逐漸成為戰場一方勢力<br>
-                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍在戰場上勝率極高並佔領了最多領地以保護自己的後代
+                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍上勝率極高並佔領了最多領地以保護自己的後代
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1244,8 +1265,8 @@
             <summary>巴納達吉殘城</summary>
             <div class="content-inner">
                 <div class="data-box">
-                    千年前極為繁榮的城市，因未知原因某天突然全城寂靜，失去任何生命跡象<br>
-                    幾百年後曾有隊伍探訪調查，城內並無打鬥痕跡，除了年代老化之外沒有外力破壞的地方，並且具記錄所說在城內停留過久也會因未知原因而消失
+                    千年前極為繁榮的城市，因未知原因某天突然全城寂靜，失去 any 生命跡象<br>
+                    幾百年後隊伍探訪調查，城內並無打鬥痕跡，除了年代老化之外沒有外力破壞的地方，並且具記錄所說在城內停留過久也會因未知原因而消失
                 </div>
             </div>
         </details>
@@ -1274,7 +1295,7 @@
         <details>
             <summary>瑞伊德雨林</summary>
             <div class="content-inner">
-                <p class="desc">樹木高聳密集，下雨頻率高，植被高挺大多高於人類平均身高</p>
+                <p class="desc">樹木高聳密集，下雨頻率高，植備高挺大多高於人類平均身高</p>
                 <div class="data-box">
                     為應對躲藏在各處的生物攻擊，自由聯盟研究出一種可以完全隱藏氣息的藥劑，這使得他們在雨林中開發出了一片狩獵區
                 </div>
@@ -1306,9 +1327,6 @@
         MED_OS v2.4 // FULL_EMPIRE_MONITORING // VOID_E2_COMPLETE_ARCHIVE
     </div>
 
-    <!-- ==========================================================================
-       第二介面：角色資料展示層
-       ========================================================================== -->
     <div id="character-overlay">
         <div class="overlay-header">
             <button class="back-btn" onclick="closeCharacterOverlay()">◀ 返回</button>
@@ -1316,17 +1334,16 @@
             <div></div>
         </div>
 
-        <!-- 左右移動按鍵機制 -->
         <div class="slide-arrow arrow-left" onclick="prevSlide()">◀</div>
         <div class="slide-arrow arrow-right" onclick="nextSlide()">▶</div>
         
         <div class="slider-viewport">
             <div class="slider-container" id="slider">
                 
-                <!-- 角色 1：洛緹絲 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <img src="https://drive.google.com/thumbnail?id=1FzwTyIIc8FWgXr0CN-I66FQ3NocBeN4L&sz=w1000" class="char-illustration" alt="Lotisse">
+                        <div class="watermark-overlay"></div>
                     </div>
                     <div class="char-info-card" style="border-left-color: #39FF14;">
                         <div class="info-header">
@@ -1338,7 +1355,7 @@
                             <div class="info-item"><span class="info-label">種族:</span>人類</div>
                             <div class="info-item"><span class="info-label">生日:</span>09/17</div>
                             <div class="info-item"><span class="info-label">身高:</span>165cm</div>
-                            <div class="info-item"><span class="info-label">性格:</span>隨和、淡漠</div>
+                            <div class="info-item"><span class="info-label">性格:</span>隨和淡漠</div>
                             <div class="info-item"><span class="info-label">MBTI:</span>ISFP</div>
                         </div>
                         <p style="color: #39FF14;">【能力特點】</p>
@@ -1350,10 +1367,10 @@
                     </div>
                 </div>
 
-                <!-- 角色 2：阿卡琳 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <img src="https://drive.google.com/thumbnail?id=1IMAUECE8ysprnO8kHW_-BUJh6RXuVyFb&sz=w1000" class="char-illustration" alt="Akaryn">
+                        <div class="watermark-overlay"></div>
                     </div>
                     <div class="char-info-card" style="border-left-color: var(--blood-red);">
                         <div class="info-header">
@@ -1377,10 +1394,10 @@
                     </div>
                 </div>
 
-                <!-- 角色 3：卡西亞恩 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <img src="https://drive.google.com/thumbnail?id=1YO8LdB3uhuUIi3LIH-V-VTD7-4V_tyKO&sz=w1000" class="char-illustration" alt="Cassian">
+                        <div class="watermark-overlay"></div>
                     </div>
                     <div class="char-info-card" style="border-left-color: #1a3a6d;">
                         <div class="info-header">
@@ -1404,10 +1421,10 @@
                     </div>
                 </div>
 
-                <!-- 角色 4：薩迪厄斯 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <img src="https://drive.google.com/thumbnail?id=1Ub0FrNkSf3XyDpKQGbQQxlNj8Lmvjll1&sz=w1000" class="char-illustration" alt="Thaddeus">
+                        <div class="watermark-overlay"></div>
                     </div>
                     <div class="char-info-card" style="border-left-color: #2D5A27;">
                         <div class="info-header">
@@ -1431,10 +1448,10 @@
                     </div>
                 </div>
 
-                <!-- 角色 5：莉莉雅 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <img src="https://drive.google.com/thumbnail?id=1nR2cFxH-eiS02bZjwQ-vwg_64kFreVdm&sz=w1000" class="char-illustration" alt="Character">
+                        <div class="watermark-overlay"></div>
                     </div>
                     <div class="char-info-card" style="border-left-color: #8A2BE2;">
                         <div class="info-header">
@@ -1462,9 +1479,6 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       系統邏輯控制代碼
-       ========================================================================== -->
     <script>
         let currentIndex = 0;
         const slider = document.getElementById('slider');
