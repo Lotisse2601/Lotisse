@@ -1545,4 +1545,26 @@
         }
     </script>
 </body>
+    <script>
+        (function() {
+            // 未來如果想要更換其他的「分享縮圖」，只需要把下面雙引號內的網址換掉即可！
+            const targetThumbnailUrl = "https://lh3.googleusercontent.com/pw/AP1GczPr_C_0wGg4XwS4_Z16h-Jp9vK2Uo8Vxh-O3z6e8mZ_m8hO9B5m6z4E=w1200-h630-no";
+
+            // 建立標準 Open Graph Meta 結構並自動推入網頁頂端
+            const ogImage = document.createElement('meta');
+            ogImage.setAttribute('property', 'og:image');
+            ogImage.setAttribute('content', targetThumbnailUrl);
+            document.head.appendChild(ogImage);
+
+            const ogWidth = document.createElement('meta');
+            ogWidth.setAttribute('property', 'og:image:width');
+            ogWidth.setAttribute('content', '1200');
+            document.head.appendChild(ogWidth);
+
+            const ogHeight = document.createElement('meta');
+            ogHeight.setAttribute('property', 'og:image:height');
+            ogHeight.setAttribute('content', '630');
+            document.head.appendChild(ogHeight);
+        })();
+    </script>
 </html>
