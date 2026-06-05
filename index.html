@@ -402,7 +402,7 @@
             background: rgba(0,0,0,0.4);
             padding: 6px 20px;
             border-radius: 3px;
-            border: 1px dashed rgba(255,255,255,0.08);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
         }
 
         /* 側邊切換按鈕 */
@@ -489,23 +489,22 @@
             pointer-events: none; 
         }
 
-        /* 優化：重塑微型「若有似無」版權防衛水印（極小、高透、留白、無外框） */
+        /* 優化：右下角微型「B.S」版權防衛水印 */
         .watermark-overlay {
             position: absolute;
-            right: 25px; bottom: 22px; /* 精準錨定於圖片底邊右下角 */
+            right: 25px; bottom: 22px; 
             z-index: 10;
-            pointer-events: auto; /* 物理點擊攔截屏障 */
+            pointer-events: auto; 
             cursor: default;
         }
         
-        /* 縮小到極限的微型 B.S 標籤設計（達到低調不搶眼、但具備識別力的效果） */
         .watermark-overlay::before {
             content: 'B.S';
-            color: rgba(255, 255, 255, 0.15); /* 極高透明度，與背景自然融合 */
+            color: rgba(255, 255, 255, 0.15); 
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.6em; /* 極度縮小，若有似無 */
+            font-size: 0.6em; 
             font-weight: 800; 
-            letter-spacing: 4px; /* 加寬字距留白 */
+            letter-spacing: 4px; 
             white-space: nowrap;
         }
 
@@ -639,7 +638,7 @@
             <div class="content-inner">
                 <p>此計畫於希恩在位653年時被帝國內各個貴族聯合壓迫下宣告結束，死亡人數超過180萬人。</p>
                 <p>因此計畫為各個未知區域的探索帶來巨大貢獻，所以希恩仍然是統治帝國的權力者。此計畫被迫害的人在接受巨額賠償金之後大多隱居在各處，或者隱姓埋名繼續擔任雇傭兵。</p>
-               
+                <p>希恩內部高層在無法控制洛緹絲後曾試圖說服她入駐皇家，but遭其拒絕並被其殺害不少過往行為極度殘忍的部分高層。</p>
             </div>
         </details>
 
@@ -732,6 +731,27 @@
                 </div>
                 <p class="desc">聖彌可帝國主心骨，平時不管事因此會扶持家族以確保在控管範圍內聖殿每五年選拔新人選進入其中靜修，只選擇有緣之人（錢緣未盡者也可再續前緣）</p>
                 <p class="desc">完成修業者可在聖殿範圍內獲得一穩定職業，也可決定離開聖殿。未完成者則永久失去進入聖殿的機會</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[克來蒙學院]</span>
+                <div class="data-box">
+                    <ul>
+                        <li>1. 帝國第一學府</li>
+                        <li>2. 主張天賦大於努力</li>
+                        <li>3. 貴族學生居多</li>
+                        <li>4. 嚴重階級差異</li>
+                    </ul>
+                </div>
+                <p class="desc">學院中60%的學生都是各大貴族的孩子、30%是帝國之外的學生、10%是平民</p>
+                <p class="desc">年滿15歲即可報名資格，會有專人將通知信送到府上。雖然平民就學期間會遭受嚴重歧視，但和軍團差不多，完成學業後地位不受貴族控制並且可以在學院中就職</p>
+                <p class="desc">與柯尼斯學院競爭多年，因地理位置優越而穩壓一頭</p>
+
+                <div class="divider" style="background: var(--west-cyan);"></div>
+                <span class="unit-label">[柯尼斯學院]</span>
+                <div class="data-box">
+                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德和貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
+                </div>
+                <p class="desc">因學生多為勤勉之人，使帝國每年優秀人才增加許多，皇家和聖殿也會定期到當地親自挑選合適的人才</p>
             </div>
         </details>
 
@@ -823,13 +843,6 @@
                     </ul>
                 </div>
                 <p class="desc">因駐地位置靠海使其在貿易方面具有不小的成就，並在帝國中有一定佔比的重要性，因此被皇家重視距離學院遙遠而在駐地內有專設一所學院以應付多數子弟的學習需求</p>
-
-                <div class="divider" style="background: var(--west-cyan);"></div>
-                <span class="unit-label">[柯尼斯學院]</span>
-                <div class="data-box">
-                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德和貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
-                </div>
-                <p class="desc">因學生多為勤勉之人，使帝國每年優秀人才增加許多，皇家和聖殿也會定期到當地親自挑選合適的人才</p>
             </div>
         </details>
     </div>
@@ -847,7 +860,7 @@
             <div class="content-inner">
                 <span class="unit-label">[法蘭]</span>
                 <div class="data-box">
-                    萬毒城之首，歷代家主因實力高強且據說與帝國內人物有關係從而繼位至今<br>
+                    萬毒城之首，歷代家主因實力高強且據說與帝內人物有關係從而繼位至今<br>
                     城內擁有可以不被毒素干擾的儀器，因此人流密集度高每五年舉辦一次全城的清剿活動，以定期清理萬毒山脈中的魔物<br>
                     but從二百年前便不再舉辦...
                 </div>
@@ -1053,7 +1066,7 @@
                 <div class="divider" style="background: var(--ice-blue);"></div>
                 <span class="unit-label">[厄萊]</span>
                 <div class="data-box">
-                    少數並非以主族姓氏作為地名的地區，當地主張慈悲解救眾生，行財產共有制度<br>
+                    少數並非以主族姓氏作地名的地區，當地主張慈悲解救眾生，行財產共有制度<br>
                     每年家家戶戶皆要奉獻自己10%的收入去幫助弱勢，以增加自己的「聖人券」<br>
                     受萬毒城中流民群喜愛&依靠
                 </div>
@@ -1145,7 +1158,7 @@
             <summary>里司爾達聚落</summary>
             <div class="content-inner">
                 <div class="data-box">
-                    居住居民多是長年在幽谷內探索的人，當地依靠加工和處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
+                    居住居民多是長年在幽谷內探索的人，當地加工和處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
                     因幽谷內的材料特殊，因此來探險或有需要的人都會與聚落裡的人打好關係以試圖協商那高額的處理費用
                 </div>
             </div>
@@ -1191,7 +1204,7 @@
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[西密斯]</span>
                 <div class="data-box">
-                    瓦倫城中學院所在地，整座城的孩子在年滿8歲時便要進去進行6年義務教育，滿6年則可自行選擇到帝國進修或者回家就業<br>
+                    auto 瓦倫城中學院所在地，整座城的孩子在年滿8歲時便要進去進行6年義務教育，滿6年則可自行選擇到帝國進修或者回家就業<br>
                     院長為帝國家族所屬，每年可以提拔二十位人才免考即可進入帝國學院，未選中者則要自行考試進入
                 </div>
 
