@@ -622,12 +622,12 @@
             box-shadow: 0 0 15px #ff4d6d;
         }
 
-        /* 側邊小型聊天對話框 */
+        /* 統一設定電腦版與手機版的對話框：皆在圖片腳下（底部） */
         .char-chat-box {
             position: absolute;
-            top: 75px;
+            bottom: 25px; /* 精準置於立繪區塊下緣 */
             left: 25px;
-            width: 260px;
+            width: calc(100% - 50px); /* 橫向延展適配立繪外框 */
             min-height: 80px;
             background: rgba(15, 18, 22, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -638,7 +638,7 @@
             backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
+            transform: translateY(10px); /* 從下方微調淡入 */
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 95;
             color: #e2e8f0;
@@ -667,9 +667,7 @@
             .char-illustration {
                 max-height: 45vh;
             }
-            /* 手機板聊天框改為橫向貼底防擋圖 */
             .char-chat-box {
-                top: auto;
                 bottom: 25px;
                 width: calc(100% - 50px);
             }
@@ -809,7 +807,7 @@
                         <li>4. 主神至上</li>
                     </ul>
                 </div>
-                <p class="desc">聖彌可帝國主心骨，平時不管事因此會扶持家族以確保在控管範圍內聖殿每五年選拔新人選進入其中靜修，只選擇有緣之人（錢緣未盡者也可再續前緣）</p>
+                <p class="desc">聖彌可帝國主心骨，平時管事因此會扶持家族以確保在控管範圍內聖殿每五年選拔新人選進入其中靜修，只選擇有緣之人（錢緣未盡者也可再續前緣）</p>
                 <p class="desc">完成修業者可在聖殿範圍內獲得一穩定職業，也可決定離開聖殿。未完成者則永久失去進入聖殿的機會</p>
             </div>
         </details>
@@ -906,7 +904,7 @@
                 <div class="divider" style="background: var(--west-cyan);"></div>
                 <span class="unit-label">[柯尼斯學院]</span>
                 <div class="data-box">
-                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德和貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
+                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德 and 貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
                 </div>
                 <p class="desc">因學生多為勤勉之人，使帝國每年優秀人才增加許多，皇家和聖殿也會定期到當地親自挑選合適的人才</p>
             </div>
@@ -1152,7 +1150,9 @@
                 </div>
 
                 <div class="divider" style="background: var(--ice-blue);"></div>
-                <span class="unit-label">[長年招募新兵前往十二號軍團支援<br>
+                <span class="unit-label">[凜洛]</span>
+                <div class="data-box">
+                    雪紗城的軍事重地，因距離戰場較近因此長年招募新兵前往十二號軍團支援<br>
                     北方長年的寒冷使訓練出來的軍人體力易於常人，且身形壯碩<br>
                     當地主族以好戰為名，熱血的精神在戰場上時常因自我犧牲而取得巨大的戰果
                 </div>
@@ -1212,7 +1212,7 @@
                 <div class="divider" style="background: var(--ice-blue);"></div>
                 <span class="unit-label">[米希亞萊特]</span>
                 <div class="data-box">
-                    傳說是幾千年前大陸開世時的第一座城市，因怪獸暴亂和天災而消亡<br>
+                    傳說是幾千年前大陸開世時的第一座城市，因怪獸暴亂 and 天災而消亡<br>
                     遺址內機關眾多，有些技術甚至至今無法推斷並復刻出來
                 </div>
             </div>
@@ -1322,7 +1322,7 @@
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[十二號軍團]</span>
                 <div class="data-box">
-                    瓦倫城在戰場中的領地，主要以收集資料和材料為目的<br>
+                    瓦倫城在戰場中的領地，主要以收集資料 and 材料為目的<br>
                     長期招募民兵，不僅個人有優渥待遇，如果加入軍團還有家屬安全保障
                 </div>
 
@@ -1368,7 +1368,7 @@
             <div class="content-inner">
                 <div class="data-box">
                     山脈最外圍是最適合歷練的地方，但是範圍僅僅只有整個山脈的1%<br><br>
-                    探索至今1300餘年停留在一處低谷河流前，河流對面帝國派遣的人無一例外全部沒有有用的消息回來，因此被列為禁區無法探索雖說已探索區域擁有清楚的路線圖，但是因山中天氣不定以及部分生物未曾登記資料，因此此地不適合單人前往
+                    探索至今1300餘年停留在一處低谷河流前，河流對面帝國派遣的人無一例外全部沒有有用的消息回來，因此被列為禁區無法探索雖說已探索區域擁有清楚的路線圖，但是因山中天氣不定以及部分生物未曾登記資料，開展至今不適合單人前往
                 </div>
             </div>
         </details>
@@ -1421,7 +1421,6 @@
         <div class="slider-viewport">
             <div class="slider-container" id="slider">
                 
-                <!-- 洛緹絲 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1454,7 +1453,6 @@
                     </div>
                 </div>
 
-                <!-- 阿卡琳 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1487,7 +1485,6 @@
                     </div>
                 </div>
 
-                <!-- 卡西亞恩 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1520,7 +1517,6 @@
                     </div>
                 </div>
 
-                <!-- 薩迪厄斯 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1553,7 +1549,6 @@
                     </div>
                 </div>
 
-                <!-- 莉莉雅 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
