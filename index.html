@@ -9,27 +9,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            /* 核心醫用金屬基底 */
-            --metal-bg: #1a1d21;
-            --panel-steel: #e0e6ed;
-            --medical-cyan: #00ffff;
-            --medical-cyan-dim: rgba(0, 255, 255, 0.3);
-            --blood-red: #ff3333;
-            --text-light: #dbe2e9;
-            --box-bg: rgba(45, 52, 60, 0.6);
+            /* 核心金屬基底 */
+            --metal-bg: #090c10;
+            --panel-steel: #f1f5f9;
+            --medical-cyan: #00e5ff;
+            --medical-cyan-dim: rgba(0, 229, 255, 0.2);
+            --blood-red: #ff2a2b;
+            --blood-red-dim: rgba(255, 42, 43, 0.35);
+            --text-light: #f8fafc;
+            --box-bg: rgba(10, 15, 24, 0.88);
 
-            /* 各區域辨識色調 */
-            --west-cyan: #00ffff;    /* 西區：冷藍 */
-            --toxic-green: #4ade80;  /* 中區：毒素綠 */
-            --desert-red: #ff4500;   /* 南區：赤紅 */
-            --ice-blue: #a5f3fc;     /* 北區：極光藍 */
-            --chaos-purple: #8b5cf6; /* 東區：混亂紫 */
+            /* 地區辨識框架主色調統一（紅黑霓虹外框與線條） */
+            --west-cyan: #ff2a2b;    
+            --toxic-green: #ff2a2b;  
+            --desert-red: #ff2a2b;   
+            --ice-blue: #ff2a2b;     
+            --chaos-purple: #ff2a2b; 
         }
 
         body {
             background-color: var(--metal-bg);
-            background-image: repeating-radial-gradient(circle at center, #23272d 0px, #1a1d21 1px, #23272d 2px);
-            background-size: 4px 4px;
+            /* 載入全站大背景圖並疊加半透明黑罩 */
+            background-image: linear-gradient(rgba(9, 12, 16, 0.82), rgba(9, 12, 16, 0.88)), 
+                              url('https://lh3.googleusercontent.com/d/1sUJQnSeVOtFTki46kOv9PsutbZjN2YWa=w1600');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: var(--text-light);
             font-family: 'Inter', sans-serif, "Microsoft JhengHei";
             margin: 0;
@@ -38,66 +44,36 @@
             letter-spacing: 0.03em;
         }
 
-        /* 全域標題：妄二虛間 */
+        /* 電腦版排版與寬度優化控制：防止整個按鈕被拉伸過長 */
+        .main-report, .west-region, .toxic-region, .desert-region, .ice-region, .chaos-region {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* 全域大標題：字體高亮冷白，疊加紅黑絢麗渲染陰影 */
         .main-title {
-            font-size: 3.2em;
+            font-size: 3.5em;
             font-weight: 900;
-            margin-bottom: 30px;
-            color: var(--panel-steel);
+            margin-bottom: 40px;
+            color: #ffffff; 
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
             text-align: center;
-            text-shadow: -1px -1px 1px rgba(255,255,255,0.3), 1px 1px 1px rgba(0,0,0,0.8), 0 0 15px var(--medical-cyan);
-            border-bottom: 3px solid var(--panel-steel);
-            padding-bottom: 15px;
+            text-shadow: 2px 2px 4px #000000,
+                         -2px -2px 0px #ff2a2b,
+                         0 0 15px rgba(255, 42, 43, 0.85),
+                         0 0 30px rgba(255, 42, 43, 0.5),
+                         0 0 40px rgba(0, 229, 255, 0.35);
+            border-bottom: 3px solid rgba(255, 42, 43, 0.5);
+            padding-bottom: 20px;
             position: relative;
         }
         .main-title::before, .main-title::after {
             content: ''; position: absolute; bottom: -8px; width: 12px; height: 12px;
-            background: #aaa; border-radius: 50%; box-shadow: inset -1px -1px 2px #000, 1px 1px 2px rgba(255,255,255,0.5);
+            background: #ff2a2b; border-radius: 50%; box-shadow: 0 0 10px #ff2a2b, inset -1px -1px 2px #000;
         }
         .main-title::before { left: 15px; } .main-title::after { right: 15px; }
-
-        /* 統一性特效介紹區塊 */
-        .intro-section {
-            margin-bottom: 50px;
-            font-size: 1.1em;
-            padding: 25px;
-            background: rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.05);
-            text-align: left; /* 字體靠左 */
-        }
-
-        /* 區域開頭邊線顏色 */
-        .main-intro { border-left: 3px solid var(--medical-cyan); color: var(--medical-cyan); }
-        .west-intro { border-left: 3px solid var(--west-cyan); color: var(--west-cyan); }
-        .toxic-intro { border-left: 3px solid var(--toxic-green); color: var(--toxic-green); }
-        .desert-intro { border-left: 3px solid var(--desert-red); color: var(--desert-red); }
-        .ice-intro { border-left: 3px solid var(--ice-blue); color: var(--ice-blue); }
-        .chaos-intro { border-left: 3px solid var(--chaos-purple); color: var(--chaos-purple); }
-
-        /* 置頂專用特效 (解碼掃描) */
-        .main-intro::after {
-            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: scan-pass 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        @keyframes scan-pass { 0% { left: -100%; } 100% { left: 100%; } }
-
-        .reveal-text {
-            opacity: 0; filter: blur(5px); transform: translateY(10px);
-            animation: text-reveal 1.2s ease-out forwards;
-        }
-        .reveal-text:nth-child(1) { animation-delay: 0.2s; }
-        .reveal-text:nth-child(2) { animation-delay: 0.8s; }
-        .reveal-text:nth-child(3) { animation-delay: 1.4s; }
-        .reveal-text:nth-child(4) { animation-delay: 2.0s; }
-        @keyframes text-reveal {
-            0% { opacity: 0; filter: blur(10px); transform: translateY(10px); color: white; }
-            100% { opacity: 1; filter: blur(0px); transform: translateY(0px); }
-        }
 
         /* 五大區專用特效 (抽幀/閃爍進場) */
         .glitch-reveal {
@@ -114,78 +90,148 @@
             20% { opacity: 0.5; transform: translateX(2px); }
             40% { opacity: 0.2; transform: translateX(-2px); }
             60% { opacity: 0.8; transform: translateX(1px); filter: brightness(1.5); }
-            80% { opacity: 0.4; }
             100% { opacity: 1; transform: translateX(0); filter: brightness(1); }
         }
 
-        /* 摺疊區塊基礎 */
+        /* 摺疊區塊基礎與防電腦版拉伸之精緻外框設計 */
         details {
-            margin-bottom: 15px;
-            background: linear-gradient(145deg, #2a2f36, #1e2227);
-            border: 1px solid #444;
-            box-shadow: 3px 3px 6px rgba(0,0,0,0.5), inset 1px 1px 1px rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
+            margin-bottom: 18px;
+            background: linear-gradient(145deg, rgba(24, 32, 44, 0.95), rgba(12, 17, 24, 0.98));
+            border: 2px solid rgba(255, 42, 43, 0.35); 
+            border-radius: 6px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.65), inset 0 0 12px rgba(255, 42, 43, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
+        details:hover {
+            border-color: rgba(255, 42, 43, 0.7);
+            box-shadow: 0 0 20px rgba(255, 42, 43, 0.3), 0 6px 20px rgba(0,0,0,0.65);
+        }
+
+        /* 摺疊標題 */
         summary {
-            cursor: pointer; padding: 15px 20px; font-weight: bold; font-size: 1.2em;
-            color: var(--panel-steel); list-style: none; display: flex; align-items: center; outline: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            cursor: pointer; 
+            padding: 18px 24px; 
+            font-weight: 800; 
+            font-size: 1.25em;
+            color: #f1f5f9; 
+            list-style: none; 
+            display: flex; 
+            align-items: center; 
+            outline: none;
+            user-select: none;
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 42, 43, 0.2);
+            text-shadow: 2px 2px 3px #000000,
+                         -1px -1px 0px var(--blood-red), 
+                         0 0 10px rgba(255, 42, 43, 0.7),
+                         0 0 18px rgba(0, 229, 255, 0.25);
+            border-radius: 4px 4px 0 0;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        summary:hover {
+            background: rgba(255, 42, 43, 0.06);
+            border-bottom-color: rgba(255, 42, 43, 0.5);
         }
         summary::-webkit-details-marker { display: none; }
+        
+        /* 絢麗自訂控制按鍵（箭頭） */
         summary::before {
-            content: ""; display: inline-block; width: 0; height: 0; border-style: solid;
-            border-width: 8px 0 8px 14px; border-color: transparent transparent transparent var(--panel-steel);
-            margin-right: 15px; transition: transform 0.2s;
+            content: ""; 
+            display: inline-block; 
+            width: 0; height: 0; 
+            border-style: solid;
+            border-width: 7px 0 7px 12px; 
+            border-color: transparent transparent transparent var(--blood-red);
+            margin-right: 18px; 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 6px var(--blood-red));
         }
-        details[open] summary::before { transform: rotate(90deg); }
-        .content-inner { padding: 10px 30px 25px 50px; border-top: 1px solid #444; color: #d0dbe5; background: var(--metal-bg); }
+        details[open] summary::before { 
+            transform: rotate(90deg); 
+            border-color: transparent transparent transparent var(--medical-cyan);
+            filter: drop-shadow(0 0 6px var(--medical-cyan));
+        }
+        
+        /* 內文包裹區 */
+        .content-inner { 
+            padding: 20px 30px 30px 45px; 
+            border-top: 1px solid rgba(255, 42, 43, 0.25); 
+            color: #e2e8f0; 
+            background: rgba(8, 11, 16, 0.88); 
+            border-radius: 0 0 4px 4px;
+        }
 
         /* 數據面板 */
         .data-panel {
-            margin-top: 20px; background: rgba(0, 0, 0, 0.5); border: 2px solid #555; padding: 15px;
-            font-family: 'Courier New', monospace; box-shadow: inset 0 0 10px #000;
+            margin-top: 20px; background: rgba(0, 0, 0, 0.75); border: 2px solid rgba(255, 42, 43, 0.45); padding: 15px;
+            font-family: 'Courier New', monospace; box-shadow: inset 0 0 12px #000;
         }
-        .data-panel::before { content: 'BIOMETRIC DATA MONITOR'; font-size: 0.7em; color: #777; display: block; margin-bottom: 10px; border-bottom: 1px solid #333; }
-        .data-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed #333; }
+        .data-panel::before { content: 'BIOMETRIC DATA MONITOR'; font-size: 0.7em; color: #64748b; display: block; margin-bottom: 10px; border-bottom: 1px solid #222; }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed #222; }
         .highlight { color: var(--medical-cyan); font-weight: bold; }
         .danger { color: var(--blood-red); font-weight: bold; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-        /* 區域標題通用 */
+        /* 各地區的大標題 */
         .region-header {
-            font-size: 1.8em; font-weight: 900; margin-top: 60px; margin-bottom: 25px;
-            color: var(--panel-steel); text-transform: uppercase; text-align: center;
-            border-bottom: 2px solid #444; padding-bottom: 12px; position: relative;
+            font-size: 2em; 
+            font-weight: 900; 
+            margin-top: 70px; 
+            margin-bottom: 30px;
+            color: #ffffff; 
+            text-transform: uppercase; 
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 42, 43, 0.35); 
+            padding-bottom: 15px; 
+            position: relative;
+            text-shadow: 2px 2px 4px #000000,
+                         -2px -2px 0px var(--blood-red), 
+                         0 0 15px rgba(255, 42, 43, 0.8),
+                         0 0 25px rgba(0, 229, 255, 0.3);
         }
 
         /* 內容數據盒 */
         .data-box {
-            background: var(--box-bg); border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--box-bg); border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 15px 20px; margin: 10px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); font-size: 0.95em;
         }
         .data-box ul { list-style: none; padding: 0; margin: 0; }
-        .data-box li { margin-bottom: 5px; color: #dbe2e9; }
-        p.desc { margin: 12px 0; color: #b0bac5; }
+        .data-box li { margin-bottom: 5px; color: #f1f5f9; }
+        p.desc { margin: 12px 0; color: #cbd5e0; }
         .divider { height: 1px; opacity: 0.2; margin: 30px 0 10px 0; }
 
-        /* 內部標題顏色 */
-        .unit-label { font-weight: bold; font-size: 1.1em; margin-top: 25px; margin-bottom: 10px; display: block; width: fit-content; padding-right: 30px; }
+        /* 細部子目標題 */
+        .unit-label { 
+            font-weight: 800; 
+            font-size: 1.15em; 
+            margin-top: 25px; 
+            margin-bottom: 10px; 
+            display: block; 
+            width: fit-content; 
+            padding-right: 30px;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px #000000,
+                         0 0 6px var(--blood-red), 
+                         0 0 12px rgba(255, 42, 43, 0.5);
+        }
         
-        .main-report .unit-label { color: var(--medical-cyan); border-bottom: 1px solid var(--medical-cyan-dim); }
-        .west-region .unit-label { color: var(--west-cyan); border-bottom: 1px solid rgba(0, 255, 255, 0.2); }
-        .toxic-region .unit-label { color: var(--toxic-green); border-bottom: 1px solid rgba(74, 222, 128, 0.2); }
-        .desert-region .unit-label { color: var(--desert-red); border-bottom: 1px solid rgba(255, 69, 0, 0.2); }
-        .ice-region .unit-label { color: var(--ice-blue); border-bottom: 1px solid rgba(165, 243, 252, 0.2); }
-        .chaos-region .unit-label { color: var(--chaos-purple); border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
+        /* 統一內線框裝飾色 */
+        .main-report .unit-label, .west-region .unit-label, .toxic-region .unit-label,
+        .desert-region .unit-label, .ice-region .unit-label, .chaos-region .unit-label { 
+            border-bottom: 1px solid rgba(255, 42, 43, 0.35); 
+        }
 
-        /* 區域細節顏色 */
-        .west-region details[open] { border-color: var(--west-cyan); }
-        .toxic-region details[open] { border-color: var(--toxic-green); }
-        .desert-region details[open] { border-color: var(--desert-red); }
-        .ice-region details[open] { border-color: var(--ice-blue); }
-        .chaos-region details[open] { border-color: var(--chaos-purple); }
+        /* 所有地區展開時的外框 */
+        .west-region details[open], .toxic-region details[open], 
+        .desert-region details[open], .ice-region details[open], 
+        .chaos-region details[open] { 
+            border-color: rgba(255, 42, 43, 0.7); 
+            box-shadow: 0 0 20px rgba(255, 42, 43, 0.3);
+        }
 
-        /* --- 角色介紹按鈕專屬樣式 --- */
+        /* --- 第一介面最底下的按鈕專屬樣式 --- */
         .btn-container {
             margin-top: 80px;
             display: flex;
@@ -194,9 +240,9 @@
         }
 
         .action-btn {
-            background: rgba(0, 255, 255, 0.05);
-            color: var(--medical-cyan);
-            border: 2px solid var(--medical-cyan);
+            background: rgba(255, 42, 43, 0.05);
+            color: #ffffff;
+            border: 2px solid rgba(255, 42, 43, 0.7);
             padding: 15px 40px;
             font-size: 1.2em;
             font-weight: bold;
@@ -206,14 +252,16 @@
             position: relative;
             transition: all 0.3s;
             overflow: hidden;
-            box-shadow: 0 0 10px var(--medical-cyan-dim);
+            box-shadow: 0 0 12px rgba(255, 42, 43, 0.25);
             font-family: 'Inter', sans-serif;
+            text-shadow: 0 0 5px rgba(255, 42, 43, 0.5);
         }
 
         .action-btn:hover {
-            background: var(--medical-cyan);
-            color: #000;
-            box-shadow: 0 0 30px var(--medical-cyan);
+            background: var(--blood-red);
+            color: #fff;
+            box-shadow: 0 0 35px var(--blood-red);
+            border-color: var(--blood-red);
         }
 
         .action-btn::before {
@@ -237,7 +285,7 @@
             transform: translate(-50%, -50%);
             width: 300px;
             background: #000;
-            border: 1px solid var(--medical-cyan);
+            border: 1px solid var(--blood-red);
             padding: 20px;
             z-index: 1000;
             text-align: center;
@@ -258,7 +306,7 @@
             position: absolute;
             left: -50%;
             width: 50%; height: 100%;
-            background: var(--medical-cyan);
+            background: var(--blood-red);
             animation: loading 1.5s infinite;
         }
 
@@ -269,12 +317,12 @@
 
         .footer-tag { margin-top: 60px; font-size: 0.8em; text-align: right; color: #555; border-top: 1px solid #333; padding-top: 10px; font-family: monospace; }
         
-        /* 區域導覽列：五個按鈕橫向並排 */
+        /* 區域導覽列 */
         .region-nav {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px; /* 按鈕間距 */
+            gap: 8px; 
             margin: 40px 0;
             width: 100%;
             position: sticky;
@@ -282,13 +330,13 @@
             z-index: 100;
         }
 
-        /* 區域按鈕基礎設定 */
         .nav-btn {
-            flex: 1; /* 平分寬度讓其並排 */
-            max-width: 120px; /* 限制最大寬度避免過大 */
+            flex: 1; 
+            max-width: 120px; 
             padding: 12px 5px;
-            border: 1px solid;
-            background: rgba(26, 29, 33, 0.95);
+            border: 1px solid rgba(255, 42, 43, 0.4);
+            background: rgba(15, 23, 42, 0.95);
+            color: #f1f5f9;
             cursor: pointer;
             font-size: 0.9em;
             font-family: 'Inter', sans-serif;
@@ -296,19 +344,26 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .nav-btn:hover {
+            background: var(--blood-red);
+            color: #fff;
+            box-shadow: 0 0 18px var(--blood-red);
+            border-color: var(--blood-red);
         }
 
-        /* 圓圈置頂按鈕：固定在右下角 */
+        /* 圓圈置頂按鈕 */
         .btn-top-circle {
             position: fixed;
             bottom: 30px;
             right: 30px;
             width: 50px;
             height: 50px;
-            border-radius: 50%; /* 變成圓形 */
+            border-radius: 50%; 
             background: rgba(0, 0, 0, 0.7);
-            border: 2px solid var(--medical-cyan);
-            color: var(--medical-cyan);
+            border: 2px solid var(--blood-red);
+            color: var(--blood-red);
             font-size: 1.2em;
             display: flex;
             justify-content: center;
@@ -316,37 +371,18 @@
             cursor: pointer;
             z-index: 999;
             transition: all 0.3s;
-            box-shadow: 0 0 10px var(--medical-cyan-dim);
+            box-shadow: 0 0 12px rgba(255, 42, 43, 0.35);
         }
 
         .btn-top-circle:hover {
-            background: var(--medical-cyan);
-            color: #000;
-            box-shadow: 0 0 20px var(--medical-cyan);
+            background: var(--blood-red);
+            color: #fff;
+            box-shadow: 0 0 20px var(--blood-red);
             transform: translateY(-5px);
         }
 
-        /* 各區按鈕特定顏色 */
-        .btn-west { border-color: var(--west-cyan); color: var(--west-cyan); }
-        .btn-west:hover { background: var(--west-cyan); color: #000; box-shadow: 0 0 15px var(--west-cyan); }
-
-        .btn-toxic { border-color: var(--toxic-green); color: var(--toxic-green); }
-        .btn-toxic:hover { background: var(--toxic-green); color: #000; box-shadow: 0 0 15px var(--toxic-green); }
-
-        .btn-desert { border-color: var(--desert-red); color: var(--desert-red); }
-        .btn-desert:hover { background: var(--desert-red); color: #000; box-shadow: 0 0 15px var(--desert-red); }
-
-        .btn-ice { border-color: var(--ice-blue); color: var(--ice-blue); }
-        .btn-ice:hover { background: var(--ice-blue); color: #000; box-shadow: 0 0 15px var(--ice-blue); }
-
-        .btn-chaos { border-color: var(--chaos-purple); color: var(--chaos-purple); }
-        .btn-chaos:hover { background: var(--chaos-purple); color: #000; box-shadow: 0 0 15px var(--chaos-purple); }
-
-        .btn-top { border-color: var(--panel-steel); font-size: 0.8em; }
-        .btn-top:hover { background: var(--panel-steel); color: #000; }
-
         /* ==========================================================================
-           第二介面：角色介紹全螢幕滑動介面
+           第二介面：角色介紹全螢幕滑動介面（擴展優化電腦寬螢幕適配比例，防止縮小）
            ========================================================================== */
         #character-overlay {
             display: none;
@@ -361,7 +397,6 @@
             overflow: hidden;
         }
 
-        /* 頂部控制列 */
         .overlay-header {
             position: absolute;
             top: 0; left: 0; width: 100%;
@@ -376,22 +411,32 @@
             border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
 
+        /* 第二介面返回鍵：預設為紅，按下為藍 */
         .back-btn {
-            color: var(--medical-cyan);
-            border: 1px solid var(--medical-cyan);
+            color: var(--blood-red);
+            border: 1px solid var(--blood-red);
             padding: 8px 24px;
             cursor: pointer;
-            background: rgba(0,255,255,0.03);
+            background: rgba(255, 42, 43, 0.05);
             font-weight: bold;
             font-family: monospace;
             font-size: 0.95em;
             letter-spacing: 1px;
             transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 42, 43, 0.4);
         }
         .back-btn:hover {
+            background: var(--blood-red);
+            color: #fff;
+            box-shadow: 0 0 15px var(--blood-red);
+            text-shadow: none;
+        }
+        .back-btn:active {
             background: var(--medical-cyan);
+            border-color: var(--medical-cyan);
             color: #000;
-            box-shadow: 0 0 15px var(--medical-cyan);
+            box-shadow: 0 0 20px var(--medical-cyan);
+            transition: 0s; 
         }
 
         .swipe-hint {
@@ -405,17 +450,17 @@
             border: 1px dashed rgba(255,255,255,0.08);
         }
 
-        /* 側邊切換按鈕 */
+        /* 第二介面切換按鈕：電腦版放大高度與間距 */
         .slide-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 60px;
-            height: 100px;
-            background: rgba(7, 9, 11, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #a0aec0;
-            font-size: 1.6em;
+            width: 65px;
+            height: 140px; /* 電腦版高度放大增加適配度 */
+            background: rgba(20, 25, 35, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #64748b;
+            font-size: 1.8em;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -425,15 +470,22 @@
             user-select: none;
         }
         .slide-arrow:hover {
-            color: var(--medical-cyan);
-            border-color: var(--medical-cyan);
-            background: rgba(0, 255, 255, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+            color: #e2e8f0;
+            background: rgba(40, 50, 65, 0.9);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
         }
-        .arrow-left { left: 20px; border-radius: 4px 0 0 4px; }
-        .arrow-right { right: 20px; border-radius: 0 4px 4px 0; }
+        .slide-arrow:active {
+            background: var(--medical-cyan);
+            color: #000;
+            border-color: var(--medical-cyan);
+            box-shadow: 0 0 25px var(--medical-cyan);
+            transition: 0s; 
+        }
 
-        /* 裁切視窗與主軌道 */
+        .arrow-left { left: 30px; border-radius: 6px 0 0 6px; }
+        .arrow-right { right: 30px; border-radius: 0 6px 6px 0; }
+
         .slider-viewport {
             width: 100%;
             height: 100%;
@@ -449,7 +501,7 @@
             will-change: transform;
         }
 
-        /* 單個角色頁面佈局 */
+        /* 擴大電腦版默認比例佈局控制，確保滿版協調感 */
         .char-slide {
             min-width: 100%;
             width: 100%;
@@ -457,10 +509,10 @@
             box-sizing: border-box;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 110px 100px 60px 100px;
+            padding: 120px 140px 60px 140px; /* 加寬兩側留白配合大視窗 */
             display: grid;
-            grid-template-columns: 420px 1fr;
-            gap: 50px;
+            grid-template-columns: 480px 1fr; /* 放大立繪與資訊卡比例限制，由420px調大至480px */
+            gap: 60px;
             justify-content: center;
             align-items: start;
             scroll-behavior: smooth;
@@ -479,8 +531,8 @@
 
         .char-illustration {
             width: 100%;
-            max-width: 400px;
-            max-height: 72vh;
+            max-width: 460px; /* 大螢幕默認下放大圖片展示限制 */
+            max-height: 75vh;
             object-fit: contain;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -489,23 +541,21 @@
             pointer-events: none; 
         }
 
-        /* 優化：重塑微型「若有似無」版權防衛水印（極小、高透、留白、無外框） */
         .watermark-overlay {
             position: absolute;
-            right: 25px; bottom: 22px; /* 精準錨定於圖片底邊右下角 */
+            right: 25px; bottom: 22px; 
             z-index: 10;
-            pointer-events: auto; /* 物理點擊攔截屏障 */
+            pointer-events: auto; 
             cursor: default;
         }
         
-        /* 縮小到極限的微型 B.S 標籤設計（達到低調不搶眼、但具備識別力的效果） */
         .watermark-overlay::before {
             content: 'B.S';
-            color: rgba(255, 255, 255, 0.15); /* 極高透明度，與背景自然融合 */
+            color: rgba(255, 255, 255, 0.15); 
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.6em; /* 極度縮小，若有似無 */
+            font-size: 0.6em; 
             font-weight: 800; 
-            letter-spacing: 4px; /* 加寬字距留白 */
+            letter-spacing: 4px; 
             white-space: nowrap;
         }
 
@@ -513,7 +563,7 @@
             background: rgba(20, 24, 29, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-left: 5px solid var(--medical-cyan);
-            padding: 40px;
+            padding: 45px; /* 電腦版卡片內部留白等比放大 */
             border-radius: 0 4px 4px 0;
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
             font-family: 'Inter', "Microsoft JhengHei", monospace;
@@ -529,14 +579,14 @@
         }
         
         .info-header-top {
-            font-size: 1.45em; 
+            font-size: 1.6em; /* 字體比例等比放大 */
             font-weight: 800;
             letter-spacing: 0.08em; 
             white-space: nowrap; 
         }
         
         .info-header-bottom {
-            font-size: 1.12em; 
+            font-size: 1.2em; /* 字體比例等比放大 */
             font-weight: 700;
             letter-spacing: 0.06em; 
             white-space: nowrap; 
@@ -545,44 +595,43 @@
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px 30px;
-            margin-bottom: 30px;
+            gap: 16px 35px; /* 間距微調放大 */
+            margin-bottom: 35px;
         }
         
         .info-item { 
             border-bottom: 1px dashed rgba(255, 255, 255, 0.06); 
-            padding: 6px 0;
-            font-size: 1.05em;
+            padding: 8px 0;
+            font-size: 1.1em; /* 電腦版文字放大 */
             display: flex;
             align-items: center;
         }
         
         .info-label { 
             color: #718096; 
-            font-size: 0.85em; 
+            font-size: 0.88em; 
             font-weight: bold; 
-            width: 90px;
+            width: 100px;
             flex-shrink: 0;
             letter-spacing: 1px;
         }
         
         .char-info-card p {
-            font-size: 1.1em;
+            font-size: 1.15em;
             font-weight: bold;
             margin-top: 25px;
             margin-bottom: 10px;
         }
         
         .char-info-card p + p {
-            font-size: 1em;
+            font-size: 1.05em;
             font-weight: normal;
             color: #cbd5e0;
-            line-height: 1.7;
+            line-height: 1.75;
             margin-top: 0;
             margin-bottom: 25px;
         }
 
-        /* --- 愛心按鈕與對話框控制樣式 --- */
         .heart-btn-wrapper {
             position: absolute;
             top: 25px;
@@ -591,8 +640,8 @@
         }
 
         .heart-circle-btn {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: rgba(17, 20, 23, 0.85);
             border: 1.5px solid rgba(255, 255, 255, 0.25);
@@ -601,7 +650,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 0.95em;
+            font-size: 1em;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             user-select: none;
@@ -614,7 +663,6 @@
             transform: scale(1.05);
         }
 
-        /* 啟用啟動狀態 */
         .heart-circle-btn.active {
             background: #ff4d6d;
             border-color: #ff4d6d;
@@ -622,27 +670,26 @@
             box-shadow: 0 0 15px #ff4d6d;
         }
 
-        /* 統一設定電腦版與手機版的對話框：皆在圖片腳下（底部） */
         .char-chat-box {
             position: absolute;
-            bottom: 25px; /* 精準置於立繪區塊下緣 */
+            bottom: 25px; 
             left: 25px;
-            width: calc(100% - 50px); /* 橫向延展適配立繪外框 */
-            min-height: 80px;
-            background: rgba(15, 18, 22, 0.88);
+            width: calc(100% - 50px); 
+            min-height: 85px;
+            background: rgba(15, 18, 22, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
-            padding: 15px;
+            padding: 16px;
             box-sizing: border-box;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px); /* 從下方微調淡入 */
+            transform: translateY(10px); 
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 95;
             color: #e2e8f0;
-            font-size: 0.9em;
+            font-size: 0.95em; /* 電腦版氣泡框內文字微調放大 */
             text-align: left;
             line-height: 1.6;
         }
@@ -653,11 +700,22 @@
             transform: translateY(0);
         }
 
-        /* 響應式佈局：適應手機與平板 */
+        /* 響應式排版控制：確保原本的手機、平板排版不因電腦版重塑而跑位 */
+        @media (max-width: 1200px) {
+            .char-slide {
+                padding: 110px 60px 60px 60px;
+                grid-template-columns: 400px 1fr;
+                gap: 40px;
+            }
+            .slide-arrow { height: 100px; width: 60px; font-size: 1.6em; }
+            .arrow-left { left: 20px; } .arrow-right { right: 20px; }
+        }
+
         @media (max-width: 1024px) {
+            body { padding: 15px; }
             .char-slide {
                 grid-template-columns: 1fr;
-                padding: 100px 60px 80px 60px;
+                padding: 100px 40px 80px 40px;
                 gap: 35px;
             }
             .char-illustration-wrapper {
@@ -666,6 +724,7 @@
             }
             .char-illustration {
                 max-height: 45vh;
+                max-width: 400px;
             }
             .char-chat-box {
                 bottom: 25px;
@@ -674,23 +733,11 @@
         }
 
         @media (max-width: 768px) {
-            .char-slide {
-                padding: 95px 20px 80px 20px;
-            }
-            .slide-arrow {
-                width: 45px;
-                height: 70px;
-                font-size: 1.3em;
-            }
-            .arrow-left { left: 5px; }
-            .arrow-right { right: 5px; }
-            .info-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-            .char-info-card {
-                padding: 25px;
-            }
+            .char-slide { padding: 95px 20px 80px 20px; }
+            .slide-arrow { width: 45px; height: 70px; font-size: 1.3em; }
+            .arrow-left { left: 5px; } .arrow-right { right: 5px; }
+            .info-grid { grid-template-columns: 1fr; gap: 8px; }
+            .char-info-card { padding: 25px; }
             .info-header-top { font-size: 1.25em; }
             .info-header-bottom { font-size: 1.02em; }
             .watermark-overlay { right: 18px; bottom: 15px; }
@@ -704,19 +751,18 @@
     <div class="main-report">
         <div class="main-title">妄二虛間</div>
 
-        <div class="intro-section main-intro">
-            <div class="reveal-text">繁華之城的野心，數百萬生命流逝</div>
-            <div class="reveal-text">一場數百年的實驗，使生存成為奢望、自由成為妄想</div>
-            <div class="reveal-text">赤色長河與刀鋒爭鬥，一步步牽線成為強權手下的傀儡</div>
-            <div class="reveal-text">沒有終點的壽命，是生命的蛻變也是一生的枷鎖</div>
+        <!-- 摺疊區塊正上方的滿版大背景圖節點（加上防止圖片拉伸之CSS控制） -->
+        <div style="width: 100%; max-width: 1000px; margin: 0 auto 35px auto; border: 1px solid rgba(255, 42, 43, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; overflow: hidden; border-radius: 4px;">
+            <img src="https://lh3.googleusercontent.com/d/1sUJQnSeVOtFTki46kOv9PsutbZjN2YWa=w1000" style="width: 100%; height: auto; max-height: 450px; object-fit: cover; display: block; filter: brightness(95%) contrast(102%); pointer-events: none;" alt="Void Main Architecture">
+            <!-- 實裝第一介面圖片的 B.S 水印保護層 -->
+            <div class="watermark-overlay"></div>
         </div>
 
         <details>
             <summary>人類基因改造計畫</summary>
             <div class="content-inner">
                 <p>此計畫於希恩在位653年時被帝國內各個貴族聯合壓迫下宣告結束，死亡人數超過180萬人。</p>
-                <p>因此計畫為各個未知區域的探索帶來巨大貢獻，所以希恩仍然是統治帝國的權力者。此計畫被迫害的人在接受巨額賠償金之後大多隱居在各處，或者隱姓埋名繼續擔任雇傭兵。</p>
-               
+                <p>原原因此計畫為各個未知區域的探索帶來巨大貢獻，所以希恩仍然是統治帝國的權力者。此計畫被迫害的人在接受巨額賠償金之後大多隱居在各處，或者隱姓名繼續擔任雇傭兵。</p>
             </div>
         </details>
 
@@ -746,13 +792,9 @@
 
     <div class="btn-top-circle" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">▲</div>
 
+    <!-- 西區 -->
     <div class="west-region">
         <div class="region-header">【聖彌可帝國 】</div>
-        <div class="intro-section west-intro">
-            <div class="glitch-reveal">冰冷的機械聲與忙碌的腳步，沒有人情味的社會只剩科技與時間的搏鬥</div>
-            <div class="glitch-reveal">在資源荒涼的世代不斷找尋新科技</div>
-            <div class="glitch-reveal">自給自足的代價是強權的壓迫</div>
-        </div>
 
         <details>
             <summary>中立派</summary>
@@ -770,7 +812,7 @@
                 <p class="desc">於在位二百多年時開始啟動「人類基因改造計畫」，在此期間不斷在帝國外的地區尋找幼年孩子進行藥物實驗</p>
                 <p class="desc">在位五百多年時計畫敗露但是因各家利益牽扯導致帝國主權仍然掌握在手中</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[希爾曼家族（子爵）]</span>
                 <p class="desc">(原為希爾文家族，後因內部爭鬥改名)</p>
                 <div class="data-box">
@@ -783,7 +825,7 @@
                 </div>
                 <p class="desc">希恩在位四百多年時因族內內訌產生權力挑戰，當代家主變挑戰成功後飲毒自殺。而希爾文家族也不復存在，由希爾曼家族接續</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[聖希維爾軍團]</span>
                 <div class="data-box">
                     <ul>
@@ -795,9 +837,9 @@
                 </div>
                 <p class="desc">聖彌可最著名的就職方向，高福利及不受貴族控制的地位使每年都有無數平民爭奪名額。當然每年也有貴族會將自己部分子弟送入盼望他們能成為自己未來的助力</p>
                 <p class="desc">具有挑戰制度，每十年舉行一次大會，輪替萬夫長以下軍職，以上則二十年輪替一次統帥等高層則是五十年輪替一次</p>
-                <p class="desc">在役期間可對比自己高的軍職發起挑戰兩次不限時間，兩次皆失敗則失去下次挑戰大會的名額並且具有重大功勞也不予升軍職最低服役時間為二十年，十年後可自行決定是否留於軍中</p>
+                <p class="desc">在役期間可對比自己高的軍職發起挑戰裝次不限時間，兩次皆失敗則失去下次挑戰大會的名額並且具有重大功勞也不予升軍職最低服役時間為二十年，十年後可自行決定是否留於軍中</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[奧雷伊索聖殿]</span>
                 <div class="data-box">
                     <ul>
@@ -825,19 +867,19 @@
                 </div>
                 <p class="desc">不受聖殿待見，但是因每年繳納高額貢獻金使其爵位尚存，但也因此無法晉升公爵</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
-                <span class="unit-label">[瓦拉家族（伯爵）]</span>
+                <div class="divider"></div>
+                <span class="unit-label">[裝拉家族（伯爵）]</span>
                 <div class="data-box">
                     <ul>
                         <li>1. 科技著名</li>
-                        <li>2. 主張知識&數據才是真理</li>
+                        <li>2. 主張 knowledge & 數據才是真理</li>
                         <li>3. 受軍團喜愛</li>
                         <li>4. 厭惡聖殿</li>
                     </ul>
                 </div>
                 <p class="desc">為了希恩研究中的數據而私下達成了某種協議。看不慣聖殿以神為信仰的行為但是礙於權力表面仍然尊敬</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[貝拉維塔家族（子爵）]</span>
                 <div class="data-box">
                     <ul>
@@ -849,7 +891,7 @@
                 </div>
                 <p class="desc">希恩在位三百多年時第486代副主教米德．貝爾維塔因平民出身，為了將自己姓氏留存於世向聖殿申請了爵位並於兩年後成功通過。也立下了以信仰為中心的一切家規</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[彭布曼家族（男爵）]</span>
                 <div class="data-box">
                     <ul>
@@ -866,7 +908,7 @@
         <details>
             <summary>保守派</summary>
             <div class="content-inner">
-                <span class="unit-label">[孟思萊德家族（公爵）]</span>
+                <span class="unit-label">[開思萊德家族（公爵）]</span>
                 <div class="data-box">
                     <ul>
                         <li>1. 老牌貴族</li>
@@ -877,7 +919,7 @@
                 </div>
                 <p class="desc">原是聖殿想扶持成皇家的貴族，因當時高層們一致認為不適合才換希恩上位公爵地位為一代代皇家慢慢升上來的，盡忠職守無野心，使孟思萊德幾乎是每代皇家並需要取得支持的家族</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[貝里安家族（男爵）]</span>
                 <div class="data-box">
                     <ul>
@@ -889,7 +931,7 @@
                 </div>
                 <p class="desc">配戴貝里安姓氏者大多與其血統並無太大關係，通常為被收養者經培養後授予其姓氏每代貝里安家主由對帝國有最高奉獻者繼承</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[法羅拉斯家族（子爵）]</span>
                 <div class="data-box">
                     <ul>
@@ -901,23 +943,19 @@
                 </div>
                 <p class="desc">因駐地位置靠海使其在貿易方面具有不小的成就，並在帝國中有一定佔比的重要性，因此被皇家重視距離學院遙遠而在駐地內有專設一所學院以應付多數子弟的學習需求</p>
 
-                <div class="divider" style="background: var(--west-cyan);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[柯尼斯學院]</span>
                 <div class="data-box">
-                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德 and 貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排名前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
+                    <p class="desc">為窮苦人家專門設立的學院，由孟思萊德 and 貝里安合作協辦。學費、住宿全免，課業優異者甚至有獎學金輔助完成學業的排筆前5%可獲得得到聖殿實習或者進軍團擔任文職的機會</p>
                 </div>
                 <p class="desc">因學生多為勤勉之人，使帝國每年優秀人才增加許多，皇家和聖殿也會定期到當地親自挑選合適的人才</p>
             </div>
         </details>
     </div>
 
+    <!-- 中區 -->
     <div class="toxic-region">
         <div class="region-header">【萬毒之地】</div>
-        <div class="intro-section toxic-intro">
-            <div class="glitch-reveal">人為的污染與資源的消耗，人們長時以面具抵擋空氣中未知的毒素</div>
-            <div class="glitch-reveal">依賴外地糧食與水源，少部分人因禍得福免疫毒素成為一方霸主</div>
-            <div class="glitch-reveal">將重心放在工業上以求得更高權力的支持</div>
-        </div>
 
         <details>
             <summary>萬毒城</summary>
@@ -929,27 +967,27 @@
                     但是從二百年前便不再舉辦...
                 </div>
 
-                <div class="divider" style="background: var(--toxic-green);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[梅倫]</span>
                 <div class="data-box">
                     外地移居，非中區本地勢力，但依靠高明的制工與防毒技術在城中奪得一席之位
                 </div>
 
-                <div class="divider" style="background: var(--toxic-green);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[薩摩金]</span>
                 <div class="data-box">
                     主業是海上貿易，與帝國和雪紗城部分地區皆有交易來往<br>
                     暗中與奎金達成交易合作，定期搶奪法蘭冒險隊隊伍並分贓
                 </div>
 
-                <div class="divider" style="background: var(--toxic-green);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[洛笙]</span>
                 <div class="data-box">
                     表面是萬毒城中最龐大傭兵團，除了傭兵委託之外也會進行城中交易往來<br>
                     暗地裡有名為“夜夢”的殺手組織，用特殊的委託渠道才能知道這個組織，業務範圍涵蓋除南區之外的範圍
                 </div>
 
-                <div class="divider" style="background: var(--toxic-green);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[奎雷那]</span>
                 <div class="data-box">
                     負責控制流民地帶暴動，與雪紗城有奴隸交易，在無人管控的區域中是地頭蛇的存在
@@ -973,7 +1011,7 @@
                 <div class="data-box">
                     盛產紫青岩，可用於製造武器、能量炮，甚至可以當成燃料，是聖彌可中大量需要的物品
                 </div>
-                <p class="desc" style="color: #4ade80;">目前由瓦拉家族 and 聖希維爾軍團掌控</p>
+                <p class="desc">目前由瓦拉家族 and 聖希維爾軍團掌控</p>
             </div>
         </details>
 
@@ -982,7 +1020,7 @@
             <div class="content-inner">
                 <span class="unit-label">[密坦達灣]</span>
                 <div class="data-box">
-                    因萬毒山脈的地形遮擋使寂冰之喉中的極端寒風不會影響到灣內，因此建造許多碼頭和漁業<br><br>
+                    因萬毒山脈的地形遮擋使寂冰之喉中的極端寒風不會影響到灣內，因此建造許多碼頭 and 漁業<br><br>
                     靠近聖彌可帝國的邊界地帶目前由貝爾維塔和法羅拉斯家族掌控，其餘為萬毒城掌控區塊
                 </div>
             </div>
@@ -993,16 +1031,16 @@
             <div class="content-inner">
                 <span class="unit-label">[羅布倫村]</span>
                 <div class="data-box">
-                    位於萬毒山脈西邊山腳，因接近軍團轄地因而安全受到保障，當地以農業自給自足為主
+                    位於萬毒山脈西邊山腳，因接近軍團轄地因而安全受到保障，當地以農業自給足為主
                 </div>
 
-                <div class="divider" style="background: var(--toxic-green);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[奎金]</span>
                 <div class="data-box">
                     定點於萬毒山脈南邊高緯度斷崖附近一處山洞中，對山中地貌極為熟悉，因定點隱密沒人知道他們真正的大本營在何處
                 </div>
 
-                <div class="divider" style="background: var(--toxic-green);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[米拉爾]</span>
                 <div class="data-box">
                     一群非人類種族，定居在萬毒山脈山腳下一處山洞中，平時靠法蘭發布的委託和挖礦、鍛造交易維生<br>
@@ -1012,46 +1050,42 @@
         </details>
     </div>
 
+    <!-- 南區 -->
     <div class="desert-region">
         <div class="region-header">【亂災沙漠】</div>
-        <div class="intro-section desert-intro">
-            <div class="glitch-reveal">時不時出現的自然天災使得人們並無定居，隨時能遷移的行李是永遠暢銷的資源</div>
-            <div class="glitch-reveal">易於收納的避寒之物能免於在烈陽消失後失溫</div>
-            <div class="glitch-reveal">沒有權柄和地頭蛇，只有四處遊蕩尋得一絲安全的「自由人」</div>
-        </div>
 
         <details>
             <summary>邊境</summary>
             <div class="content-inner">
                 <span class="unit-label">[赤玉交易閣]</span>
                 <div class="data-box">
-                    近百年間突然崛起的勢力，外人只知背後掌控者與聖希維爾中某位人物關係密切，並且力高深因實惠價格、高信用、童叟無欺，且消費固定額度後會贈與免費住宿，在邊境一帶是遊蕩人群的極佳休息地
+                    近百年間突然崛記的勢力，外人只知背後掌控者與聖希維爾中某位人物關係密切，並且力高深因實惠價格、高信用、童叟無欺，且消費固定額度後會贈與免費住宿，在邊境一帶是遊蕩人群的極佳休息地
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[開凡倫特]</span>
                 <div class="data-box">
                     南區最安全的城鎮，當地盛產一種名為「西蜜沙果」的食物，據說有解渴降火的功效，是當地熱銷的產品，也是軍中定期採購的商品之一
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[席爾維亞]</span>
                 <div class="data-box">
                     因靠近迷霧地帶而與自由之旅達成合作在當地建造了專屬交易區，所有冒險者可以在此地擺攤互相交換在迷霧內所得物<br>
                     因迷霧特殊性當地較少定居者，並且冒險者大多會配備特殊面具
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[碧得卡]</span>
                 <div class="data-box">
                     邊境老牌勢力，在赤玉建立前壟斷一切外部市場，因此極度敵對赤玉<br>
                     與夙族關係友好，有專門設立和夙族人風花雪月之地
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[自由之旅聯盟]</span>
                 <div class="data-box">
-                    邊境最龐大勢力，為了了解夢亂迷霧中的謎團不擇手段，每個月都會派遣探索組去採集材料或勘查地形<br>
+                    隊伍最龐大勢力，為了了解夢亂迷霧中的謎團不擇手段，每個月都會派遣探索組去採集材料或勘查地形<br>
                     甚至創造出了專門蒐集迷霧的容器，因此還賺了不少錢
                 </div>
             </div>
@@ -1065,15 +1099,15 @@
                     一種擬態類族群，白天依附在仙人掌或隱藏在沙地下休息，傍晚時會幻化成人形掠奪食物擅長以枯藤作為主要武器，並且以移動速度為名在每年冬季時進入繁殖期
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[夙族]</span>
                 <div class="data-box">
-                    形似精靈，但非精靈純血種，不過因此具有絕色的容貌，在與碧得卡交好前曾一度是帝國的狩獵物多居住在山洞中，每當炎砂下雨時便會重新尋找據點<br>
+                    形似精靈，但非精靈純血種，不過因此具有裝色容貌，在與碧得卡交好前曾一度是帝國的狩獵物多居住在山洞中，每當炎砂下雨時便會重新尋找據點<br>
                     全女性種族，因未知原因她們的血脈無法繁殖出男性<br><br>
                     新的族人會由每年12月21日的月光指引以此延續至今
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[鴞族]</span>
                 <div class="data-box">
                     形似幽靈般的存在，無人知道他們什麼時候出沒，又被稱做「守靈者」<br>
@@ -1091,7 +1125,7 @@
                     戰鬥時身上會出現曼珠沙華的圖案，也是其種族的代表之一極少數人標記會出現在瞳孔，通常這類人都是族內的族長或者重要戰力
                 </div>
 
-                <div class="divider" style="background: var(--desert-red);"></div>
+                <div class="divider"></div>
                 <div class="data-box">
                     [曼蒂羅小隊（自由之旅）]<br>
                     [曼蒂諾小隊（自由之旅）]<br>
@@ -1102,13 +1136,9 @@
         </details>
     </div>
 
+    <!-- 北區 -->
     <div class="ice-region">
         <div class="region-header">【極寒冰域】</div>
-        <div class="intro-section ice-intro">
-            <div class="glitch-reveal">無止的暴風雪夾雜著刺骨寒風讓望而卻步，永晝為模糊的視野帶來了光亮</div>
-            <div class="glitch-reveal">部分人們以捕食維生，偌大的海上是厚重的冰層</div>
-            <div class="glitch-reveal">冰層之下是賴以生存的水源與食物來源</div>
-        </div>
 
         <details>
             <summary>雪紗城</summary>
@@ -1119,7 +1149,7 @@
                     目前瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[紗維妲]</span>
                 <div class="data-box">
                     女權主義，當地人口組成也多為女性為主一妻多夫制度，僅限當地。因選夫制度嚴格且和當地女人結婚福利及待遇非常好，因此是北區許多男人的嚮往的地方<br>
@@ -1127,7 +1157,7 @@
                     以貿易維生，平時海上有專門的船隊及護衛隊及提防海盜
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[厄萊]</span>
                 <div class="data-box">
                     少數並非以主族姓氏作為地名的地區，當地主張慈悲解救眾生，行財產共有制度<br>
@@ -1135,21 +1165,21 @@
                     受萬毒城中流民群喜愛 & 依靠
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[馮德梅拉]</span>
                 <div class="data-box">
                     也是非主族姓氏命名地之一雪紗城幸福指數最高的地區，同時也是自殺率最高的地區<br>
                     當地沒什麼娛樂設施，適合喜歡安穩人生的人定居，是退休後渡假的好去處
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[辛利]</span>
                 <div class="data-box">
                     主族以商家起家，因曾到訪帝國而宣示信仰聖殿主神，並將信仰帶回雪紗城內<br>
                     區內擁有一座小型聖堂以收取人們的香火錢和祭拜主神
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[凜洛]</span>
                 <div class="data-box">
                     雪紗城的軍事重地，因距離戰場較近因此長年招募新兵前往十二號軍團支援<br>
@@ -1157,16 +1187,16 @@
                     當地主族以好戰為名，熱血的精神在戰場上時常因自我犧牲而取得巨大的戰果
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[伊拉瓦福科尼耶]</span>
                 <div class="data-box">
-                    大多設立工廠和礦場，且具有城中最大的監獄，時不時會出現處刑槍聲或處理屍體狀況，因此居住此地的人極為罕見
+                    大多設立工廠 and 礦場，且具有城中最大的監獄，時不時會出現處刑槍聲或處理屍體狀況，因此居住此地的人極為罕見
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[凱博海]</span>
                 <div class="data-box">
-                    盛行奴隸交易，甚至為此建立了一個競拍場所和風花雪月場所，時常與奎雷那私下往來交易，並且當地的權力象徵是南區被抓了的奴隸
+                    盛行奴隸交易，甚至為此建立了一個競拍場所 and 風花雪月場所，時常與奎雷那私下往來交易，並且當地的權力象徵是南區被抓了的奴隸
                 </div>
             </div>
         </details>
@@ -1179,14 +1209,14 @@
                     無勢力所屬，島上具有原住民，以海上捕食、渡假行業維生。因此認識不少權貴，並取得不少資金發展
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[思卡晨德群島]</span>
                 <div class="data-box">
                     又稱為「怨魂血島」，最早希恩建造實驗所的地方，在主島底下掩埋了大量屍體<br>
                     轉移基地後因屍體怨念過多積成實體無法離開島嶼從而在島上空形成一片片黑霧
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[災暮嶼]</span>
                 <div class="data-box">
                     島上只有朴絲猴族群生存，但是殘暴屬性和極其狡猾的個性使當地不適合生活也難以將其滅絕
@@ -1202,18 +1232,18 @@
                     銜接十二號軍團的資源供給處，當地負責接收凜洛區帶來的資源 and 人才，以及生產糧食
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[辜斯雷涅]</span>
                 <div class="data-box">
                     不想遵守城內規範而自主獨立出來的區域，這裡人們主張自給自足，不與外界接觸<br>
                     曾受皇家委託成為實驗計畫施行的地方之一在接近幽谷的山中有後來為此建立的墓園
                 </div>
 
-                <div class="divider" style="background: var(--ice-blue);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[米希亞萊特]</span>
                 <div class="data-box">
                     傳說是幾千年前大陸開世時的第一座城市，因怪獸暴亂 and 天災而消亡<br>
-                    遺址內機關眾多，有些技術甚至至今無法推斷並復刻出來
+                    遺址內機關眾多，有些技術幕後至今無法推斷並復刻出來
                 </div>
             </div>
         </details>
@@ -1240,45 +1270,41 @@
         </details>
     </div>
 
+    <!-- 東區 -->
     <div class="chaos-region">
         <div class="region-header">【混亂之地】</div>
-        <div class="intro-section chaos-intro">
-            <div class="glitch-reveal">活著是種幸福，錯綜複雜的勢力無時無刻都在等著下一秒的資源爭奪</div>
-            <div class="glitch-reveal">人命在此刻不過是一場交易表中中最微不足道的籌碼</div>
-            <div class="glitch-reveal">溫飽在此地是奢侈甚至難以想像的待遇，在絕望中苟延殘喘</div>
-        </div>
 
         <details>
             <summary>瓦倫城</summary>
             <div class="content-inner">
                 <span class="unit-label">[瓦倫]</span>
                 <div class="data-box">
-                    為彰顯自己權力將自身領地和整座城皆更改為自己家族的姓氏，並且城內每處皆有瓦倫所屬的軍隊駐紮<br>
+                    為彰顯自己權力將自身領地 and 整座城皆更改為自己家族的姓氏，並且城內每處皆有瓦倫所屬的軍隊駐紮<br>
                     擁有榮譽男爵頭銜，但是不被帝國內貴族承認因而未記錄<br>
-                    其中為避免受戰爭和流民所擾，沿著自身駐地建立了高達20米的高牆，只留靠海處朝外進行貿易
+                    其中為避免受戰爭 and 流民所擾，沿著自身駐地建立了高達20米的高牆，只留靠海處朝外進行貿易
                 </div>
 
-                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[巴加]</span>
                 <div class="data-box">
                     由巴格德里以及加米洛家族共同管理，一方負責民事管理一方負責財政，在沼澤帶中開發了一片新產業<br>
                     不提倡奴隸制度，會定期在流民群中施放糧食等資源救濟
                 </div>
 
-                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[西密斯]</span>
                 <div class="data-box">
                     瓦倫城中學院所在地，整座城的孩子在年滿8歲時便要進去進行6年義務教育，滿6年則可自行選擇到帝國進修或者回家就業<br>
                     院長為帝國家族所屬，每年可以提拔二十位人才免考即可進入帝國學院，未選中者則要自行考試進入
                 </div>
 
-                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <div class="divider"></div>
                 <span class="unit-label">[伊可德勒柏雅芝]</span>
                 <div class="data-box">
                     ...瓦倫城金融重心...
                 </div>
 
-                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <div class="divider" style="background: var(--chaos-purple);"></div
                 <span class="unit-label">[莫水斯基科]</span>
                 <div class="data-box">
                     戰場上退役老兵的修養地，也是瓦倫城的軍事訓練重點，並且醫療資源也是全城最先進，為此還曾花大代價尋求帝國某些家族的協助
@@ -1287,19 +1313,19 @@
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[古雷皮那裡]</span>
                 <div class="data-box">
-                    各種不同的傭兵團駐紮地，當地地區由古雷傭兵協會主管，負責登記外來傭兵訊息和各類委託
+                    各種不同的傭兵團駐紮地，當地地區由古雷傭兵協會主管，負責登記外來傭兵訊息 and 各類委託
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[成希沙漠]</span>
                 <div class="data-box">
-                    四周環山與世隔絕，凹陷地區全是水域當地房屋以高腳式為主，從事養殖業和觀光，四季皆春的景色是萬毒城和雪紗城人民著名的度假警點
+                    四周環山與世隔絕，凹陷地區全是水域當地房屋以高腳式為主，從事養殖業 and 觀光，四季皆春的景色是萬毒城 and 雪紗城人民著名的度假警點
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[蘭維摩克絲拉爾]</span>
                 <div class="data-box">
-                    著名交易地區，當地擁有各種武器和藥劑或者道具可以使你在探索帕茲恆山脈或者寂語之森時有更高的存活率和回報<br>
+                    著名交易地區，當地擁有各種武器 and 藥劑或者道具可以使你在探索帕茲恆山脈或者寂語之森時有更高的存活率 and 回報<br>
                     並且在自由市場中可以兌換到自己需要的材料，前提是你要有足夠的代價，若償還不了代價則自有當地「規規」處理
                 </div>
             </div>
@@ -1316,7 +1342,7 @@
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[停戰區]</span>
                 <div class="data-box">
-                    各方勢力協調好不可鬥爭的區域，因靠近瓦倫城所以有不少醫療區 and 藥劑交易區
+                    各方勢力協調好不可鬥爭的區域，因靠近瓦倫城所以有不少醫療區 and 材料交易區
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1368,7 +1394,7 @@
             <div class="content-inner">
                 <div class="data-box">
                     山脈最外圍是最適合歷練的地方，但是範圍僅僅只有整個山脈的1%<br><br>
-                    探索至今1300餘年停留在一處低谷河流前，河流對面帝國派遣的人無一例外全部沒有有用的消息回來，因此被列為禁區無法探索雖說已探索區域擁有清楚的路線圖，但是因山中天氣不定以及部分生物未曾登記資料，開展至今不適合單人前往
+                    探索至今1300餘年停留在一處低谷河流前，河流對面帝國派遣的人無一例外全部沒有有用的消息回來，開展至今不適合單人前往
                 </div>
             </div>
         </details>
@@ -1396,7 +1422,7 @@
     <div class="btn-container">
         <button class="action-btn" onclick="showProcessing()">角色介紹</button>
         <div id="processingModal" class="modal">
-            <div style="color: var(--medical-cyan); font-weight: bold; font-family: monospace;">INITIALIZING...</div>
+            <div style="color: var(--blood-red); font-weight: bold; font-family: monospace;">INITIALIZING...</div>
             <div class="processing-line"></div>
             <div style="color: #fff; font-size: 0.9em;">檔案正在加載中</div>
             <div style="color: #555; font-size: 0.7em; margin-top: 10px;">ACCESS DENIED: DATA_STREAM_PENDING</div>
@@ -1421,6 +1447,7 @@
         <div class="slider-viewport">
             <div class="slider-container" id="slider">
                 
+                <!-- 洛緹絲 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1453,6 +1480,7 @@
                     </div>
                 </div>
 
+                <!-- 阿卡琳 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1485,6 +1513,7 @@
                     </div>
                 </div>
 
+                <!-- 卡西亞恩 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1495,7 +1524,7 @@
                         <img src="https://drive.google.com/thumbnail?id=1YO8LdB3uhuUIi3LIH-V-VTD7-4V_tyKO&sz=w1000" class="char-illustration" alt="Cassian">
                         <div class="watermark-overlay"></div>
                     </div>
-                    <div class="char-info-card" style="border-left-color: #1a3a6d;">
+                    <div class="char-info-card" style="border-left-color: #4A90E2;">
                         <div class="info-header">
                             <div class="info-header-top" style="color: #4A90E2;">#1034732 Cassian·Farran</div>
                             <div class="info-header-bottom" style="color: #4A90E2;">卡西亞恩・法蘭</div>
@@ -1517,6 +1546,7 @@
                     </div>
                 </div>
 
+                <!-- 薩迪厄斯 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
@@ -1544,11 +1574,12 @@
                         <p>金屬操縱、言靈</p>
                         <p style="color: #2D5A27;">【背景簡述】</p>
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
-                            原為雪紗城著名狩獵者，卻成為家族換取權力的籌碼。12歲時在瓦諾爾家族的洗腦操控下，被作為效忠皇家的「禮物」送入實驗所
+                            原為雪紗城著名狩獵者，卻成為家族換取權力的籌碼。12歲時在瓦諾爾家族的洗腦操控下，被作為效忠皇家的「禮物開」送入實驗所
                         </div>
                     </div>
                 </div>
 
+                <!-- 莉莉雅 -->
                 <div class="char-slide">
                     <div class="char-illustration-wrapper">
                         <div class="heart-btn-wrapper">
