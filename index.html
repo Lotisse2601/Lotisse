@@ -35,7 +35,7 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* 全域強制固定背景圖，使滑動時背景不要動 */
+            background-attachment: fixed;
             color: var(--text-light);
             font-family: 'Inter', sans-serif, "Microsoft JhengHei";
             margin: 0;
@@ -44,14 +44,14 @@
             letter-spacing: 0.03em;
         }
 
-        /* 電腦版排版與寬度優化控制 */
+        /* 電腦版排版與寬度優化控制：防止整個按鈕被拉伸過長 */
         .main-report, .west-region, .toxic-region, .desert-region, .ice-region, .chaos-region {
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
         }
 
-        /* 全域大標題 */
+        /* 全域大標題：字體高亮冷白，疊加紅黑絢麗渲染陰影 */
         .main-title {
             font-size: 3.5em;
             font-weight: 900;
@@ -277,7 +277,7 @@
             left: 100%;
         }
 
-        /* 彈窗樣式 */
+        /* 彈窗樣式 (Processing 效果) */
         .modal {
             display: none;
             position: fixed;
@@ -382,7 +382,7 @@
         }
 
         /* ==========================================================================
-           第二介面：角色介紹全螢幕滑動介面
+           第二介面：角色介紹全螢幕滑動介面（擴展優化電腦寬螢幕適配比例，防止縮小）
            ========================================================================== */
         #character-overlay {
             display: none;
@@ -411,7 +411,7 @@
             border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
 
-        /* 第二介面返回鍵 */
+        /* 第二介面返回鍵：預設為紅，按下為藍 */
         .back-btn {
             color: var(--blood-red);
             border: 1px solid var(--blood-red);
@@ -450,13 +450,13 @@
             border: 1px dashed rgba(255,255,255,0.08);
         }
 
-        /* 第二介面切換按鈕 */
+        /* 第二介面切換按鈕：電腦版放大高度與間距 */
         .slide-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             width: 65px;
-            height: 140px; 
+            height: 140px; /* 電腦版高度放大增加適配度 */
             background: rgba(20, 25, 35, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: #64748b;
@@ -501,6 +501,7 @@
             will-change: transform;
         }
 
+        /* 擴大電腦版默認比例佈局控制，確保滿版協調感 */
         .char-slide {
             min-width: 100%;
             width: 100%;
@@ -508,14 +509,13 @@
             box-sizing: border-box;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 120px 140px 180px 140px; /* 微調底部留白釋放空間 */
+            padding: 120px 140px 60px 140px; /* 加寬兩側留白配合大視窗 */
             display: grid;
-            grid-template-columns: 480px 1fr; 
+            grid-template-columns: 480px 1fr; /* 放大立繪與資訊卡比例限制，由420px調大至480px */
             gap: 60px;
             justify-content: center;
             align-items: start;
             scroll-behavior: smooth;
-            position: relative; 
         }
 
         .char-illustration-wrapper {
@@ -531,7 +531,7 @@
 
         .char-illustration {
             width: 100%;
-            max-width: 460px; 
+            max-width: 460px; /* 大螢幕默認下放大圖片展示限制 */
             max-height: 75vh;
             object-fit: contain;
             background: rgba(0, 0, 0, 0.3);
@@ -541,7 +541,6 @@
             pointer-events: none; 
         }
 
-        /* 統一的水印防禦樣式 */
         .watermark-overlay {
             position: absolute;
             right: 25px; bottom: 22px; 
@@ -564,7 +563,7 @@
             background: rgba(20, 24, 29, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-left: 5px solid var(--medical-cyan);
-            padding: 45px; 
+            padding: 45px; /* 電腦版卡片內部留白等比放大 */
             border-radius: 0 4px 4px 0;
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
             font-family: 'Inter', "Microsoft JhengHei", monospace;
@@ -580,14 +579,14 @@
         }
         
         .info-header-top {
-            font-size: 1.6em; 
+            font-size: 1.6em; /* 字體比例等比放大 */
             font-weight: 800;
             letter-spacing: 0.08em; 
             white-space: nowrap; 
         }
         
         .info-header-bottom {
-            font-size: 1.2em; 
+            font-size: 1.2em; /* 字體比例等比放大 */
             font-weight: 700;
             letter-spacing: 0.06em; 
             white-space: nowrap; 
@@ -596,14 +595,14 @@
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px 35px; 
+            gap: 16px 35px; /* 間距微調放大 */
             margin-bottom: 35px;
         }
         
         .info-item { 
             border-bottom: 1px dashed rgba(255, 255, 255, 0.06); 
             padding: 8px 0;
-            font-size: 1.1em; 
+            font-size: 1.1em; /* 電腦版文字放大 */
             display: flex;
             align-items: center;
         }
@@ -640,71 +639,60 @@
             z-index: 100;
         }
 
-        /* 電腦版心心按鈕鎖定不動 */
         .heart-circle-btn {
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(17, 20, 23, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.7);
+            background: rgba(17, 20, 23, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1.3em; 
+            font-size: 1em;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             user-select: none;
         }
 
         .heart-circle-btn:hover {
             border-color: #ff4d6d;
             color: #ff4d6d;
-            box-shadow: 0 0 16px rgba(255, 77, 109, 0.6);
-            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 77, 109, 0.4);
+            transform: scale(1.05);
         }
 
         .heart-circle-btn.active {
             background: #ff4d6d;
             border-color: #ff4d6d;
             color: #fff;
-            box-shadow: 0 0 20px #ff4d6d;
+            box-shadow: 0 0 15px #ff4d6d;
         }
 
-        /* 電腦版對話框：等比拉寬拉大（從480px提升至520px），增加內邊距，防止字體緊擠 */
         .char-chat-box {
             position: absolute;
-            bottom: 40px; 
-            left: 120px;
-            width: 520px; /* 等比放大寬度，給予文字足夠的呼吸空間 */
-            min-height: 100px;
-            background: rgba(12, 16, 22, 0.94);
+            bottom: 25px; 
+            left: 25px;
+            width: calc(100% - 50px); 
+            min-height: 85px;
+            background: rgba(15, 18, 22, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
-            padding: 22px 28px; /* 增加內間距使視窗更明顯大器 */
+            padding: 16px;
             box-sizing: border-box;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(15px); 
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 150;
-            color: #f1f5f9;
-            font-size: 1.15em; 
-            font-weight: 700;
-            text-shadow: 1px 1px 2px #000000;
+            transform: translateY(10px); 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 95;
+            color: #e2e8f0;
+            font-size: 0.95em; /* 電腦版氣泡框內文字微調放大 */
             text-align: left;
-            line-height: 1.7;
-            letter-spacing: 0.05em;
-            white-space: normal; 
+            line-height: 1.6;
         }
-
-        /* 角色各自的專屬代表色霓虹外框外發光設計 */
-        .char-slide:nth-child(1) .char-chat-box { border: 1.5px solid #39FF14; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(57, 255, 20, 0.15); }
-        .char-slide:nth-child(2) .char-chat-box { border: 1.5px solid #ff2a2b; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(255, 42, 43, 0.15); }
-        .char-slide:nth-child(3) .char-chat-box { border: 1.5px solid #4A90E2; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(74, 144, 226, 0.15); }
-        .char-slide:nth-child(4) .char-chat-box { border: 1.5px solid #2D5A27; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(45, 90, 39, 0.15); }
-        .char-slide:nth-child(5) .char-chat-box { border: 1.5px solid #9370DB; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(147, 112, 219, 0.15); }
 
         .char-chat-box.show {
             opacity: 1;
@@ -712,23 +700,19 @@
             transform: translateY(0);
         }
 
-        /* 響應式排版與背景圖保護控制 */
+        /* 響應式排版控制：確保原本的手機、平板排版不因電腦版重塑而跑位 */
         @media (max-width: 1200px) {
             .char-slide {
-                padding: 110px 60px 140px 60px;
+                padding: 110px 60px 60px 60px;
                 grid-template-columns: 400px 1fr;
                 gap: 40px;
             }
             .slide-arrow { height: 100px; width: 60px; font-size: 1.6em; }
             .arrow-left { left: 20px; } .arrow-right { right: 20px; }
-            .char-chat-box { left: 60px; width: 400px; bottom: 25px; }
         }
 
         @media (max-width: 1024px) {
-            body { 
-                background-attachment: fixed !important; 
-                padding: 15px; 
-            }
+            body { padding: 15px; }
             .char-slide {
                 grid-template-columns: 1fr;
                 padding: 100px 40px 80px 40px;
@@ -742,22 +726,10 @@
                 max-height: 45vh;
                 max-width: 400px;
             }
-            /* 行動裝置（手機版）隔離保護，完全維持原本比例 */
-            .heart-circle-btn { width: 34px; height: 34px; font-size: 0.95em; }
             .char-chat-box {
-                position: absolute;
                 bottom: 25px;
-                left: 25px;
-                width: calc(100% - 50px) !important;
-                min-height: 80px;
-                font-size: 0.95em;
-                padding: 15px;
+                width: calc(100% - 50px);
             }
-            .char-slide:nth-child(1) .char-chat-box { border: 1px solid #39FF14; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(2) .char-chat-box { border: 1px solid #ff2a2b; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(3) .char-chat-box { border: 1px solid #4A90E2; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(4) .char-chat-box { border: 1px solid #2D5A27; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(5) .char-chat-box { border: 1px solid #9370DB; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         }
 
         @media (max-width: 768px) {
@@ -770,7 +742,7 @@
             .info-header-bottom { font-size: 1.02em; }
             .watermark-overlay { right: 18px; bottom: 15px; }
             .heart-btn-wrapper { top: 18px; left: 18px; }
-            .char-chat-box { left: 18px; width: calc(100% - 36px) !important; bottom: 18px; }
+            .char-chat-box { left: 18px; width: calc(100% - 36px); bottom: 18px; }
         }
     </style>
 </head>
@@ -779,7 +751,7 @@
     <div class="main-report">
         <div class="main-title">妄二虛間</div>
 
-        <!-- 摺疊區塊正上方的滿版大背景圖節點 -->
+        <!-- 摺疊區塊正上方的滿版大背景圖節點（加上防止圖片拉伸之CSS控制） -->
         <div style="width: 100%; max-width: 1000px; margin: 0 auto 35px auto; border: 1px solid rgba(255, 42, 43, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; overflow: hidden; border-radius: 4px;">
             <img src="https://lh3.googleusercontent.com/d/1sUJQnSeVOtFTki46kOv9PsutbZjN2YWa=w1000" style="width: 100%; height: auto; max-height: 450px; object-fit: cover; display: block; filter: brightness(95%) contrast(102%); pointer-events: none;" alt="Void Main Architecture">
             <!-- 實裝第一介面圖片的 B.S 水印保護層 -->
@@ -885,7 +857,7 @@
         <details>
             <summary>激進派</summary>
             <div class="content-inner">
-                <span class="unit-label">[開德里克家族（伯爵）]</span>
+                <span class="unit-label">[艾德里克家族（伯爵）]</span>
                 <div class="data-box">
                     <ul>
                         <li>1. 從商貴族，位高權重</li>
@@ -991,14 +963,14 @@
                 <span class="unit-label">[法蘭]</span>
                 <div class="data-box">
                     萬毒城之首，歷代家主因實力高強且據說與帝國內人物有關係從而繼位至今<br>
-                    城內擁有可以不被毒素干擾的儀器，開展至今人流密集度高每五年舉辦一次全城的清剿活動，以定期清理萬毒山脈中的魔物<br>
-                    地區從二百年前便不再舉辦...
+                    城內擁有可以不被毒素干擾的儀器，因此人流密集度高每五年舉辦一次全城的清剿活動，以定期清理萬毒山脈中的魔物<br>
+                    但是從二百年前便不再舉辦...
                 </div>
 
                 <div class="divider"></div>
                 <span class="unit-label">[梅倫]</span>
                 <div class="data-box">
-                    外地移居，非中區本地勢力，外加依靠高明的制工與防毒技術在城中奪得一席之位
+                    外地移居，非中區本地勢力，但依靠高明的制工與防毒技術在城中奪得一席之位
                 </div>
 
                 <div class="divider"></div>
@@ -1071,7 +1043,7 @@
                 <div class="divider"></div>
                 <span class="unit-label">[米拉爾]</span>
                 <div class="data-box">
-                    一群非人類種族，定居在萬毒山脈山腳下一處山洞中，平時靠法蘭發布的委託 and 挖礦、鍛造交易維生<br>
+                    一群非人類種族，定居在萬毒山脈山腳下一處山洞中，平時靠法蘭發布的委託和挖礦、鍛造交易維生<br>
                     喜好燉湯和山泉水，因其廚藝高超因此不少法蘭人會僱用他們當廚師
                 </div>
             </div>
@@ -1155,7 +1127,7 @@
 
                 <div class="divider"></div>
                 <div class="data-box">
-                    [開地羅小隊（自由之旅）]<br>
+                    [曼蒂羅小隊（自由之旅）]<br>
                     [曼蒂諾小隊（自由之旅）]<br>
                     [赤玉勘察隊]<br>
                     [席爾維亞探索組]
@@ -1280,7 +1252,7 @@
             <summary>里司爾達聚落</summary>
             <div class="content-inner">
                 <div class="data-box">
-                    居住居民多是長年在幽谷內探索的人，當地依靠加工 and 處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
+                    居住居民多是長年在幽谷內探索的人，當地依靠加工和處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
                     因幽谷內的材料特殊，因此來探險或有需要的人都會與聚落裡的人打好關係以試圖協商那高額的處理費用
                 </div>
             </div>
@@ -1293,7 +1265,7 @@
                     地形複雜，常年因寒冷被寒霧籠罩，兩側峭壁覆滿岩石和當地專有的幽凝鐵礦
                 </div>
                 <p class="desc">深層地區居住著一群淺藍小精靈，每過一段時間會產出名為凝霧晶的特殊材料</p>
-                <p class="desc">在外圍有著專門採集材料的人們居住，依靠採集材料 and 擔任引路人維生</p>
+                <p class="desc">在外圍有著專門採集材料的人們居住，依靠採集材料和擔任引路人維生</p>
             </div>
         </details>
     </div>
@@ -1327,12 +1299,12 @@
                 </div>
 
                 <div class="divider"></div>
-                <span class="unit-label">[伊可德勒慢雅芝]</span>
+                <span class="unit-label">[伊可德勒柏雅芝]</span>
                 <div class="data-box">
                     ...瓦倫城金融重心...
                 </div>
 
-                <div class="divider" style="background: var(--chaos-purple);"></div>
+                <div class="divider" style="background: var(--chaos-purple);"></div
                 <span class="unit-label">[莫水斯基科]</span>
                 <div class="data-box">
                     戰場上退役老兵的修養地，也是瓦倫城的軍事訓練重點，並且醫療資源也是全城最先進，為此還曾花大代價尋求帝國某些家族的協助
@@ -1384,7 +1356,7 @@
                 <span class="unit-label">[謝克拉迪人民反抗軍]</span>
                 <div class="data-box">
                     因不滿瓦倫城對難民置之不理的態度，以謝克拉迪為創始者，在不断搶劫貴族物資、收納戰場難民後逐漸成為戰場一方勢力<br>
-                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，開展至今反抗軍上勝率極高並佔領了最多領地以保護自己的後代
+                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍上勝率極高並佔領了最多領地以保護自己的後代
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1412,7 +1384,7 @@
                 <div class="data-box">
                     顧名思義，是發出超過標準分貝的聲音就會亡命的森林<br>
                     經驗者記錄裡寫道：裡面居住者一種沒有形體生物，會在你第一次超過限制分貝時尾隨你，並且隨著時間越長，跟隨的數量會逐漸增多。而當你第二次超出分貝時，累積的「它們」便會全部暴起將你一起「同化」<br>
-                    此之外也流傳著各式各樣的傳說，儘管古雷傭兵協會曾保證說已探索的區域危險性早已降之最低，但仍然每個月都有不同的意外發生
+                    除此之外也流傳著各式各樣的傳說，儘管古雷傭兵協會曾保證說已探索的區域危險性早已降之最低，但仍然每個月都有不同的意外發生
                 </div>
             </div>
         </details>
@@ -1562,7 +1534,7 @@
                             <div class="info-item"><span class="info-label">種族:</span>人類</div>
                             <div class="info-item"><span class="info-label">生日:</span>07/25</div>
                             <div class="info-item"><span class="info-label">身高:</span>177cm</div>
-                            <div class="info-item"><span class="info-label">性格:</span>冷計、精敏、重感情</div>
+                            <div class="info-item"><span class="info-label">性格:</span>冷靜、精敏、重感情</div>
                             <div class="info-item"><span class="info-label">MBTI:</span>INTP</div>
                         </div>
                         <p style="color: #4A90E2;">【能力】</p>
