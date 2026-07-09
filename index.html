@@ -508,14 +508,13 @@
             box-sizing: border-box;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 120px 140px 160px 140px; 
+            padding: 120px 140px 60px 140px; 
             display: grid;
             grid-template-columns: 480px 1fr; 
             gap: 60px;
             justify-content: center;
             align-items: start;
             scroll-behavior: smooth;
-            position: relative; 
         }
 
         .char-illustration-wrapper {
@@ -640,71 +639,60 @@
             z-index: 100;
         }
 
-        /* 電腦版心心按鈕 */
         .heart-circle-btn {
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(17, 20, 23, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.7);
+            background: rgba(17, 20, 23, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1.3em; 
+            font-size: 1em;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             user-select: none;
         }
 
         .heart-circle-btn:hover {
             border-color: #ff4d6d;
             color: #ff4d6d;
-            box-shadow: 0 0 16px rgba(255, 77, 109, 0.6);
-            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 77, 109, 0.4);
+            transform: scale(1.05);
         }
 
         .heart-circle-btn.active {
             background: #ff4d6d;
             border-color: #ff4d6d;
             color: #fff;
-            box-shadow: 0 0 20px #ff4d6d;
+            box-shadow: 0 0 15px #ff4d6d;
         }
 
-        /* 電腦版對話框：拉寬不擠字、長度與圖片（480px）一致，不影響手機版 */
         .char-chat-box {
             position: absolute;
-            bottom: 40px; 
-            left: 140px;
-            width: 480px; /* 長度完美契合左側立繪外框 */
-            min-height: 90px;
-            background: rgba(12, 16, 22, 0.94);
+            bottom: 25px; 
+            left: 25px;
+            width: calc(100% - 50px); 
+            min-height: 85px;
+            background: rgba(15, 18, 22, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
-            padding: 20px 25px;
+            padding: 16px;
             box-sizing: border-box;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(15px); 
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 150;
-            color: #f1f5f9;
-            font-size: 1.15em; 
-            font-weight: 700;
-            text-shadow: 1px 1px 2px #000000;
+            transform: translateY(10px); 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 95;
+            color: #e2e8f0;
+            font-size: 0.95em; 
             text-align: left;
-            line-height: 1.65;
-            letter-spacing: 0.05em;
-            white-space: normal; /* 防字體擠在一起 */
+            line-height: 1.6;
         }
-
-        /* 角色各自的專屬代表色霓虹外框外發光設計 */
-        .char-slide:nth-child(1) .char-chat-box { border: 1.5px solid #39FF14; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(57, 255, 20, 0.15); }
-        .char-slide:nth-child(2) .char-chat-box { border: 1.5px solid #ff2a2b; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(255, 42, 43, 0.15); }
-        .char-slide:nth-child(3) .char-chat-box { border: 1.5px solid #4A90E2; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(74, 144, 226, 0.15); }
-        .char-slide:nth-child(4) .char-chat-box { border: 1.5px solid #2D5A27; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(45, 90, 39, 0.15); }
-        .char-slide:nth-child(5) .char-chat-box { border: 1.5px solid #9370DB; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(147, 112, 219, 0.15); }
 
         .char-chat-box.show {
             opacity: 1;
@@ -715,17 +703,17 @@
         /* 響應式排版與背景圖保護控制 */
         @media (max-width: 1200px) {
             .char-slide {
-                padding: 110px 60px 140px 60px;
+                padding: 110px 60px 60px 60px;
                 grid-template-columns: 400px 1fr;
                 gap: 40px;
             }
             .slide-arrow { height: 100px; width: 60px; font-size: 1.6em; }
             .arrow-left { left: 20px; } .arrow-right { right: 20px; }
-            .char-chat-box { left: 60px; width: 400px; bottom: 25px; }
         }
 
         @media (max-width: 1024px) {
             body { 
+                /* 確保手機版滑動時第一介面的網頁背景圖完全固定鎖死、不隨滾動產生位移 */
                 background-attachment: fixed !important; 
                 padding: 15px; 
             }
@@ -742,22 +730,10 @@
                 max-height: 45vh;
                 max-width: 400px;
             }
-            /* 行動裝置（手機版）完美還原獨立定位，不被電腦版覆蓋 */
-            .heart-circle-btn { width: 34px; height: 34px; font-size: 0.95em; }
             .char-chat-box {
-                position: absolute;
                 bottom: 25px;
-                left: 25px;
-                width: calc(100% - 50px) !important;
-                min-height: 80px;
-                font-size: 0.95em;
-                padding: 15px;
+                width: calc(100% - 50px);
             }
-            .char-slide:nth-child(1) .char-chat-box { border: 1px solid #39FF14; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(2) .char-chat-box { border: 1px solid #ff2a2b; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(3) .char-chat-box { border: 1px solid #4A90E2; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(4) .char-chat-box { border: 1px solid #2D5A27; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(5) .char-chat-box { border: 1px solid #9370DB; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         }
 
         @media (max-width: 768px) {
@@ -770,7 +746,7 @@
             .info-header-bottom { font-size: 1.02em; }
             .watermark-overlay { right: 18px; bottom: 15px; }
             .heart-btn-wrapper { top: 18px; left: 18px; }
-            .char-chat-box { left: 18px; width: calc(100% - 36px) !important; bottom: 18px; }
+            .char-chat-box { left: 18px; width: calc(100% - 36px); bottom: 18px; }
         }
     </style>
 </head>
@@ -998,7 +974,7 @@
                 <div class="divider"></div>
                 <span class="unit-label">[梅倫]</span>
                 <div class="data-box">
-                    外地移居，非中區本地勢力，外加依靠高明的制工與防毒技術在城中奪得一席之位
+                    外地移居，非中區本地勢力，但依靠高明的制工與防毒技術在城中奪得一席之位
                 </div>
 
                 <div class="divider"></div>
@@ -1155,7 +1131,7 @@
 
                 <div class="divider"></div>
                 <div class="data-box">
-                    [開地羅小隊（自由之旅）]<br>
+                    [曼蒂羅小隊（自由之旅）]<br>
                     [曼蒂諾小隊（自由之旅）]<br>
                     [赤玉勘察隊]<br>
                     [席爾維亞探索組]
@@ -1174,7 +1150,7 @@
                 <span class="unit-label">[瓦諾爾]</span>
                 <div class="data-box">
                     以瓦諾爾一族為主族的地區，其地區裡有四十三種不同姓氏每年春季皆會舉辦狩獵大賽，8-15歲一組、16-23歲一組、24-30歲一組，連續五年三組奪冠的家族則可以替換掉原來的主族<br>
-                    目位瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
+                    目前瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
                 </div>
 
                 <div class="divider"></div>
@@ -1327,7 +1303,7 @@
                 </div>
 
                 <div class="divider"></div>
-                <span class="unit-label">[伊可德勒慢雅芝]</span>
+                <span class="unit-label">[伊可德勒柏雅芝]</span>
                 <div class="data-box">
                     ...瓦倫城金融重心...
                 </div>
@@ -1384,7 +1360,7 @@
                 <span class="unit-label">[謝克拉迪人民反抗軍]</span>
                 <div class="data-box">
                     因不滿瓦倫城對難民置之不理的態度，以謝克拉迪為創始者，在不断搶劫貴族物資、收納戰場難民後逐漸成為戰場一方勢力<br>
-                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，開展至今反抗軍上勝率極高並佔領了最多領地以保護自己的後代
+                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍上勝率極高並佔領了最多領地以保護自己的後代
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1562,12 +1538,12 @@
                             <div class="info-item"><span class="info-label">種族:</span>人類</div>
                             <div class="info-item"><span class="info-label">生日:</span>07/25</div>
                             <div class="info-item"><span class="info-label">身高:</span>177cm</div>
-                            <div class="info-item"><span class="info-label">性格:</span>冷計、精敏、重感情</div>
+                            <div class="info-item"><span class="info-label">性格:</span>冷靜、精敏、重感情</div>
                             <div class="info-item"><span class="info-label">MBTI:</span>INTP</div>
                         </div>
                         <p style="color: #4A90E2;">【能力】</p>
                         <p>毒免疫、隱身、瞬移</p>
-                        <p style="color: #4A90E2;">【背景簡述】</p>
+                        <p style="color: #4A90E2;">//【背景簡述】</p>
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             年幼時在萬毒山脈因凶獸追殺重傷墜入懸崖，被救起治療後，發現體內因不明原因產生極強毒抗性。隨後被強行留作實驗體，對外則被偽造成失蹤死亡
                         </div>
@@ -1666,7 +1642,7 @@
                 "「草莓蛋糕…？沒有，我沒喜歡吃。」"
             ],
             thaddeus: [
-                "「夥計，要不要來塊肉？」",
+                "            "「夥計，要不要來塊肉？」",
                 "「願奧雷伊索主神庇護你」",
                 "「缺錢？行啊需要多少」"
             ],
