@@ -169,7 +169,7 @@
             font-family: 'Courier New', monospace; box-shadow: inset 0 0 12px #000;
         }
         .data-panel::before { content: 'BIOMETRIC DATA MONITOR'; font-size: 0.7em; color: #64748b; display: block; margin-bottom: 10px; border-bottom: 1px solid #222; }
-        .data-row { display: flex; justify-space-between; margin-bottom: 8px; border-bottom: 1px dashed #222; }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed #222; }
         .highlight { color: var(--medical-cyan); font-weight: bold; }
         .danger { color: var(--blood-red); font-weight: bold; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -508,14 +508,13 @@
             box-sizing: border-box;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 120px 140px 180px 140px; /* 增加底部留白配給加大的台詞框空間 */
+            padding: 120px 140px 60px 140px; 
             display: grid;
             grid-template-columns: 480px 1fr; 
             gap: 60px;
             justify-content: center;
             align-items: start;
             scroll-behavior: smooth;
-            position: relative; 
         }
 
         .char-illustration-wrapper {
@@ -640,71 +639,60 @@
             z-index: 100;
         }
 
-        /* 電腦版心心按鈕：再度加大尺寸並不影響手機版 */
         .heart-circle-btn {
-            width: 52px;
-            height: 52px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(17, 20, 23, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.7);
+            background: rgba(17, 20, 23, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1.5em; 
+            font-size: 1em;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             user-select: none;
         }
 
         .heart-circle-btn:hover {
             border-color: #ff4d6d;
             color: #ff4d6d;
-            box-shadow: 0 0 16px rgba(255, 77, 109, 0.6);
-            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 77, 109, 0.4);
+            transform: scale(1.05);
         }
 
         .heart-circle-btn.active {
             background: #ff4d6d;
             border-color: #ff4d6d;
             color: #fff;
-            box-shadow: 0 0 20px #ff4d6d;
+            box-shadow: 0 0 15px #ff4d6d;
         }
 
-        /* 電腦版對話框：等比拉寬不擠字、長度與圖片（480px範圍）對齊放大至520px */
         .char-chat-box {
             position: absolute;
-            bottom: 35px; 
-            left: 120px;
-            width: 520px; /* 大寬螢幕下優雅加寬避免擠字 */
-            min-height: 95px;
-            background: rgba(12, 16, 22, 0.94);
+            bottom: 25px; 
+            left: 25px;
+            width: calc(100% - 50px); 
+            min-height: 85px;
+            background: rgba(15, 18, 22, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
-            padding: 22px 28px;
+            padding: 16px;
             box-sizing: border-box;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(15px); 
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 150;
-            color: #f8fafc;
-            font-size: 1.25em; /* 等比放大台詞字體，更清晰易讀 */
-            font-weight: 700;
-            text-shadow: 1px 1px 3px #000000;
+            transform: translateY(10px); 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 95;
+            color: #e2e8f0;
+            font-size: 0.95em; 
             text-align: left;
-            line-height: 1.7;
-            letter-spacing: 0.05em;
-            white-space: normal; 
+            line-height: 1.6;
         }
-
-        /* 各受試者專屬代表色霓虹外框渲染 */
-        .char-slide:nth-child(1) .char-chat-box { border: 2px solid #39FF14; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(57, 255, 20, 0.2); }
-        .char-slide:nth-child(2) .char-chat-box { border: 2px solid #ff2a2b; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(255, 42, 43, 0.2); }
-        .char-slide:nth-child(3) .char-chat-box { border: 2px solid #4A90E2; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(74, 144, 226, 0.2); }
-        .char-slide:nth-child(4) .char-chat-box { border: 2px solid #2D5A27; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(45, 90, 39, 0.2); }
-        .char-slide:nth-child(5) .char-chat-box { border: 2px solid #9370DB; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(147, 112, 219, 0.2); }
 
         .char-chat-box.show {
             opacity: 1;
@@ -715,17 +703,17 @@
         /* 響應式排版與背景圖保護控制 */
         @media (max-width: 1200px) {
             .char-slide {
-                padding: 110px 60px 140px 60px;
+                padding: 110px 60px 60px 60px;
                 grid-template-columns: 400px 1fr;
                 gap: 40px;
             }
             .slide-arrow { height: 100px; width: 60px; font-size: 1.6em; }
             .arrow-left { left: 20px; } .arrow-right { right: 20px; }
-            .char-chat-box { left: 60px; width: 400px; bottom: 25px; }
         }
 
         @media (max-width: 1024px) {
             body { 
+                /* 確保手機版滑動時第一介面的網頁背景圖完全固定鎖死、不隨滾動產生位移 */
                 background-attachment: fixed !important; 
                 padding: 15px; 
             }
@@ -742,22 +730,10 @@
                 max-height: 45vh;
                 max-width: 400px;
             }
-            /* 手機板安全還原，徹底隔離電腦版的擴展變更 */
-            .heart-circle-btn { width: 34px; height: 34px; font-size: 0.95em; }
             .char-chat-box {
-                position: absolute;
                 bottom: 25px;
-                left: 25px;
-                width: calc(100% - 50px) !important;
-                min-height: 80px;
-                font-size: 0.95em;
-                padding: 15px;
+                width: calc(100% - 50px);
             }
-            .char-slide:nth-child(1) .char-chat-box { border: 1px solid #39FF14; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(2) .char-chat-box { border: 1px solid #ff2a2b; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(3) .char-chat-box { border: 1px solid #4A90E2; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(4) .char-chat-box { border: 1px solid #2D5A27; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-            .char-slide:nth-child(5) .char-chat-box { border: 1px solid #9370DB; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         }
 
         @media (max-width: 768px) {
@@ -770,7 +746,7 @@
             .info-header-bottom { font-size: 1.02em; }
             .watermark-overlay { right: 18px; bottom: 15px; }
             .heart-btn-wrapper { top: 18px; left: 18px; }
-            .char-chat-box { left: 18px; width: calc(100% - 36px) !important; bottom: 18px; }
+            .char-chat-box { left: 18px; width: calc(100% - 36px); bottom: 18px; }
         }
     </style>
 </head>
@@ -1048,7 +1024,7 @@
             <div class="content-inner">
                 <span class="unit-label">[密坦達灣]</span>
                 <div class="data-box">
-                    因萬毒山脈的地形遮擋使寂冰之喉中的極端寒風不會影響到灣內，開展至今建造許多碼頭 and 漁業<br><br>
+                    因萬毒山脈的地形遮擋使寂冰之喉中的極端寒風不會影響到灣內，因此建造許多碼頭 and 漁業<br><br>
                     靠近聖彌可帝國的邊界地帶目前由貝爾維塔和法羅拉斯家族掌控，其餘為萬毒城掌控區塊
                 </div>
             </div>
@@ -1114,7 +1090,7 @@
                 <span class="unit-label">[自由之旅聯盟]</span>
                 <div class="data-box">
                     隊伍最龐大勢力，為了了解夢亂迷霧中的謎團不擇手段，每個月都會派遣探索組去採集材料或勘查地形<br>
-                    創造出了專門蒐集迷霧的容器，因此還賺了不少錢
+                    甚至創造出了專門蒐集迷霧的容器，因此還賺了不少錢
                 </div>
             </div>
         </details>
@@ -1155,7 +1131,7 @@
 
                 <div class="divider"></div>
                 <div class="data-box">
-                    [開地羅小隊（自由之旅）]<br>
+                    [曼蒂羅小隊（自由之旅）]<br>
                     [曼蒂諾小隊（自由之旅）]<br>
                     [赤玉勘察隊]<br>
                     [席爾維亞探索組]
@@ -1174,7 +1150,7 @@
                 <span class="unit-label">[瓦諾爾]</span>
                 <div class="data-box">
                     以瓦諾爾一族為主族的地區，其地區裡有四十三種不同姓氏每年春季皆會舉辦狩獵大賽，8-15歲一組、16-23歲一組、24-30歲一組，連續五年三組奪冠的家族則可以替換掉原來的主族<br>
-                    目位瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
+                    目前瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
                 </div>
 
                 <div class="divider"></div>
@@ -1196,7 +1172,7 @@
                 <div class="divider"></div>
                 <span class="unit-label">[馮德梅拉]</span>
                 <div class="data-box">
-                    也是非主族姓氏 brass 命名地之一雪紗城幸福指數最高的地區，同時也是自殺率最高的地區<br>
+                    也是非主族姓氏命名地之一雪紗城幸福指數最高的地區，同時也是自殺率最高的地區<br>
                     當地沒什麼娛樂設施，適合喜歡安穩人生的人定居，是退休後渡假的好去處
                 </div>
 
@@ -1384,7 +1360,7 @@
                 <span class="unit-label">[謝克拉迪人民反抗軍]</span>
                 <div class="data-box">
                     因不滿瓦倫城對難民置之不理的態度，以謝克拉迪為創始者，在不断搶劫貴族物資、收納戰場難民後逐漸成為戰場一方勢力<br>
-                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，開展至今反抗軍上勝率極高並佔領了最多領地以保護自己的後代
+                    在反抗軍內的人民絕大多數都是抱著必死的態度對陣，因此反抗軍上勝率極高並佔領了最多領地以保護自己的後代
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1562,12 +1538,12 @@
                             <div class="info-item"><span class="info-label">種族:</span>人類</div>
                             <div class="info-item"><span class="info-label">生日:</span>07/25</div>
                             <div class="info-item"><span class="info-label">身高:</span>177cm</div>
-                            <div class="info-item"><span class="info-label">性格:</span>冷計、精敏、重感情</div>
+                            <div class="info-item"><span class="info-label">性格:</span>冷靜、精敏、重感情</div>
                             <div class="info-item"><span class="info-label">MBTI:</span>INTP</div>
                         </div>
                         <p style="color: #4A90E2;">【能力】</p>
                         <p>毒免疫、隱身、瞬移</p>
-                        <p style="color: #4A90E2;">【背景簡述】</p>
+                        <p style="color: #4A90E2;">//【背景簡述】</p>
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             年幼時在萬毒山脈因凶獸追殺重傷墜入懸崖，被救起治療後，發現體內因不明原因產生極強毒抗性。隨後被強行留作實驗體，對外則被偽造成失蹤死亡
                         </div>
@@ -1666,7 +1642,7 @@
                 "「草莓蛋糕…？沒有，我沒喜歡吃。」"
             ],
             thaddeus: [
-                "「夥計，要不要來塊肉？」",
+                "            "「夥計，要不要來塊肉？」",
                 "「願奧雷伊索主神庇護你」",
                 "「缺錢？行啊需要多少」"
             ],
