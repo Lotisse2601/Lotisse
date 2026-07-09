@@ -508,14 +508,14 @@
             box-sizing: border-box;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 120px 140px 160px 140px; /* 增加底部留白，為打破格局的台詞框留出空間 */
+            padding: 120px 140px 160px 140px; 
             display: grid;
             grid-template-columns: 480px 1fr; 
             gap: 60px;
             justify-content: center;
             align-items: start;
             scroll-behavior: smooth;
-            position: relative; /* 讓絕對定位的電腦版對話框可以參考此母體 */
+            position: relative; 
         }
 
         .char-illustration-wrapper {
@@ -640,7 +640,7 @@
             z-index: 100;
         }
 
-        /* 電腦版心心按鈕霸氣等比放大 */
+        /* 電腦版心心按鈕 */
         .heart-circle-btn {
             width: 44px;
             height: 44px;
@@ -652,7 +652,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1.3em; /* 符號同步放大 */
+            font-size: 1.3em; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             user-select: none;
@@ -672,21 +672,17 @@
             box-shadow: 0 0 20px #ff4d6d;
         }
 
-        /* 重新設計電腦版對話框：打破立繪卡片限制，橫跨底部兩側，字體放大更清晰 */
+        /* 電腦版對話框：拉寬不擠字、長度與圖片（480px）一致，不影響手機版 */
         .char-chat-box {
             position: absolute;
             bottom: 40px; 
             left: 140px;
-            width: calc(100% - 280px); /* 精準對齊加寬後的左右留白 */
+            width: 480px; /* 長度完美契合左側立繪外框 */
             min-height: 90px;
             background: rgba(12, 16, 22, 0.94);
-            /* 優化外框：加上紅黑與醫用綠微光交織的精密防護框 */
-            border: 1.5px solid rgba(255, 42, 43, 0.4);
             border-radius: 6px;
             padding: 20px 25px;
             box-sizing: border-box;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 
-                        inset 0 0 15px rgba(255, 42, 43, 0.1);
             backdrop-filter: blur(10px);
             opacity: 0;
             visibility: hidden;
@@ -694,13 +690,21 @@
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 150;
             color: #f1f5f9;
-            font-size: 1.15em; /* 顯著放大字體，解決看不清的問題 */
+            font-size: 1.15em; 
             font-weight: 700;
             text-shadow: 1px 1px 2px #000000;
             text-align: left;
             line-height: 1.65;
             letter-spacing: 0.05em;
+            white-space: normal; /* 防字體擠在一起 */
         }
+
+        /* 角色各自的專屬代表色霓虹外框外發光設計 */
+        .char-slide:nth-child(1) .char-chat-box { border: 1.5px solid #39FF14; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(57, 255, 20, 0.15); }
+        .char-slide:nth-child(2) .char-chat-box { border: 1.5px solid #ff2a2b; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(255, 42, 43, 0.15); }
+        .char-slide:nth-child(3) .char-chat-box { border: 1.5px solid #4A90E2; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(74, 144, 226, 0.15); }
+        .char-slide:nth-child(4) .char-chat-box { border: 1.5px solid #2D5A27; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(45, 90, 39, 0.15); }
+        .char-slide:nth-child(5) .char-chat-box { border: 1.5px solid #9370DB; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(147, 112, 219, 0.15); }
 
         .char-chat-box.show {
             opacity: 1;
@@ -717,7 +721,7 @@
             }
             .slide-arrow { height: 100px; width: 60px; font-size: 1.6em; }
             .arrow-left { left: 20px; } .arrow-right { right: 20px; }
-            .char-chat-box { left: 60px; width: calc(100% - 120px); bottom: 25px; }
+            .char-chat-box { left: 60px; width: 400px; bottom: 25px; }
         }
 
         @media (max-width: 1024px) {
@@ -738,19 +742,22 @@
                 max-height: 45vh;
                 max-width: 400px;
             }
-            /* 行動裝置還原成原本的卡片內貼底泡泡框大小與愛心尺寸 */
+            /* 行動裝置（手機版）完美還原獨立定位，不被電腦版覆蓋 */
             .heart-circle-btn { width: 34px; height: 34px; font-size: 0.95em; }
             .char-chat-box {
                 position: absolute;
                 bottom: 25px;
                 left: 25px;
-                width: calc(100% - 50px);
+                width: calc(100% - 50px) !important;
                 min-height: 80px;
                 font-size: 0.95em;
                 padding: 15px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             }
+            .char-slide:nth-child(1) .char-chat-box { border: 1px solid #39FF14; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+            .char-slide:nth-child(2) .char-chat-box { border: 1px solid #ff2a2b; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+            .char-slide:nth-child(3) .char-chat-box { border: 1px solid #4A90E2; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+            .char-slide:nth-child(4) .char-chat-box { border: 1px solid #2D5A27; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+            .char-slide:nth-child(5) .char-chat-box { border: 1px solid #9370DB; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         }
 
         @media (max-width: 768px) {
@@ -763,7 +770,7 @@
             .info-header-bottom { font-size: 1.02em; }
             .watermark-overlay { right: 18px; bottom: 15px; }
             .heart-btn-wrapper { top: 18px; left: 18px; }
-            .char-chat-box { left: 18px; width: calc(100% - 36px); bottom: 18px; }
+            .char-chat-box { left: 18px; width: calc(100% - 36px) !important; bottom: 18px; }
         }
     </style>
 </head>
@@ -1167,7 +1174,7 @@
                 <span class="unit-label">[瓦諾爾]</span>
                 <div class="data-box">
                     以瓦諾爾一族為主族的地區，其地區裡有四十三種不同姓氏每年春季皆會舉辦狩獵大賽，8-15歲一組、16-23歲一組、24-30歲一組，連續五年三組奪冠的家族則可以替換掉原來的主族<br>
-                    目前瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
+                    目位瓦諾爾一族已成為主族百餘年，人才輩出但是地區內仍流傳著幾十年前消失的瓦諾爾長子的單人連冠傳說
                 </div>
 
                 <div class="divider"></div>
@@ -1286,7 +1293,7 @@
                     地形複雜，常年因寒冷被寒霧籠罩，兩側峭壁覆滿岩石和當地專有的幽凝鐵礦
                 </div>
                 <p class="desc">深層地區居住著一群淺藍小精靈，每過一段時間會產出名為凝霧晶的特殊材料</p>
-                <p class="desc">在外圍有著專門採集材料的人們居住，依靠採集材料和擔任引路人維生</p>
+                <p class="desc">在外圍有著專門採集材料的人們居住，依靠採集材料 and 擔任引路人維生</p>
             </div>
         </details>
     </div>
@@ -1320,7 +1327,7 @@
                 </div>
 
                 <div class="divider"></div>
-                <span class="unit-label">[伊可德勒柏雅芝]</span>
+                <span class="unit-label">[伊可德勒慢雅芝]</span>
                 <div class="data-box">
                     ...瓦倫城金融重心...
                 </div>
