@@ -700,6 +700,234 @@
             transform: translateY(0);
         }
 
+        /* ==========================================================================
+           修訂功能：二級分類終端、存取按鈕「檔案記錄」與賽博龐克高級警告彈窗樣式
+           ========================================================================== */
+        .story-access-trigger {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .story-trigger-text {
+            display: inline-block;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            letter-spacing: 2px;
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        /* 洛緹絲專屬高級霓虹流光 */
+        .trigger-lotisse {
+            color: #39FF14;
+            text-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
+        }
+        .trigger-lotisse:hover {
+            color: #ffffff;
+            background: rgba(57, 255, 20, 0.15);
+            border-color: #39FF14;
+            text-shadow: 0 0 10px #39FF14;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+        }
+
+        /* 薩迪厄斯專屬白灰色流光 */
+        .trigger-thaddeus {
+            color: #cbd5e0;
+            text-shadow: 0 0 6px rgba(203, 213, 224, 0.4);
+        }
+        .trigger-thaddeus:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #cbd5e0;
+            text-shadow: 0 0 10px #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+        }
+
+        /* 其他角色通用科技灰外框 */
+        .trigger-generic {
+            color: #64748b;
+        }
+        .trigger-generic:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 8px #ffffff;
+        }
+
+        /* 故事次級分類展開終端基礎面板 */
+        .sub-story-terminal {
+            display: none;
+            margin-top: 20px;
+            background: rgba(5, 8, 12, 0.96);
+            border-radius: 4px;
+            padding: 20px;
+            text-align: left;
+            animation: terminal-slide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* 洛緹絲專屬綠框 */
+        #lotisse-stories {
+            border: 1px solid #39FF14;
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.15), inset 0 0 15px rgba(57, 255, 20, 0.05);
+        }
+
+        /* 薩迪厄斯專屬白灰框 */
+        #thaddeus-stories {
+            border: 1px solid #cbd5e0;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.03);
+        }
+
+        @keyframes terminal-slide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .terminal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .terminal-card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 14px 10px;
+            border-radius: 3px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* 洛緹絲卡片懸停 */
+        #lotisse-stories .terminal-card { border: 1px solid rgba(57, 255, 20, 0.2); }
+        #lotisse-stories .terminal-card:hover {
+            border-color: #39FF14;
+            background: rgba(57, 255, 20, 0.08);
+            box-shadow: 0 0 12px rgba(57, 255, 20, 0.2);
+            transform: translateY(-2px);
+        }
+        #lotisse-stories .terminal-card .story-code { color: #39FF14; font-size: 0.7em; font-family: monospace; opacity: 0.7; }
+
+        /* 薩迪厄斯卡片懸停 */
+        #thaddeus-stories .terminal-card { border: 1px solid rgba(255, 255, 255, 0.1); }
+        #thaddeus-stories .terminal-card:hover {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        #thaddeus-stories .terminal-card .story-code { color: #cbd5e0; font-size: 0.7em; font-family: monospace; opacity: 0.6; }
+
+        .terminal-card .story-name {
+            color: #ffffff;
+            font-size: 0.95em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* 返回原網頁/原卡片按鈕控制 */
+        .terminal-close-btn {
+            display: block;
+            width: fit-content;
+            margin: 10px auto 0 auto;
+            background: transparent;
+            font-family: monospace;
+            font-size: 0.85em;
+            font-weight: bold;
+            padding: 6px 20px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        #lotisse-stories .terminal-close-btn { border: 1px dashed rgba(57, 255, 20, 0.5); color: #39FF14; }
+        #lotisse-stories .terminal-close-btn:hover { background: #39FF14; color: #000000; box-shadow: 0 0 15px #39FF14; }
+
+        #thaddeus-stories .terminal-close-btn { border: 1px dashed rgba(255, 255, 255, 0.3); color: #cbd5e0; }
+        #thaddeus-stories .terminal-close-btn:hover { background: #ffffff; color: #000000; box-shadow: 0 0 15px #ffffff; border-style: solid; }
+
+        /* 炫酷的自訂警告彈窗（其餘三人未開啟權限展示） */
+        .cyber-alert-modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            background: #0d0202;
+            border: 2px solid var(--blood-red);
+            padding: 25px 20px;
+            z-index: 3000;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 42, 43, 0.4), inset 0 0 15px rgba(255, 42, 43, 0.1);
+            font-family: monospace;
+            animation: alert-bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes alert-bounce {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .cyber-alert-title {
+            color: var(--blood-red);
+            font-weight: bold;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 8px rgba(255, 42, 43, 0.6);
+        }
+
+        .cyber-alert-msg {
+            color: #ffffff;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .cyber-alert-confirm {
+            background: rgba(255, 42, 43, 0.1);
+            color: var(--blood-red);
+            border: 1px solid var(--blood-red);
+            padding: 6px 24px;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cyber-alert-confirm:hover {
+            background: var(--blood-red);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--blood-red);
+        }
+
+        /* 故事子選單的手機板 RWD 斷點控制 */
+        @media (max-width: 768px) {
+            .terminal-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .terminal-card {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 16px;
+            }
+            .sub-story-terminal {
+                padding: 15px;
+            }
+        }
+
         /* 響應式排版控制：確保原本的手機、平板排版不因電腦版重塑而跑位 */
         @media (max-width: 1200px) {
             .char-slide {
@@ -809,7 +1037,7 @@
                         <li>5. 位於帝國西南部</li>
                     </ul>
                 </div>
-                <p class="desc">於在位二百多年時開始啟動「人類基因改造計畫」，在此期間不斷在帝國外的地區尋找幼年孩子進行藥物實驗</p>
+                <p class="desc">於在位二百話題度年時開始啟動「人類基因改造計畫」，在此期間不斷在帝國外的地區尋找幼年孩子進行藥物實驗</p>
                 <p class="desc">在位五百多年時計畫敗露但是因各家利益牽扯導致帝國主權仍然掌握在手中</p>
 
                 <div class="divider"></div>
@@ -929,7 +1157,7 @@
                         <li>4. 會定期收養孤兒或年幼奴隸培養成族內力量</li>
                     </ul>
                 </div>
-                <p class="desc">配戴貝里安姓氏者大多與其血統並無太大關係，通常為被收養者經培養後授予其姓氏每代貝里安家主由對帝國有最高奉獻者繼承</p>
+                <p class="desc">配戴貝里安姓氏者多與其血統並無太大關係，通常為被收養者經培養後授予其姓氏每代貝里安家主由對帝國有最高奉獻者繼承</p>
 
                 <div class="divider"></div>
                 <span class="unit-label">[法羅拉斯家族（子爵）]</span>
@@ -1176,7 +1404,7 @@
                 <span class="unit-label">[辛利]</span>
                 <div class="data-box">
                     主族以商家起家，因曾到訪帝國而宣示信仰聖殿主神，並將信仰帶回雪紗城內<br>
-                    區內擁有一座小型聖堂以收取人們的香火錢和祭拜主神
+                    區內擁有一座小型聖堂以收取人們的香火錢 and 祭拜主神
                 </div>
 
                 <div class="divider"></div>
@@ -1190,7 +1418,7 @@
                 <div class="divider"></div>
                 <span class="unit-label">[伊拉瓦福科尼耶]</span>
                 <div class="data-box">
-                    大多設立工廠 and 礦場，且具有城中最大的監獄，時不時會出現處刑槍聲或處理屍體狀況，因此居住此地的人極為罕見
+                    Core 基地大多設立工廠 and 礦場，且具有城中最大的監獄，時不時會出現處刑槍聲或處理屍體狀況，因此居住此地的人極為罕見
                 </div>
 
                 <div class="divider"></div>
@@ -1219,7 +1447,7 @@
                 <div class="divider"></div>
                 <span class="unit-label">[災暮嶼]</span>
                 <div class="data-box">
-                    島上只有朴絲猴族群生存，但是殘暴屬性和極其狡猾的個性使當地不適合生活也難以將其滅絕
+                    島上只有朴絲猴族群生存，但是残暴屬性和極其狡猾的個性使當地不適合生活也難以將其滅絕
                 </div>
             </div>
         </details>
@@ -1252,7 +1480,7 @@
             <summary>里司爾達聚落</summary>
             <div class="content-inner">
                 <div class="data-box">
-                    居住居民多是長年在幽谷內探索的人，當地依靠加工和處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
+                    居住居民多是長年在幽谷內探索的人，當地依靠加工 and 處理維生，擁有的獨家秘術使所有屋子明明是冰所做卻能保持溫暖<br>
                     因幽谷內的材料特殊，因此來探險或有需要的人都會與聚落裡的人打好關係以試圖協商那高額的處理費用
                 </div>
             </div>
@@ -1319,7 +1547,7 @@
                 <div class="divider" style="background: var(--chaos-purple);"></div>
                 <span class="unit-label">[成希沙漠]</span>
                 <div class="data-box">
-                    四周環山與世隔絕，凹陷地區全是水域當地房屋以高腳式為主，從事養殖業 and 觀光，四季皆春的景色是萬毒城 and 雪紗城人民著名的度假警點
+                    四周環山與世隔絕，凹陷地區全是水域當地房屋以高腳式為主，從事養殖業 and 觀光，四季皆春的景色是萬毒城 and雪紗城人民著名的度假警點
                 </div>
 
                 <div class="divider" style="background: var(--chaos-purple);"></div>
@@ -1372,7 +1600,7 @@
             <summary>巴納達吉殘城</summary>
             <div class="content-inner">
                 <div class="data-box">
-                    千年前極為繁榮的城市，因未知原因某天突然全城寂靜，失去任何生命跡象<br>
+                    千年前極為繁榮的城市，因未知原因某天突然全城寂靜，失去 any 生命跡象<br>
                     幾百年後隊伍探訪調查，城內並無打鬥痕跡，除了年代老化之外沒有外力破壞的地方，並且具記錄所說在城內停留過久也會因未知原因而消失
                 </div>
             </div>
@@ -1384,7 +1612,7 @@
                 <div class="data-box">
                     顧名思義，是發出超過標準分貝的聲音就會亡命的森林<br>
                     經驗者記錄裡寫道：裡面居住者一種沒有形體生物，會在你第一次超過限制分貝時尾隨你，並且隨著時間越長，跟隨的數量會逐漸增多。而當你第二次超出分貝時，累積的「它們」便會全部暴起將你一起「同化」<br>
-                    除此之外也流傳著各式各樣的傳說，儘管古雷傭兵協會曾保證說已探索的區域危險性早已降之最低，但仍然每個月都有不同的意外發生
+                    除此之外也流傳著各式各樣的傳傳說，儘管古雷傭兵協會曾保證說已探索的區域危險性早已降之最低，但仍然每個月都有不同的意外發生
                 </div>
             </div>
         </details>
@@ -1434,6 +1662,13 @@
         EMPIRE_MONITORING // VOID_E2_COMPLETE_ARCHIVE
     </div>
 
+    <!-- 炫酷自訂警告彈窗（其餘三人未開啟權限展示） -->
+    <div id="cyberAlertModal" class="cyber-alert-modal">
+        <div class="cyber-alert-title">⚠️ ACCESS DENIED</div>
+        <div class="cyber-alert-msg">檔案權限未開啟</div>
+        <button class="cyber-alert-confirm" onclick="closeCyberAlert()">確定</button>
+    </div>
+
     <div id="character-overlay">
         <div class="overlay-header">
             <button class="back-btn" onclick="closeCharacterOverlay()">◀ 返回</button>
@@ -1477,6 +1712,32 @@
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             於戰亂中出生，苟延殘喘多年，追殺、奪食、人性在小女孩短短的幾年中不斷上演，一次因飢餓昏迷後被實驗所綁走成為第一批實驗體
                         </div>
+
+                        <!-- 洛緹絲專屬故事跳轉區 -->
+                        <div class="story-access-trigger">
+                            <div class="story-trigger-text trigger-lotisse" onclick="toggleSubStories('lotisse-stories')">
+                                [ 檔案記錄 ]
+                            </div>
+                            
+                            <!-- 內嵌二級故事分類終端（無大標題） -->
+                            <div id="lotisse-stories" class="sub-story-terminal">
+                                <div class="terminal-grid">
+                                    <a href="https://docs.google.com/document/d/1Mb8lldEALjiJgWFfWgFVUpZzly5Y9SlMwcYljlySCTI/edit?usp=drivesdk" target="_blank" class="terminal-card">
+                                        <span class="story-name">日記</span>
+                                        <span class="story-code">MAIN_DIARY.LOG</span>
+                                    </a>
+                                    <a href="https://docs.google.com/document/d/1JIyyK0tWfqnwKZDjNo1nWYnoxj6PFSER5B80DlBmIpg/edit?usp=drivesdk" target="_blank" class="terminal-card">
+                                        <span class="story-name">第三小隊</span>
+                                        <span class="story-code">TEAM_THREE.LOG</span>
+                                    </a>
+                                    <a href="https://docs.google.com/document/d/1SnveJ5J9kA7_465YppDVtccBRdl50o1gUnMuPZW_z9Y/edit?usp=drivesdk" target="_blank" class="terminal-card">
+                                        <span class="story-name">邂逅</span>
+                                        <span class="story-code">ENCOUNTER.LOG</span>
+                                    </a>
+                                </div>
+                                <button class="terminal-close-btn" onclick="toggleSubStories('lotisse-stories')">◀ RETURN CARD // 返回原介紹頁面</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1510,6 +1771,13 @@
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             手臂上具有闇族代表紋身曼珠沙華，但血緣未能證實。被探索組發現後強行打暈帶回實驗所，身份檔案仍處於半加密狀態。
                         </div>
+
+                        <!-- 阿卡琳故事跳轉區 -->
+                        <div class="story-access-trigger">
+                            <div class="story-trigger-text trigger-generic" onclick="openCyberAlert()">
+                                [ 檔案記錄 ]
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1534,7 +1802,7 @@
                             <div class="info-item"><span class="info-label">種族:</span>人類</div>
                             <div class="info-item"><span class="info-label">生日:</span>07/25</div>
                             <div class="info-item"><span class="info-label">身高:</span>177cm</div>
-                            <div class="info-item"><span class="info-label">性格:</span>冷靜、精敏、重感情</div>
+                            <div class="info-item"><span class="info-label">性格:</span>冷計、精敏、重感情</div>
                             <div class="info-item"><span class="info-label">MBTI:</span>INTP</div>
                         </div>
                         <p style="color: #4A90E2;">【能力】</p>
@@ -1542,6 +1810,13 @@
                         <p style="color: #4A90E2;">【背景簡述】</p>
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             年幼時在萬毒山脈因凶獸追殺重傷墜入懸崖，被救起治療後，發現體內因不明原因產生極強毒抗性。隨後被強行留作實驗體，對外則被偽造成失蹤死亡
+                        </div>
+
+                        <!-- 卡西亞恩故事跳轉區 -->
+                        <div class="story-access-trigger">
+                            <div class="story-trigger-text trigger-generic" onclick="openCyberAlert()">
+                                [ 檔案記錄 ]
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1557,7 +1832,7 @@
                         <img src="https://drive.google.com/thumbnail?id=1Ub0FrNkSf3XyDpKQGbQQxlNj8Lmvjll1&sz=w1000" class="char-illustration" alt="Thaddeus">
                         <div class="watermark-overlay"></div>
                     </div>
-                    <div class="char-info-card" style="border-left-color: #2D5A27;">
+                    <div class="char-info-card" style="border-left-color: #6C7A89;">
                         <div class="info-header">
                             <div class="info-header-top" style="color: #6C7A89;">#638281 Thaddeus·Vanor</div>
                             <div class="info-header-bottom" style="color: #6C7A89;">薩迪厄斯・瓦諾爾</div>
@@ -1570,11 +1845,29 @@
                             <div class="info-item"><span class="info-label">性格:</span>陽光、穩重、和善、果斷</div>
                             <div class="info-item"><span class="info-label">MBTI:</span>ESTJ</div>
                         </div>
-                        <p style="color: #2D5A27;">【能力】</p>
+                        <p style="color: #6C7A89;">【能力】</p>
                         <p>金屬操縱、言靈</p>
-                        <p style="color: #2D5A27;">【背景簡述】</p>
+                        <p style="color: #6C7A89;">【背景簡述】</p>
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             原為雪紗城著名狩獵者，卻成為家族換取權力的籌碼。12歲時在瓦諾爾家族的洗腦操控下，被作為效忠皇家的「禮物開」送入實驗所
+                        </div>
+
+                        <!-- 薩迪厄斯專屬故事跳轉區（高級白灰色調） -->
+                        <div class="story-access-trigger">
+                            <div class="story-trigger-text trigger-thaddeus" onclick="toggleSubStories('thaddeus-stories')">
+                                [ 檔案記錄 ]
+                            </div>
+                            
+                            <!-- 內嵌二級故事分類終端（無大標題，白灰配色） -->
+                            <div id="thaddeus-stories" class="sub-story-terminal">
+                                <div class="terminal-grid">
+                                    <a href="https://docs.google.com/document/d/1egeXWcSDUjbW9r8pv6hk7vH7xGIlBNxVb89XlDezUpU/edit?usp=drivesdk" target="_blank" class="terminal-card">
+                                        <span class="story-name">傀儡</span>
+                                        <span class="story-code">PUPPET_LOG.TXT</span>
+                                    </a>
+                                </div>
+                                <button class="terminal-close-btn" onclick="toggleSubStories('thaddeus-stories')">◀ RETURN CARD // 返回原介紹頁面</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1608,6 +1901,13 @@
                         <p style="color: #9370DB;">【背景簡述】</p>
                         <div style="font-size: 0.95em; border-top: 1px solid #444; padding-top: 10px; color: #cbd5e0;">
                             作為家族棄子，16歲時被希恩帶走納入實驗計劃 。不同於其他受試者，她享有截然不同的優渥待遇 但也因此在目睹篩選過程的殘酷血腥時 , 產生了強烈的不可置信感與精神衝擊
+                        </div>
+
+                        <!-- 莉莉雅故事跳轉區 -->
+                        <div class="story-access-trigger">
+                            <div class="story-trigger-text trigger-generic" onclick="openCyberAlert()">
+                                [ 檔案記錄 ]
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1660,6 +1960,7 @@
                 setSliderPosition();
                 resetCurrentSlideTop();
                 closeAllChatBoxes();
+                closeAllTerminals();
             }, 1500);
         }
 
@@ -1699,6 +2000,7 @@
             setSliderPosition();
             resetCurrentSlideTop();
             closeAllChatBoxes();
+            closeAllTerminals();
         }
 
         function prevSlide() {
@@ -1711,6 +2013,7 @@
             setSliderPosition();
             resetCurrentSlideTop();
             closeAllChatBoxes();
+            closeAllTerminals();
         }
 
         /* --- 互動按鈕隨機台詞邏輯 --- */
@@ -1745,6 +2048,36 @@
             document.querySelectorAll('.heart-circle-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
+        }
+
+        /* --- 故事次級分類顯示切換控制 --- */
+        function toggleSubStories(terminalId) {
+            const terminal = document.getElementById(terminalId);
+            if (terminal) {
+                if (terminal.style.display === 'block') {
+                    terminal.style.display = 'none';
+                } else {
+                    terminal.style.display = 'block';
+                    // 平滑向下滾動，確保在手機上展開後能被完整看見
+                    setTimeout(() => {
+                        terminal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 50);
+                }
+            }
+        }
+
+        function closeAllTerminals() {
+            const terminals = document.querySelectorAll('.sub-story-terminal');
+            terminals.forEach(t => t.style.display = 'none');
+        }
+
+        /* --- 其餘角色的賽博龐克警告彈窗邏輯 --- */
+        function openCyberAlert() {
+            document.getElementById('cyberAlertModal').style.display = 'block';
+        }
+
+        function closeCyberAlert() {
+            document.getElementById('cyberAlertModal').style.display = 'none';
         }
     </script>
 </body>
